@@ -16,7 +16,7 @@ backtraces = ["cosmwasm-std/backtraces"]
 library = []
 
 [dependencies]
-cosmwasm-std = { version = "1.0.0-beta", features = ["staking", "stargate"] }
+cosmwasm-std = { version = "1.4.4", features = ["staking", "stargate"] }
 cosmwasm-storage = { version = "1.0.0-beta" }
 schemars = "0.8.1"
 serde = { version = "1.0.103", default-features = false, features = ["derive"] }
