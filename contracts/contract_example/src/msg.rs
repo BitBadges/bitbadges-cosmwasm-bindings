@@ -1,11 +1,11 @@
 use bitbadges_cosmwasm::{
   AddressList, Transfer,
   Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, BadgeMetadataTimeline, 
-  OffChainBalancesMetadataTimeline, CustomDataTimeline, CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore
+  OffChainBalancesMetadataTimeline, CustomDataTimeline, CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions
 };
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
-// use cosmwasm_std::{Coin, VoteOption};
+
 
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct InstantiateMsg {}
@@ -20,12 +20,12 @@ pub enum ExecuteMsg {
 
     #[serde(rename_all = "camelCase")]
     CreateAddressListsMsg {
-        address_lists: Vec<AddressList>,
+      address_lists: Vec<AddressList>,
     },
 
     #[serde(rename_all = "camelCase")]
     TransferBadgesMsg {
-        collection_id: String,
+        collection_id: String ,
         transfers: Vec<Transfer>,
     },
 
@@ -33,7 +33,7 @@ pub enum ExecuteMsg {
     CreateCollectionMsg {
       balances_type: String,
       default_balances: UserBalanceStore,
-      badges_to_create: Vec<Balance>,
+      valid_badge_ids: Vec<UintRange>,
       collection_permissions: CollectionPermissions,
       manager_timeline: Vec<ManagerTimeline>,
       collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
@@ -48,7 +48,8 @@ pub enum ExecuteMsg {
     #[serde(rename_all = "camelCase")]
     UpdateCollectionMsg {
       collection_id: String,
-      badges_to_create: Vec<Balance>,
+      update_valid_badge_ids: bool,
+      valid_badge_ids: Vec<UintRange>,
       update_collection_permissions: bool,
       collection_permissions: CollectionPermissions,
       update_manager_timeline: bool,
@@ -74,7 +75,8 @@ pub enum ExecuteMsg {
       collection_id: String,
       balances_type: String,
       default_balances: UserBalanceStore,
-      badges_to_create: Vec<Balance>,
+      update_valid_badge_ids: bool,
+      valid_badge_ids: Vec<UintRange>,
       update_collection_permissions: bool,
       collection_permissions: CollectionPermissions,
       update_manager_timeline: bool,
@@ -93,6 +95,23 @@ pub enum ExecuteMsg {
       standards_timeline: Vec<StandardsTimeline>,
       update_is_archived_timeline: bool,
       is_archived_timeline: Vec<IsArchivedTimeline>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    UpdateUserApprovalsMsg {
+      collection_id: String,
+      update_outgoing_approvals: bool,
+      outgoing_approvals: Vec<UserOutgoingApproval>,
+      update_incoming_approvals: bool,
+      incoming_approvals: Vec<UserIncomingApproval>,
+      update_auto_approve_self_initiated_outgoing_transfers: bool,
+      auto_approve_self_initiated_outgoing_transfers: bool,
+      update_auto_approve_self_initiated_incoming_transfers: bool,
+      auto_approve_self_initiated_incoming_transfers: bool, 
+      update_auto_approve_all_incoming_transfers: bool,
+      auto_approve_all_incoming_transfers: bool,
+      update_user_permissions: bool,
+      user_permissions: UserPermissions,
     },
 
     // Add other messages here as needed

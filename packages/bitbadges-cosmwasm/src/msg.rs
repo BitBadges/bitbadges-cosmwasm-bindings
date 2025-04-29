@@ -14,74 +14,35 @@ impl From<BitBadgesMsg> for CosmosMsg<BitBadgesMsg> {
   }
 }
 
-
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub enum BitBadgesMsg {
-  // #[serde(rename_all = "camelCase")]
-  // SetCollectionForProtocolMsg {
-  //   creator: String,
-  //   name: String,
-  //   collection_id: String,
-  // },
-
-  // #[serde(rename_all = "camelCase")]
-  // UnsetCollectionForProtocolMsg {
-  //   creator: String,
-  //   name: String,
-  // },
-
-  // #[serde(rename_all = "camelCase")]
-  // CreateProtocolMsg {
-  //   creator: String,
-  //   name: String,
-  //   uri: String,
-  //   custom_data: String,
-  //   is_frozen: bool,
-  // },
-
-  // #[serde(rename_all = "camelCase")]
-  // UpdateProtocolMsg {
-  //   creator: String,
-  //   name: String,
-  //   uri: String,
-  //   custom_data: String,
-  //   is_frozen: bool,
-  // },
-
-  // #[serde(rename_all = "camelCase")]
-  // DeleteProtocolMsg {
-  //   creator: String,
-  //   name: String,
-  // },
-
-  #[serde(rename_all = "camelCase")]
-  AddCustomData {
-    data: String,
-  },
-
   #[serde(rename_all = "camelCase")]
   DeleteCollectionMsg {
       //As a string
       collection_id: String, 
+      creator_override: String,
   },
 
   #[serde(rename_all = "camelCase")]
   CreateAddressListsMsg {
     address_lists: Vec<AddressList>,
+    creator_override: String,
   },
 
   #[serde(rename_all = "camelCase")]
   TransferBadgesMsg {
     collection_id: String,
     transfers: Vec<Transfer>,
+    creator_override: String,
   },
 
   #[serde(rename_all = "camelCase")]
   CreateCollectionMsg {
+    creator_override: String,
     balances_type: String,
     default_balances: UserBalanceStore,
-    badge_ids_to_add: Vec<UintRange>,
+    valid_badge_ids: Vec<UintRange>,
     collection_permissions: CollectionPermissions,
     manager_timeline: Vec<ManagerTimeline>,
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
@@ -90,14 +51,16 @@ pub enum BitBadgesMsg {
     custom_data_timeline: Vec<CustomDataTimeline>,
     collection_approvals: Vec<CollectionApproval>,
     standards_timeline: Vec<StandardsTimeline>,
-    is_archived_timeline: Vec<IsArchivedTimeline>
+    is_archived_timeline: Vec<IsArchivedTimeline>,
   },
 
 
   #[serde(rename_all = "camelCase")]
   UpdateCollectionMsg {
     collection_id: String,
-    badge_ids_to_add: Vec<UintRange>,
+    creator_override: String,
+    update_valid_badge_ids: bool,
+    valid_badge_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
     update_manager_timeline: bool,
@@ -121,9 +84,11 @@ pub enum BitBadgesMsg {
   #[serde(rename_all = "camelCase")]
   UniversalUpdateCollectionMsg {
     collection_id: String,
+    creator_override: String,
     balances_type: String,
     default_balances: UserBalanceStore,
-    badge_ids_to_add: Vec<UintRange>,
+    update_valid_badge_ids: bool,
+    valid_badge_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
     update_manager_timeline: bool,
@@ -143,110 +108,63 @@ pub enum BitBadgesMsg {
     update_is_archived_timeline: bool,
     is_archived_timeline: Vec<IsArchivedTimeline>
   },
-}
 
-// pub fn set_collection_for_protocol_msg(
-//   creator: String,
-//   name: String,
-//   collection_id: String,
-// ) -> CosmosMsg<BitBadgesMsg> {
-//   BitBadgesMsg::SetCollectionForProtocolMsg {
-//     creator,
-//     name,
-//     collection_id,
-//   }.into()
-// }
-
-// pub fn unset_collection_for_protocol_msg(
-//   creator: String,
-//   name: String,
-// ) -> CosmosMsg<BitBadgesMsg> {
-//   BitBadgesMsg::UnsetCollectionForProtocolMsg {
-//     creator,
-//     name,
-//   }.into()
-// }
-
-// pub fn create_protocol_msg(
-//   creator: String,
-//   name: String,
-//   uri: String,
-//   custom_data: String,
-//   is_frozen: bool,
-// ) -> CosmosMsg<BitBadgesMsg> {
-//   BitBadgesMsg::CreateProtocolMsg {
-//     creator,
-//     name,
-//     uri,
-//     custom_data,
-//     is_frozen,
-//   }.into()
-// }
-
-// pub fn update_protocol_msg(
-//   creator: String,
-//   name: String,
-//   uri: String,
-//   custom_data: String,
-//   is_frozen: bool,
-// ) -> CosmosMsg<BitBadgesMsg> {
-//   BitBadgesMsg::UpdateProtocolMsg {
-//     creator,
-//     name,
-//     uri,
-//     custom_data,
-//     is_frozen,
-//   }.into()
-// }
-
-// pub fn delete_protocol_msg(
-//   creator: String,
-//   name: String,
-// ) -> CosmosMsg<BitBadgesMsg> {
-//   BitBadgesMsg::DeleteProtocolMsg {
-//     creator,
-//     name,
-//   }.into()
-// }
-
-pub fn add_custom_data_msg(
-  data: String,
-) -> CosmosMsg<BitBadgesMsg> {
-  BitBadgesMsg::AddCustomData {
-    data,
-  }.into()
+  #[serde(rename_all = "camelCase")]
+  UpdateUserApprovalsMsg {
+    creator_override: String,
+    collection_id: String,
+    update_outgoing_approvals: bool,
+    outgoing_approvals: Vec<UserOutgoingApproval>,
+    update_incoming_approvals: bool,
+    incoming_approvals: Vec<UserIncomingApproval>,
+    update_auto_approve_self_initiated_outgoing_transfers: bool,
+    auto_approve_self_initiated_outgoing_transfers: bool,
+    update_auto_approve_self_initiated_incoming_transfers: bool,
+    auto_approve_self_initiated_incoming_transfers: bool,
+    update_auto_approve_all_incoming_transfers: bool, 
+    auto_approve_all_incoming_transfers: bool,
+    update_user_permissions: bool,
+    user_permissions: UserPermissions,
+  }
 }
 
 pub fn delete_collection_msg(
+    creator_override: String,
     collection_id: String,
 ) -> CosmosMsg<BitBadgesMsg> {
     BitBadgesMsg::DeleteCollectionMsg {
+        creator_override,
         collection_id,
     }.into()
 }
 
 pub fn address_lists_msg(
+  creator_override: String,
   address_lists: Vec<AddressList>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateAddressListsMsg {
+    creator_override,
     address_lists,
   }.into()
 }
 
 pub fn transfer_badges_msg(
+  creator_override: String,
   collection_id: String,
   transfers: Vec<Transfer>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::TransferBadgesMsg {
     collection_id,
     transfers,
-  }.into()
+    creator_override,
+    }.into()
 }
 
 pub fn create_collection_msg(
+  creator_override: String,
   balances_type: String,
   default_balances: UserBalanceStore,
-  badge_ids_to_add: Vec<UintRange>,
+  valid_badge_ids: Vec<UintRange>,
   collection_permissions: CollectionPermissions,
   manager_timeline: Vec<ManagerTimeline>,
   collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
@@ -258,9 +176,10 @@ pub fn create_collection_msg(
   is_archived_timeline: Vec<IsArchivedTimeline>
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateCollectionMsg { 
+    creator_override,
     balances_type,
     default_balances: default_balances,
-    badge_ids_to_add,
+    valid_badge_ids,
     collection_permissions,
     manager_timeline,
     collection_metadata_timeline,
@@ -274,8 +193,10 @@ pub fn create_collection_msg(
 }
   
 pub fn update_collection_msg(
+  creator_override: String,
   collection_id: String,
-  badge_ids_to_add: Vec<UintRange>,
+  update_valid_badge_ids: bool,
+  valid_badge_ids: Vec<UintRange>,
   update_collection_permissions: bool,
   collection_permissions: CollectionPermissions,
   update_manager_timeline: bool,
@@ -296,12 +217,14 @@ pub fn update_collection_msg(
   is_archived_timeline: Vec<IsArchivedTimeline>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateCollectionMsg {
-      collection_id,
-      badge_ids_to_add,
-      update_collection_permissions,
-      collection_permissions,
-      update_manager_timeline,
-      manager_timeline,
+    creator_override,
+    collection_id,
+    update_valid_badge_ids,
+    valid_badge_ids,
+    update_collection_permissions,
+    collection_permissions,
+    update_manager_timeline,
+    manager_timeline,
       update_collection_metadata_timeline,
       collection_metadata_timeline,
       update_badge_metadata_timeline,
@@ -321,10 +244,12 @@ pub fn update_collection_msg(
 }
 
 pub fn universal_update_collection_msg(
+  creator_override: String,
   collection_id: String,
   balances_type: String,
   default_balances: UserBalanceStore,
-  badge_ids_to_add: Vec<UintRange>,
+  update_valid_badge_ids: bool,
+  valid_badge_ids: Vec<UintRange>,
   update_collection_permissions: bool,
   collection_permissions: CollectionPermissions,
   update_manager_timeline: bool,
@@ -345,13 +270,15 @@ pub fn universal_update_collection_msg(
   is_archived_timeline: Vec<IsArchivedTimeline>
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UniversalUpdateCollectionMsg {
-      collection_id,
-      balances_type,
-      default_balances: default_balances,
-      badge_ids_to_add,
-      update_collection_permissions,
-      collection_permissions,
-      update_manager_timeline,
+    creator_override,
+    collection_id,
+    balances_type,
+    default_balances: default_balances,
+    update_valid_badge_ids,
+    valid_badge_ids,
+    update_collection_permissions,
+    collection_permissions,
+    update_manager_timeline,
       manager_timeline,
       update_collection_metadata_timeline,
       collection_metadata_timeline,
@@ -371,16 +298,41 @@ pub fn universal_update_collection_msg(
   .into()
 }
 
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct Protocol {
-  pub name: String,
-  pub uri: String,
-  pub custom_data: String,
-  pub created_by: String,
-  pub is_frozen: bool,
+pub fn update_user_approvals_msg(
+  creator_override: String,
+  collection_id: String,
+  update_outgoing_approvals: bool,
+  outgoing_approvals: Vec<UserOutgoingApproval>,
+  update_incoming_approvals: bool,
+  incoming_approvals: Vec<UserIncomingApproval>,  
+  update_auto_approve_self_initiated_outgoing_transfers: bool,
+  auto_approve_self_initiated_outgoing_transfers: bool,
+  update_auto_approve_self_initiated_incoming_transfers: bool,
+  auto_approve_self_initiated_incoming_transfers: bool,
+  update_auto_approve_all_incoming_transfers: bool, 
+  auto_approve_all_incoming_transfers: bool,
+  update_user_permissions: bool,
+  user_permissions: UserPermissions,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::UpdateUserApprovalsMsg {
+    creator_override,
+    collection_id,
+    update_outgoing_approvals,
+    outgoing_approvals,
+    update_incoming_approvals,
+    incoming_approvals,
+    update_auto_approve_self_initiated_outgoing_transfers,
+    auto_approve_self_initiated_outgoing_transfers,
+    update_auto_approve_self_initiated_incoming_transfers,
+    auto_approve_self_initiated_incoming_transfers,
+    update_auto_approve_all_incoming_transfers,
+    auto_approve_all_incoming_transfers,
+    update_user_permissions,
+    user_permissions,
+  }
+  .into()
 }
+
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
@@ -405,28 +357,12 @@ pub struct Transfer {
     pub merkle_proofs: Vec<MerkleProof>,
     pub memo: String,
     pub prioritized_approvals: Vec<ApprovalIdentifierDetails>,
-    pub only_check_prioritized_approvals: bool,
-    pub zk_proof_solutions: Vec<ZkProofSolution>,
+    pub only_check_prioritized_collection_approvals: bool,
+    pub only_check_prioritized_incoming_approvals: bool,
+    pub only_check_prioritized_outgoing_approvals: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct ZkProofSolution {
-  pub public_inputs: String,
-  pub proof: String,
-}
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct ZkProof {
-  // The verification key for the proof.
-  pub verification_key: String,
-  // The URI associated with this proof, optionally providing metadata about the proof.
-  pub uri: String,
-  // Arbitrary custom data associated with this proof.
-  pub custom_data: String,
-  // The ID of this proof
-  pub zkp_tracker_id: String,
-}
+
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
@@ -451,6 +387,7 @@ pub struct ApprovalIdentifierDetails {
     pub approval_id: String,
     pub approval_level: String,
     pub approver_address: String,
+    pub version: String,
 }
 
 
@@ -469,17 +406,6 @@ pub struct MerklePathItem {
     pub on_right: bool,
 }
 
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct MustOwnBadges {
-    pub collection_id: String,
-    pub amount_range: UintRange,
-    pub ownership_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
-    pub override_with_current_time: bool,
-    pub must_satify_for_all_assets: bool,
-}
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -584,8 +510,8 @@ pub struct IncrementedBalances {
     pub start_balances: Vec<Balance>,
     pub increment_badge_ids_by: String,
     pub increment_ownership_times_by: String,
+    pub approval_duration_from_now: String,
 }
-
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
@@ -649,14 +575,14 @@ pub struct CosmosCoin {
 pub struct CoinTransfer {
   pub to: String,
   pub coins: Vec<CosmosCoin>,
+  pub override_from_with_approver_address: bool,
+  pub override_to_with_initiator: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct ApprovalCriteria {
-  must_own_badges: Vec<MustOwnBadges>,
   merkle_challenges: Vec<MerkleChallenge>,
-  zk_proofs: Vec<ZkProof>,
   coin_transfers: Vec<CoinTransfer>,
   predetermined_balances: PredeterminedBalances,
   approval_amounts: ApprovalAmounts,
@@ -673,9 +599,7 @@ pub struct ApprovalCriteria {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct OutgoingApprovalCriteria {
-  must_own_badges: Vec<MustOwnBadges>,
   merkle_challenges: Vec<MerkleChallenge>,
-  zk_proofs: Vec<ZkProof>,
   coin_transfers: Vec<CoinTransfer>,
   predetermined_balances: PredeterminedBalances,
   approval_amounts: ApprovalAmounts,
@@ -688,9 +612,7 @@ pub struct OutgoingApprovalCriteria {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct IncomingApprovalCriteria {
-  must_own_badges: Vec<MustOwnBadges>,
   merkle_challenges: Vec<MerkleChallenge>,
-  zk_proofs: Vec<ZkProof>,
   coin_transfers: Vec<CoinTransfer>,
   predetermined_balances: PredeterminedBalances,
   approval_amounts: ApprovalAmounts,
@@ -725,6 +647,7 @@ pub struct UserOutgoingApproval {
     pub custom_data: String,
     pub approval_id: String,
     pub approval_criteria: OutgoingApprovalCriteria,
+    pub version: String,
 }
 
 
@@ -740,6 +663,7 @@ pub struct UserIncomingApproval {
     pub custom_data: String,
     pub approval_id: String,
     pub approval_criteria: IncomingApprovalCriteria,
+    pub version: String,
 }
 
 
@@ -756,6 +680,7 @@ pub struct CollectionApproval {
     pub custom_data: String,
     pub approval_id: String,
     pub approval_criteria: ApprovalCriteria,
+    pub version: String,
 }
 
 
@@ -782,6 +707,7 @@ pub struct UserPermissions {
     pub can_update_incoming_approvals: Vec<UserIncomingApprovalPermission>,
     pub can_update_auto_approve_self_initiated_outgoing_transfers: Vec<ActionPermission>,
     pub can_update_auto_approve_self_initiated_incoming_transfers: Vec<ActionPermission>,
+    pub can_update_auto_approve_all_incoming_transfers: Vec<ActionPermission>,
 }
 
 
@@ -869,6 +795,7 @@ pub struct UserBalanceStore {
     pub incoming_approvals: Vec<UserIncomingApproval>,
     pub auto_approve_self_initiated_outgoing_transfers: bool,
     pub auto_approve_self_initiated_incoming_transfers: bool,
+    pub auto_approve_all_incoming_transfers: bool,
     pub user_permissions: UserPermissions,
 }
 
@@ -891,13 +818,4 @@ pub struct BadgeCollection {
   created_by: String,
   alias_address: String,
   valid_badge_ids: Vec<UintRange>,
-}
-
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct AnchorData {
-  creator: String,
-  data: String,
-  timestamp: String,
 }

@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use cosmwasm_std::CustomQuery;
 
-use crate::{AddressList, AnchorData, ApprovalTracker, BadgeCollection, Protocol, UserBalanceStore};
+use crate::{AddressList, ApprovalTracker, BadgeCollection,  UserBalanceStore};
 
 // implement custom query
 impl CustomQuery for BitBadgesQuery {}
@@ -13,22 +13,6 @@ impl CustomQuery for BitBadgesQuery {}
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub enum BitBadgesQuery {
-    // #[serde(rename_all = "camelCase")]
-    // QueryProtocol {
-    //   name: String,
-    // },
-
-    // #[serde(rename_all = "camelCase")]
-    // QueryCollectionIdForProtocol {
-    //   name: String,
-    //   address: String,
-    // },
-
-    #[serde(rename_all = "camelCase")]
-    QueryValueAtLocation {
-      location_id: String,
-    },
-
     #[serde(rename_all = "camelCase")]
     QueryCollection {
       collection_id: String,
@@ -64,16 +48,6 @@ pub enum BitBadgesQuery {
 
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct QueryValueAtLocationResponse {
-    pub anchor_data: AnchorData,
-}
-
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-pub struct QueryGetProtocolResponse {
-    pub protocol: Protocol,
-}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct QueryGetCollectionIdForProtocolResponse {
@@ -82,7 +56,7 @@ pub struct QueryGetCollectionIdForProtocolResponse {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct QueryAddressByIdResponse {
-    pub address: String, //cosmos address
+    pub address: String, //bech32 address
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

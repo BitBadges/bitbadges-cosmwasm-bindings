@@ -6,26 +6,6 @@
     {
       "type": "object",
       "required": [
-        "queryValueAtLocation"
-      ],
-      "properties": {
-        "queryValueAtLocation": {
-          "type": "object",
-          "required": [
-            "locationId"
-          ],
-          "properties": {
-            "locationId": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    {
-      "type": "object",
-      "required": [
         "queryCollection"
       ],
       "properties": {

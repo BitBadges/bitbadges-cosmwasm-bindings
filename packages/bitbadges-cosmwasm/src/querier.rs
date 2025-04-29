@@ -10,35 +10,7 @@ impl<'a> BitBadgesQuerier<'a> {
     pub fn new(querier: &'a QuerierWrapper<'a, BitBadgesQuery>) -> Self {
         BitBadgesQuerier { querier }
     }
-
-    pub fn query_value_at_location<T: Into<String>>(&self, location: String) -> StdResult<String> {
-        let request = BitBadgesQuery::QueryValueAtLocation { 
-            location_id: location
-        }
-        .into();
-
-        self.querier.query(&request)
-    }
-
-    // pub fn query_protocol<T: Into<String>>(&self, name: String) -> StdResult<String> {
-    //     let request = BitBadgesQuery::QueryProtocol { 
-    //         name
-    //     }
-    //     .into();
-
-    //     self.querier.query(&request)
-    // }
-
-    // pub fn query_collection_id_for_protocol<T: Into<String>>(&self, name: String, address: String) -> StdResult<String> {
-    //     let request = BitBadgesQuery::QueryCollectionIdForProtocol { 
-    //         name,
-    //         address
-    //     }
-    //     .into();
-
-    //     self.querier.query(&request)
-    // }
-
+    
     pub fn query_collection<T: Into<String>>(&self, collection_id: String) -> StdResult<String> {
         let request = BitBadgesQuery::QueryCollection { 
             collection_id

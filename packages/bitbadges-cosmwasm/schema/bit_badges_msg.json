@@ -5,36 +5,20 @@
     {
       "type": "object",
       "required": [
-        "addCustomData"
-      ],
-      "properties": {
-        "addCustomData": {
-          "type": "object",
-          "required": [
-            "data"
-          ],
-          "properties": {
-            "data": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    {
-      "type": "object",
-      "required": [
         "deleteCollectionMsg"
       ],
       "properties": {
         "deleteCollectionMsg": {
           "type": "object",
           "required": [
-            "collectionId"
+            "collectionId",
+            "creatorOverride"
           ],
           "properties": {
             "collectionId": {
+              "type": "string"
+            },
+            "creatorOverride": {
               "type": "string"
             }
           }
@@ -51,7 +35,8 @@
         "createAddressListsMsg": {
           "type": "object",
           "required": [
-            "addressLists"
+            "addressLists",
+            "creatorOverride"
           ],
           "properties": {
             "addressLists": {
@@ -59,6 +44,9 @@
               "items": {
                 "$ref": "#/definitions/AddressList"
               }
+            },
+            "creatorOverride": {
+              "type": "string"
             }
           }
         }
@@ -75,10 +63,14 @@
           "type": "object",
           "required": [
             "collectionId",
+            "creatorOverride",
             "transfers"
           ],
           "properties": {
             "collectionId": {
+              "type": "string"
+            },
+            "creatorOverride": {
               "type": "string"
             },
             "transfers": {
@@ -101,26 +93,21 @@
         "createCollectionMsg": {
           "type": "object",
           "required": [
-            "badgeIdsToAdd",
             "badgeMetadataTimeline",
             "balancesType",
             "collectionApprovals",
             "collectionMetadataTimeline",
             "collectionPermissions",
+            "creatorOverride",
             "customDataTimeline",
             "defaultBalances",
             "isArchivedTimeline",
             "managerTimeline",
             "offChainBalancesMetadataTimeline",
-            "standardsTimeline"
+            "standardsTimeline",
+            "validBadgeIds"
           ],
           "properties": {
-            "badgeIdsToAdd": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UintRange"
-              }
-            },
             "badgeMetadataTimeline": {
               "type": "array",
               "items": {
@@ -144,6 +131,9 @@
             },
             "collectionPermissions": {
               "$ref": "#/definitions/CollectionPermissions"
+            },
+            "creatorOverride": {
+              "type": "string"
             },
             "customDataTimeline": {
               "type": "array",
@@ -176,6 +166,12 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/StandardsTimeline"
+              }
+            },
+            "validBadgeIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UintRange"
               }
             }
           }
@@ -192,12 +188,12 @@
         "updateCollectionMsg": {
           "type": "object",
           "required": [
-            "badgeIdsToAdd",
             "badgeMetadataTimeline",
             "collectionApprovals",
             "collectionId",
             "collectionMetadataTimeline",
             "collectionPermissions",
+            "creatorOverride",
             "customDataTimeline",
             "isArchivedTimeline",
             "managerTimeline",
@@ -211,15 +207,11 @@
             "updateIsArchivedTimeline",
             "updateManagerTimeline",
             "updateOffChainBalancesMetadataTimeline",
-            "updateStandardsTimeline"
+            "updateStandardsTimeline",
+            "updateValidBadgeIds",
+            "validBadgeIds"
           ],
           "properties": {
-            "badgeIdsToAdd": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UintRange"
-              }
-            },
             "badgeMetadataTimeline": {
               "type": "array",
               "items": {
@@ -243,6 +235,9 @@
             },
             "collectionPermissions": {
               "$ref": "#/definitions/CollectionPermissions"
+            },
+            "creatorOverride": {
+              "type": "string"
             },
             "customDataTimeline": {
               "type": "array",
@@ -300,6 +295,15 @@
             },
             "updateStandardsTimeline": {
               "type": "boolean"
+            },
+            "updateValidBadgeIds": {
+              "type": "boolean"
+            },
+            "validBadgeIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UintRange"
+              }
             }
           }
         }
@@ -315,13 +319,13 @@
         "universalUpdateCollectionMsg": {
           "type": "object",
           "required": [
-            "badgeIdsToAdd",
             "badgeMetadataTimeline",
             "balancesType",
             "collectionApprovals",
             "collectionId",
             "collectionMetadataTimeline",
             "collectionPermissions",
+            "creatorOverride",
             "customDataTimeline",
             "defaultBalances",
             "isArchivedTimeline",
@@ -336,15 +340,11 @@
             "updateIsArchivedTimeline",
             "updateManagerTimeline",
             "updateOffChainBalancesMetadataTimeline",
-            "updateStandardsTimeline"
+            "updateStandardsTimeline",
+            "updateValidBadgeIds",
+            "validBadgeIds"
           ],
           "properties": {
-            "badgeIdsToAdd": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/UintRange"
-              }
-            },
             "badgeMetadataTimeline": {
               "type": "array",
               "items": {
@@ -371,6 +371,9 @@
             },
             "collectionPermissions": {
               "$ref": "#/definitions/CollectionPermissions"
+            },
+            "creatorOverride": {
+              "type": "string"
             },
             "customDataTimeline": {
               "type": "array",
@@ -431,6 +434,93 @@
             },
             "updateStandardsTimeline": {
               "type": "boolean"
+            },
+            "updateValidBadgeIds": {
+              "type": "boolean"
+            },
+            "validBadgeIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UintRange"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "updateUserApprovalsMsg"
+      ],
+      "properties": {
+        "updateUserApprovalsMsg": {
+          "type": "object",
+          "required": [
+            "autoApproveAllIncomingTransfers",
+            "autoApproveSelfInitiatedIncomingTransfers",
+            "autoApproveSelfInitiatedOutgoingTransfers",
+            "collectionId",
+            "creatorOverride",
+            "incomingApprovals",
+            "outgoingApprovals",
+            "updateAutoApproveAllIncomingTransfers",
+            "updateAutoApproveSelfInitiatedIncomingTransfers",
+            "updateAutoApproveSelfInitiatedOutgoingTransfers",
+            "updateIncomingApprovals",
+            "updateOutgoingApprovals",
+            "updateUserPermissions",
+            "userPermissions"
+          ],
+          "properties": {
+            "autoApproveAllIncomingTransfers": {
+              "type": "boolean"
+            },
+            "autoApproveSelfInitiatedIncomingTransfers": {
+              "type": "boolean"
+            },
+            "autoApproveSelfInitiatedOutgoingTransfers": {
+              "type": "boolean"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creatorOverride": {
+              "type": "string"
+            },
+            "incomingApprovals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserIncomingApproval"
+              }
+            },
+            "outgoingApprovals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserOutgoingApproval"
+              }
+            },
+            "updateAutoApproveAllIncomingTransfers": {
+              "type": "boolean"
+            },
+            "updateAutoApproveSelfInitiatedIncomingTransfers": {
+              "type": "boolean"
+            },
+            "updateAutoApproveSelfInitiatedOutgoingTransfers": {
+              "type": "boolean"
+            },
+            "updateIncomingApprovals": {
+              "type": "boolean"
+            },
+            "updateOutgoingApprovals": {
+              "type": "boolean"
+            },
+            "updateUserPermissions": {
+              "type": "boolean"
+            },
+            "userPermissions": {
+              "$ref": "#/definitions/UserPermissions"
             }
           }
         }
@@ -536,15 +626,13 @@
         "coinTransfers",
         "maxNumTransfers",
         "merkleChallenges",
-        "mustOwnBadges",
         "overridesFromOutgoingApprovals",
         "overridesToIncomingApprovals",
         "predeterminedBalances",
         "requireFromDoesNotEqualInitiatedBy",
         "requireFromEqualsInitiatedBy",
         "requireToDoesNotEqualInitiatedBy",
-        "requireToEqualsInitiatedBy",
-        "zkProofs"
+        "requireToEqualsInitiatedBy"
       ],
       "properties": {
         "approvalAmounts": {
@@ -563,12 +651,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/MerkleChallenge"
-          }
-        },
-        "mustOwnBadges": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MustOwnBadges"
           }
         },
         "overridesFromOutgoingApprovals": {
@@ -591,12 +673,6 @@
         },
         "requireToEqualsInitiatedBy": {
           "type": "boolean"
-        },
-        "zkProofs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZkProof"
-          }
         }
       }
     },
@@ -605,7 +681,8 @@
       "required": [
         "approvalId",
         "approvalLevel",
-        "approverAddress"
+        "approverAddress",
+        "version"
       ],
       "properties": {
         "approvalId": {
@@ -615,6 +692,9 @@
           "type": "string"
         },
         "approverAddress": {
+          "type": "string"
+        },
+        "version": {
           "type": "string"
         }
       }
@@ -719,6 +799,8 @@
       "type": "object",
       "required": [
         "coins",
+        "overrideFromWithApproverAddress",
+        "overrideToWithInitiator",
         "to"
       ],
       "properties": {
@@ -727,6 +809,12 @@
           "items": {
             "$ref": "#/definitions/CosmosCoin"
           }
+        },
+        "overrideFromWithApproverAddress": {
+          "type": "boolean"
+        },
+        "overrideToWithInitiator": {
+          "type": "boolean"
         },
         "to": {
           "type": "string"
@@ -745,7 +833,8 @@
         "ownershipTimes",
         "toListId",
         "transferTimes",
-        "uri"
+        "uri",
+        "version"
       ],
       "properties": {
         "approvalCriteria": {
@@ -785,6 +874,9 @@
           }
         },
         "uri": {
+          "type": "string"
+        },
+        "version": {
           "type": "string"
         }
       }
@@ -993,11 +1085,9 @@
         "coinTransfers",
         "maxNumTransfers",
         "merkleChallenges",
-        "mustOwnBadges",
         "predeterminedBalances",
         "requireFromDoesNotEqualInitiatedBy",
-        "requireFromEqualsInitiatedBy",
-        "zkProofs"
+        "requireFromEqualsInitiatedBy"
       ],
       "properties": {
         "approvalAmounts": {
@@ -1018,12 +1108,6 @@
             "$ref": "#/definitions/MerkleChallenge"
           }
         },
-        "mustOwnBadges": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MustOwnBadges"
-          }
-        },
         "predeterminedBalances": {
           "$ref": "#/definitions/PredeterminedBalances"
         },
@@ -1032,23 +1116,21 @@
         },
         "requireFromEqualsInitiatedBy": {
           "type": "boolean"
-        },
-        "zkProofs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZkProof"
-          }
         }
       }
     },
     "IncrementedBalances": {
       "type": "object",
       "required": [
+        "approvalDurationFromNow",
         "incrementBadgeIdsBy",
         "incrementOwnershipTimesBy",
         "startBalances"
       ],
       "properties": {
+        "approvalDurationFromNow": {
+          "type": "string"
+        },
         "incrementBadgeIdsBy": {
           "type": "string"
         },
@@ -1208,43 +1290,6 @@
         }
       }
     },
-    "MustOwnBadges": {
-      "type": "object",
-      "required": [
-        "amountRange",
-        "badgeIds",
-        "collectionId",
-        "mustSatifyForAllAssets",
-        "overrideWithCurrentTime",
-        "ownershipTimes"
-      ],
-      "properties": {
-        "amountRange": {
-          "$ref": "#/definitions/UintRange"
-        },
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "collectionId": {
-          "type": "string"
-        },
-        "mustSatifyForAllAssets": {
-          "type": "boolean"
-        },
-        "overrideWithCurrentTime": {
-          "type": "boolean"
-        },
-        "ownershipTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
     "OffChainBalancesMetadata": {
       "type": "object",
       "required": [
@@ -1285,11 +1330,9 @@
         "coinTransfers",
         "maxNumTransfers",
         "merkleChallenges",
-        "mustOwnBadges",
         "predeterminedBalances",
         "requireToDoesNotEqualInitiatedBy",
-        "requireToEqualsInitiatedBy",
-        "zkProofs"
+        "requireToEqualsInitiatedBy"
       ],
       "properties": {
         "approvalAmounts": {
@@ -1310,12 +1353,6 @@
             "$ref": "#/definitions/MerkleChallenge"
           }
         },
-        "mustOwnBadges": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MustOwnBadges"
-          }
-        },
         "predeterminedBalances": {
           "$ref": "#/definitions/PredeterminedBalances"
         },
@@ -1324,12 +1361,6 @@
         },
         "requireToEqualsInitiatedBy": {
           "type": "boolean"
-        },
-        "zkProofs": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZkProof"
-          }
         }
       }
     },
@@ -1477,10 +1508,11 @@
         "from",
         "memo",
         "merkleProofs",
-        "onlyCheckPrioritizedApprovals",
+        "onlyCheckPrioritizedCollectionApprovals",
+        "onlyCheckPrioritizedIncomingApprovals",
+        "onlyCheckPrioritizedOutgoingApprovals",
         "prioritizedApprovals",
-        "toAddresses",
-        "zkProofSolutions"
+        "toAddresses"
       ],
       "properties": {
         "balances": {
@@ -1501,7 +1533,13 @@
             "$ref": "#/definitions/MerkleProof"
           }
         },
-        "onlyCheckPrioritizedApprovals": {
+        "onlyCheckPrioritizedCollectionApprovals": {
+          "type": "boolean"
+        },
+        "onlyCheckPrioritizedIncomingApprovals": {
+          "type": "boolean"
+        },
+        "onlyCheckPrioritizedOutgoingApprovals": {
           "type": "boolean"
         },
         "precalculateBalancesFromApproval": {
@@ -1525,12 +1563,6 @@
           "items": {
             "type": "string"
           }
-        },
-        "zkProofSolutions": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ZkProofSolution"
-          }
         }
       }
     },
@@ -1552,6 +1584,7 @@
     "UserBalanceStore": {
       "type": "object",
       "required": [
+        "autoApproveAllIncomingTransfers",
         "autoApproveSelfInitiatedIncomingTransfers",
         "autoApproveSelfInitiatedOutgoingTransfers",
         "balances",
@@ -1560,6 +1593,9 @@
         "userPermissions"
       ],
       "properties": {
+        "autoApproveAllIncomingTransfers": {
+          "type": "boolean"
+        },
         "autoApproveSelfInitiatedIncomingTransfers": {
           "type": "boolean"
         },
@@ -1600,7 +1636,8 @@
         "initiatedByListId",
         "ownershipTimes",
         "transferTimes",
-        "uri"
+        "uri",
+        "version"
       ],
       "properties": {
         "approvalCriteria": {
@@ -1637,6 +1674,9 @@
           }
         },
         "uri": {
+          "type": "string"
+        },
+        "version": {
           "type": "string"
         }
       }
@@ -1702,7 +1742,8 @@
         "ownershipTimes",
         "toListId",
         "transferTimes",
-        "uri"
+        "uri",
+        "version"
       ],
       "properties": {
         "approvalCriteria": {
@@ -1739,6 +1780,9 @@
           }
         },
         "uri": {
+          "type": "string"
+        },
+        "version": {
           "type": "string"
         }
       }
@@ -1796,12 +1840,19 @@
     "UserPermissions": {
       "type": "object",
       "required": [
+        "canUpdateAutoApproveAllIncomingTransfers",
         "canUpdateAutoApproveSelfInitiatedIncomingTransfers",
         "canUpdateAutoApproveSelfInitiatedOutgoingTransfers",
         "canUpdateIncomingApprovals",
         "canUpdateOutgoingApprovals"
       ],
       "properties": {
+        "canUpdateAutoApproveAllIncomingTransfers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActionPermission"
+          }
+        },
         "canUpdateAutoApproveSelfInitiatedIncomingTransfers": {
           "type": "array",
           "items": {
@@ -1825,44 +1876,6 @@
           "items": {
             "$ref": "#/definitions/UserOutgoingApprovalPermission"
           }
-        }
-      }
-    },
-    "ZkProof": {
-      "type": "object",
-      "required": [
-        "customData",
-        "uri",
-        "verificationKey",
-        "zkpTrackerId"
-      ],
-      "properties": {
-        "customData": {
-          "type": "string"
-        },
-        "uri": {
-          "type": "string"
-        },
-        "verificationKey": {
-          "type": "string"
-        },
-        "zkpTrackerId": {
-          "type": "string"
-        }
-      }
-    },
-    "ZkProofSolution": {
-      "type": "object",
-      "required": [
-        "proof",
-        "publicInputs"
-      ],
-      "properties": {
-        "proof": {
-          "type": "string"
-        },
-        "publicInputs": {
-          "type": "string"
         }
       }
     }
