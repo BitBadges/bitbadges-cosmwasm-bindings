@@ -360,6 +360,7 @@ pub struct Transfer {
     pub only_check_prioritized_collection_approvals: bool,
     pub only_check_prioritized_incoming_approvals: bool,
     pub only_check_prioritized_outgoing_approvals: bool,
+    pub override_timestamp: String,
 }
 
 
@@ -510,8 +511,19 @@ pub struct IncrementedBalances {
     pub start_balances: Vec<Balance>,
     pub increment_badge_ids_by: String,
     pub increment_ownership_times_by: String,
-    pub approval_duration_from_now: String,
+    pub duration_from_timestamp: String,
+    pub allow_override_timestamp: bool,
+    pub recurring_ownership_times: RecurringOwnershipTimes,
 }
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct RecurringOwnershipTimes {
+    pub start_time: String,
+    pub interval_length: String,
+    pub charge_period_length: String,
+}
+
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
@@ -542,6 +554,7 @@ pub struct ApprovalAmounts {
     pub per_from_address_approval_amount: String,
     pub per_initiated_by_address_approval_amount: String,
     pub amount_tracker_id: String,
+    pub reset_time_intervals: ResetTimeIntervals,
 }
 
 
@@ -553,6 +566,14 @@ pub struct MaxNumTransfers {
   pub per_from_address_max_num_transfers: String,
   pub per_initiated_by_address_max_num_transfers: String,
   pub amount_tracker_id: String,
+  pub reset_time_intervals: ResetTimeIntervals,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct ResetTimeIntervals {
+  pub start_time: String,
+  pub interval_length: String,
 }
 
 
@@ -561,6 +582,7 @@ pub struct MaxNumTransfers {
 pub struct ApprovalTracker {
     pub num_transfers: String,
     pub amounts: Vec<Balance>,
+    pub last_updated_at: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

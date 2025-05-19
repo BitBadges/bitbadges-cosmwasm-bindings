@@ -599,7 +599,8 @@
         "overallApprovalAmount",
         "perFromAddressApprovalAmount",
         "perInitiatedByAddressApprovalAmount",
-        "perToAddressApprovalAmount"
+        "perToAddressApprovalAmount",
+        "resetTimeIntervals"
       ],
       "properties": {
         "amountTrackerId": {
@@ -616,6 +617,9 @@
         },
         "perToAddressApprovalAmount": {
           "type": "string"
+        },
+        "resetTimeIntervals": {
+          "$ref": "#/definitions/ResetTimeIntervals"
         }
       }
     },
@@ -1122,13 +1126,18 @@
     "IncrementedBalances": {
       "type": "object",
       "required": [
-        "approvalDurationFromNow",
+        "allowOverrideTimestamp",
+        "durationFromTimestamp",
         "incrementBadgeIdsBy",
         "incrementOwnershipTimesBy",
+        "recurringOwnershipTimes",
         "startBalances"
       ],
       "properties": {
-        "approvalDurationFromNow": {
+        "allowOverrideTimestamp": {
+          "type": "boolean"
+        },
+        "durationFromTimestamp": {
           "type": "string"
         },
         "incrementBadgeIdsBy": {
@@ -1136,6 +1145,9 @@
         },
         "incrementOwnershipTimesBy": {
           "type": "string"
+        },
+        "recurringOwnershipTimes": {
+          "$ref": "#/definitions/RecurringOwnershipTimes"
         },
         "startBalances": {
           "type": "array",
@@ -1202,7 +1214,8 @@
         "overallMaxNumTransfers",
         "perFromAddressMaxNumTransfers",
         "perInitiatedByAddressMaxNumTransfers",
-        "perToAddressMaxNumTransfers"
+        "perToAddressMaxNumTransfers",
+        "resetTimeIntervals"
       ],
       "properties": {
         "amountTrackerId": {
@@ -1219,6 +1232,9 @@
         },
         "perToAddressMaxNumTransfers": {
           "type": "string"
+        },
+        "resetTimeIntervals": {
+          "$ref": "#/definitions/ResetTimeIntervals"
         }
       }
     },
@@ -1417,6 +1433,40 @@
         }
       }
     },
+    "RecurringOwnershipTimes": {
+      "type": "object",
+      "required": [
+        "chargePeriodLength",
+        "intervalLength",
+        "startTime"
+      ],
+      "properties": {
+        "chargePeriodLength": {
+          "type": "string"
+        },
+        "intervalLength": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        }
+      }
+    },
+    "ResetTimeIntervals": {
+      "type": "object",
+      "required": [
+        "intervalLength",
+        "startTime"
+      ],
+      "properties": {
+        "intervalLength": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        }
+      }
+    },
     "StandardsTimeline": {
       "type": "object",
       "required": [
@@ -1511,6 +1561,7 @@
         "onlyCheckPrioritizedCollectionApprovals",
         "onlyCheckPrioritizedIncomingApprovals",
         "onlyCheckPrioritizedOutgoingApprovals",
+        "overrideTimestamp",
         "prioritizedApprovals",
         "toAddresses"
       ],
@@ -1541,6 +1592,9 @@
         },
         "onlyCheckPrioritizedOutgoingApprovals": {
           "type": "boolean"
+        },
+        "overrideTimestamp": {
+          "type": "string"
         },
         "precalculateBalancesFromApproval": {
           "anyOf": [
