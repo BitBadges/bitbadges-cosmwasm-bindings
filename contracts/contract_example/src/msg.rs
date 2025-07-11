@@ -1,7 +1,10 @@
 use bitbadges_cosmwasm::{
   AddressList, Transfer,
-  Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, BadgeMetadataTimeline, 
-  OffChainBalancesMetadataTimeline, CustomDataTimeline, CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions
+  Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, 
+  BadgeMetadataTimeline,   OffChainBalancesMetadataTimeline, CustomDataTimeline,
+  CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, 
+  UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions, 
+  CosmosCoin, CosmosCoinWrapperPathAddObject
 };
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -10,6 +13,22 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, JsonSchema)]
 pub struct InstantiateMsg {}
 
+
+/**
+ * ExecuteMsg can be considered as the API entrypoint for the contract.
+ * 
+ * By specifying a specific ExecuteMsg with the core contract, you can execute the contract's logic
+ * for that message type.
+ * 
+ * Note: The contract will call into the core Msg types by specifying all the parameters.
+ * However, you often do not need all parameters in the API entrypoint like seen below. 
+ * 
+ * For example, you might have all the CreateCollectionMsg parameters hardcoded in your contract,
+ * and the entrypoint ExecuteMsg doesn't specify any parameters.
+ * 
+ * Alternative Note: These can be whatever you want. They do not need to match the core Msg types.
+ * This is your custom logic. Define it how you want.
+ */
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub enum ExecuteMsg {
@@ -43,6 +62,8 @@ pub enum ExecuteMsg {
       collection_approvals: Vec<CollectionApproval>,
       standards_timeline: Vec<StandardsTimeline>,
       is_archived_timeline: Vec<IsArchivedTimeline>,
+      mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+      cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
     },
 
     #[serde(rename_all = "camelCase")]
@@ -68,6 +89,8 @@ pub enum ExecuteMsg {
       standards_timeline: Vec<StandardsTimeline>,
       update_is_archived_timeline: bool,
       is_archived_timeline: Vec<IsArchivedTimeline>,
+      mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+      cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
     },
 
     #[serde(rename_all = "camelCase")]
@@ -95,6 +118,8 @@ pub enum ExecuteMsg {
       standards_timeline: Vec<StandardsTimeline>,
       update_is_archived_timeline: bool,
       is_archived_timeline: Vec<IsArchivedTimeline>,
+      mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+      cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
     },
 
     #[serde(rename_all = "camelCase")]

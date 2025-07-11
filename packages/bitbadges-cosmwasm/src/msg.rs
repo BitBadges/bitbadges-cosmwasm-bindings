@@ -20,26 +20,22 @@ pub enum BitBadgesMsg {
   #[serde(rename_all = "camelCase")]
   DeleteCollectionMsg {
       //As a string
-      collection_id: String, 
-      creator_override: String,
+      collection_id: String
   },
 
   #[serde(rename_all = "camelCase")]
   CreateAddressListsMsg {
     address_lists: Vec<AddressList>,
-    creator_override: String,
   },
 
   #[serde(rename_all = "camelCase")]
   TransferBadgesMsg {
     collection_id: String,
     transfers: Vec<Transfer>,
-    creator_override: String,
   },
 
   #[serde(rename_all = "camelCase")]
   CreateCollectionMsg {
-    creator_override: String,
     balances_type: String,
     default_balances: UserBalanceStore,
     valid_badge_ids: Vec<UintRange>,
@@ -52,13 +48,14 @@ pub enum BitBadgesMsg {
     collection_approvals: Vec<CollectionApproval>,
     standards_timeline: Vec<StandardsTimeline>,
     is_archived_timeline: Vec<IsArchivedTimeline>,
+    mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+    cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
   },
 
 
   #[serde(rename_all = "camelCase")]
   UpdateCollectionMsg {
     collection_id: String,
-    creator_override: String,
     update_valid_badge_ids: bool,
     valid_badge_ids: Vec<UintRange>,
     update_collection_permissions: bool,
@@ -79,12 +76,13 @@ pub enum BitBadgesMsg {
     standards_timeline: Vec<StandardsTimeline>,
     update_is_archived_timeline: bool,
     is_archived_timeline: Vec<IsArchivedTimeline>,
+    mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+    cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
   },
 
   #[serde(rename_all = "camelCase")]
   UniversalUpdateCollectionMsg {
     collection_id: String,
-    creator_override: String,
     balances_type: String,
     default_balances: UserBalanceStore,
     update_valid_badge_ids: bool,
@@ -106,12 +104,13 @@ pub enum BitBadgesMsg {
     update_standards_timeline: bool,
     standards_timeline: Vec<StandardsTimeline>,
     update_is_archived_timeline: bool,
-    is_archived_timeline: Vec<IsArchivedTimeline>
+    is_archived_timeline: Vec<IsArchivedTimeline>,
+    mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+    cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
   },
 
   #[serde(rename_all = "camelCase")]
   UpdateUserApprovalsMsg {
-    creator_override: String,
     collection_id: String,
     update_outgoing_approvals: bool,
     outgoing_approvals: Vec<UserOutgoingApproval>,
@@ -129,39 +128,32 @@ pub enum BitBadgesMsg {
 }
 
 pub fn delete_collection_msg(
-    creator_override: String,
     collection_id: String,
 ) -> CosmosMsg<BitBadgesMsg> {
     BitBadgesMsg::DeleteCollectionMsg {
-        creator_override,
         collection_id,
     }.into()
 }
 
 pub fn address_lists_msg(
-  creator_override: String,
   address_lists: Vec<AddressList>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateAddressListsMsg {
-    creator_override,
     address_lists,
   }.into()
 }
 
 pub fn transfer_badges_msg(
-  creator_override: String,
   collection_id: String,
   transfers: Vec<Transfer>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::TransferBadgesMsg {
     collection_id,
     transfers,
-    creator_override,
     }.into()
 }
 
 pub fn create_collection_msg(
-  creator_override: String,
   balances_type: String,
   default_balances: UserBalanceStore,
   valid_badge_ids: Vec<UintRange>,
@@ -173,10 +165,11 @@ pub fn create_collection_msg(
   custom_data_timeline: Vec<CustomDataTimeline>,
   collection_approvals: Vec<CollectionApproval>,
   standards_timeline: Vec<StandardsTimeline>,
-  is_archived_timeline: Vec<IsArchivedTimeline>
+  is_archived_timeline: Vec<IsArchivedTimeline>,
+  mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+  cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateCollectionMsg { 
-    creator_override,
     balances_type,
     default_balances: default_balances,
     valid_badge_ids,
@@ -189,11 +182,12 @@ pub fn create_collection_msg(
     collection_approvals,
     standards_timeline,
     is_archived_timeline,
+    mint_escrow_coins_to_transfer,
+    cosmos_coin_wrapper_paths_to_add,
   }.into()
 }
   
 pub fn update_collection_msg(
-  creator_override: String,
   collection_id: String,
   update_valid_badge_ids: bool,
   valid_badge_ids: Vec<UintRange>,
@@ -215,9 +209,10 @@ pub fn update_collection_msg(
   standards_timeline: Vec<StandardsTimeline>,
   update_is_archived_timeline: bool,
   is_archived_timeline: Vec<IsArchivedTimeline>,
+  mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+  cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateCollectionMsg {
-    creator_override,
     collection_id,
     update_valid_badge_ids,
     valid_badge_ids,
@@ -239,12 +234,13 @@ pub fn update_collection_msg(
       standards_timeline,
       update_is_archived_timeline,
       is_archived_timeline,
+      mint_escrow_coins_to_transfer,
+      cosmos_coin_wrapper_paths_to_add,
   }
   .into()
 }
 
 pub fn universal_update_collection_msg(
-  creator_override: String,
   collection_id: String,
   balances_type: String,
   default_balances: UserBalanceStore,
@@ -267,10 +263,11 @@ pub fn universal_update_collection_msg(
   update_standards_timeline: bool,
   standards_timeline: Vec<StandardsTimeline>,
   update_is_archived_timeline: bool,
-  is_archived_timeline: Vec<IsArchivedTimeline>
+  is_archived_timeline: Vec<IsArchivedTimeline>,
+  mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
+  cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UniversalUpdateCollectionMsg {
-    creator_override,
     collection_id,
     balances_type,
     default_balances: default_balances,
@@ -293,13 +290,14 @@ pub fn universal_update_collection_msg(
       update_standards_timeline,
       standards_timeline,
       update_is_archived_timeline,
-      is_archived_timeline
+      is_archived_timeline,
+      mint_escrow_coins_to_transfer,
+      cosmos_coin_wrapper_paths_to_add
   }
   .into()
 }
 
 pub fn update_user_approvals_msg(
-  creator_override: String,
   collection_id: String,
   update_outgoing_approvals: bool,
   outgoing_approvals: Vec<UserOutgoingApproval>,
@@ -315,7 +313,6 @@ pub fn update_user_approvals_msg(
   user_permissions: UserPermissions,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateUserApprovalsMsg {
-    creator_override,
     collection_id,
     update_outgoing_approvals,
     outgoing_approvals,
@@ -332,6 +329,8 @@ pub fn update_user_approvals_msg(
   }
   .into()
 }
+
+
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -360,7 +359,16 @@ pub struct Transfer {
     pub only_check_prioritized_collection_approvals: bool,
     pub only_check_prioritized_incoming_approvals: bool,
     pub only_check_prioritized_outgoing_approvals: bool,
+    pub precalculation_options: PrecalculationOptions,
+    pub affiliate_address: String,
+    pub num_attempts: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct PrecalculationOptions {
     pub override_timestamp: String,
+    pub badge_ids_override: Vec<UintRange>,
 }
 
 
@@ -397,6 +405,7 @@ pub struct ApprovalIdentifierDetails {
 pub struct MerkleProof {
     pub leaf: String,
     pub aunts: Vec<MerklePathItem>,
+    pub leaf_signature: String,
 }
 
 
@@ -514,6 +523,7 @@ pub struct IncrementedBalances {
     pub duration_from_timestamp: String,
     pub allow_override_timestamp: bool,
     pub recurring_ownership_times: RecurringOwnershipTimes,
+    pub allow_override_with_any_valid_badge: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -604,43 +614,50 @@ pub struct CoinTransfer {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct ApprovalCriteria {
-  merkle_challenges: Vec<MerkleChallenge>,
-  coin_transfers: Vec<CoinTransfer>,
-  predetermined_balances: PredeterminedBalances,
-  approval_amounts: ApprovalAmounts,
-  max_num_transfers: MaxNumTransfers,
-  require_to_equals_initiated_by: bool,
-  require_from_equals_initiated_by: bool,
-  require_to_does_not_equal_initiated_by: bool,
-  require_from_does_not_equal_initiated_by: bool,
-  overrides_from_outgoing_approvals: bool,
-  overrides_to_incoming_approvals: bool,
+  pub merkle_challenges: Vec<MerkleChallenge>,
+  pub predetermined_balances: PredeterminedBalances,
+  pub approval_amounts: ApprovalAmounts,
+  pub max_num_transfers: MaxNumTransfers,
+  pub coin_transfers: Vec<CoinTransfer>,
+  pub require_to_equals_initiated_by: bool,
+  pub require_from_equals_initiated_by: bool,
+  pub require_to_does_not_equal_initiated_by: bool,
+  pub require_from_does_not_equal_initiated_by: bool,
+  pub overrides_from_outgoing_approvals: bool,
+  pub overrides_to_incoming_approvals: bool,
+  pub auto_deletion_options: AutoDeletionOptions,
+  pub user_royalties: UserRoyalties,
+  pub must_own_badges: Vec<MustOwnBadges>,
 }
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct OutgoingApprovalCriteria {
-  merkle_challenges: Vec<MerkleChallenge>,
-  coin_transfers: Vec<CoinTransfer>,
-  predetermined_balances: PredeterminedBalances,
-  approval_amounts: ApprovalAmounts,
-  max_num_transfers: MaxNumTransfers,
-  require_to_equals_initiated_by: bool,
-  require_to_does_not_equal_initiated_by: bool,
+  pub merkle_challenges: Vec<MerkleChallenge>,
+  pub predetermined_balances: PredeterminedBalances,
+  pub approval_amounts: ApprovalAmounts,
+  pub max_num_transfers: MaxNumTransfers,
+  pub coin_transfers: Vec<CoinTransfer>,
+  pub require_to_equals_initiated_by: bool,
+  pub require_to_does_not_equal_initiated_by: bool,
+  pub auto_deletion_options: AutoDeletionOptions,
+  pub must_own_badges: Vec<MustOwnBadges>,
 }
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct IncomingApprovalCriteria {
-  merkle_challenges: Vec<MerkleChallenge>,
-  coin_transfers: Vec<CoinTransfer>,
-  predetermined_balances: PredeterminedBalances,
-  approval_amounts: ApprovalAmounts,
-  max_num_transfers: MaxNumTransfers,
-  require_from_equals_initiated_by: bool,
-  require_from_does_not_equal_initiated_by: bool,
+  pub merkle_challenges: Vec<MerkleChallenge>,
+  pub predetermined_balances: PredeterminedBalances,
+  pub approval_amounts: ApprovalAmounts,
+  pub max_num_transfers: MaxNumTransfers,
+  pub coin_transfers: Vec<CoinTransfer>,
+  pub require_from_equals_initiated_by: bool,
+  pub require_from_does_not_equal_initiated_by: bool,
+  pub auto_deletion_options: AutoDeletionOptions,
+  pub must_own_badges: Vec<MustOwnBadges>,
 }
 
 
@@ -654,6 +671,7 @@ pub struct MerkleChallenge {
     pub uri: String,
     pub custom_data: String,
     pub challenge_tracker_id: String,
+    pub leaf_signer: String,
 }
 
 
@@ -825,19 +843,79 @@ pub struct UserBalanceStore {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct BadgeCollection {
-  collection_id: String,
-  collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-  balances_type: String,
-  off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
-  custom_data_timeline: Vec<CustomDataTimeline>,
-  manager_timeline: Vec<ManagerTimeline>,
-  collection_permissions: CollectionPermissions,
-  collection_approvals: Vec<CollectionApproval>,
-  standards_timeline: Vec<StandardsTimeline>,
-  is_archived_timeline: Vec<IsArchivedTimeline>,
-  default_balances: UserBalanceStore,
-  created_by: String,
-  alias_address: String,
-  valid_badge_ids: Vec<UintRange>,
+  pub collection_id: String,
+  pub collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
+  pub badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+  pub balances_type: String,
+  pub off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
+  pub custom_data_timeline: Vec<CustomDataTimeline>,
+  pub manager_timeline: Vec<ManagerTimeline>,
+  pub collection_permissions: CollectionPermissions,
+  pub collection_approvals: Vec<CollectionApproval>,
+  pub standards_timeline: Vec<StandardsTimeline>,
+  pub is_archived_timeline: Vec<IsArchivedTimeline>,
+  pub default_balances: UserBalanceStore,
+  pub created_by: String,
+  pub valid_badge_ids: Vec<UintRange>,
+  pub mint_escrow_address: String,
+  pub cosmos_coin_wrapper_paths: Vec<CosmosCoinWrapperPath>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct CosmosCoinWrapperPath {
+  pub address: String,
+  pub denom: String,
+  pub balances: Vec<Balance>,
+  pub symbol: String,
+  pub denom_units: Vec<DenomUnit>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct DenomUnit {
+  pub decimals: String,
+  pub symbol: String,
+  pub is_default_display: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct AutoDeletionOptions {
+  pub after_one_use: bool,
+  pub after_overall_max_num_transfers: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct UserRoyalties {
+  pub percentage: String,
+  pub payout_address: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct MustOwnBadges {
+  pub collection_id: String,
+  pub amount_range: UintRange,
+  pub ownership_times: Vec<UintRange>,
+  pub badge_ids: Vec<UintRange>,
+  pub override_with_current_time: bool,
+  pub must_satisfy_for_all_assets: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct CosmosCoinWrapperPathAddObject {
+  pub denom: String,
+  pub balances: Vec<Balance>,
+  pub symbol: String,
+  pub denom_units: Vec<DenomUnit>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct Params {
+  // Add fields as needed based on the proto definition
+  // This is a placeholder - you'll need to add the actual fields from the params.proto file
 }
