@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use cosmwasm_std::CustomQuery;
 
-use crate::{AddressList, ApprovalTracker, BadgeCollection,  UserBalanceStore};
+use crate::{AddressList, ApprovalTracker, BadgeCollection, UserBalanceStore, DynamicStore, DynamicStoreValue};
 
 // implement custom query
 impl CustomQuery for BitBadgesQuery {}
@@ -46,6 +46,16 @@ pub enum BitBadgesQuery {
       leaf_index: String,
     },
 
+    #[serde(rename_all = "camelCase")]
+    QueryDynamicStore {
+      store_id: String,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    QueryDynamicStoreValue {
+      store_id: String,
+      address: String,
+    },
 }
 
 
@@ -81,6 +91,16 @@ pub struct QueryGetApprovalTrackerResponse {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct QueryChallengeTrackerResponse {
     pub num_used: String, //Uint
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryGetDynamicStoreResponse {
+    pub store: DynamicStore,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryGetDynamicStoreValueResponse {
+    pub value: DynamicStoreValue,
 }
 
 

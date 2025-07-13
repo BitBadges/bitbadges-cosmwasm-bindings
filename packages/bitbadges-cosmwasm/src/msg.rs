@@ -124,6 +124,33 @@ pub enum BitBadgesMsg {
     auto_approve_all_incoming_transfers: bool,
     update_user_permissions: bool,
     user_permissions: UserPermissions,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  CreateDynamicStoreMsg {
+    creator: String,
+    default_value: bool,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  UpdateDynamicStoreMsg {
+    creator: String,
+    store_id: String,
+    default_value: bool,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  DeleteDynamicStoreMsg {
+    creator: String,
+    store_id: String,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetDynamicStoreValueMsg {
+    creator: String,
+    store_id: String,
+    address: String,
+    value: bool,
   }
 }
 
@@ -326,6 +353,56 @@ pub fn update_user_approvals_msg(
     auto_approve_all_incoming_transfers,
     update_user_permissions,
     user_permissions,
+  }
+  .into()
+}
+
+pub fn create_dynamic_store_msg(
+  creator: String,
+  default_value: bool,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::CreateDynamicStoreMsg {
+    creator,
+    default_value,
+  }
+  .into()
+}
+
+pub fn update_dynamic_store_msg(
+  creator: String,
+  store_id: String,
+  default_value: bool,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::UpdateDynamicStoreMsg {
+    creator,
+    store_id,
+    default_value,
+  }
+  .into()
+}
+
+pub fn delete_dynamic_store_msg(
+  creator: String,
+  store_id: String,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::DeleteDynamicStoreMsg {
+    creator,
+    store_id,
+  }
+  .into()
+}
+
+pub fn set_dynamic_store_value_msg(
+  creator: String,
+  store_id: String,
+  address: String,
+  value: bool,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetDynamicStoreValueMsg {
+    creator,
+    store_id,
+    address,
+    value,
   }
   .into()
 }
@@ -911,6 +988,22 @@ pub struct CosmosCoinWrapperPathAddObject {
   pub balances: Vec<Balance>,
   pub symbol: String,
   pub denom_units: Vec<DenomUnit>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct DynamicStore {
+  pub store_id: String,
+  pub created_by: String,
+  pub default_value: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct DynamicStoreValue {
+  pub store_id: String,
+  pub address: String,
+  pub value: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
