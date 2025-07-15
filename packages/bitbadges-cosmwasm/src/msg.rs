@@ -189,6 +189,70 @@ pub enum BitBadgesMsg {
     approver_address: String,
     purge_counterparty_approvals: bool,
     approvals_to_purge: Vec<ApprovalIdentifierDetails>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetValidBadgeIdsMsg {
+    creator: String,
+    collection_id: String,
+    valid_badge_ids: Vec<UintRange>,
+    can_update_valid_badge_ids: Vec<BadgeIdsActionPermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetManagerMsg {
+    creator: String,
+    collection_id: String,
+    manager_timeline: Vec<ManagerTimeline>,
+    can_update_manager: Vec<TimedUpdatePermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetCollectionMetadataMsg {
+    creator: String,
+    collection_id: String,
+    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
+    can_update_collection_metadata: Vec<TimedUpdatePermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetBadgeMetadataMsg {
+    creator: String,
+    collection_id: String,
+    badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+    can_update_badge_metadata: Vec<TimedUpdateWithBadgeIdsPermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetCustomDataMsg {
+    creator: String,
+    collection_id: String,
+    custom_data_timeline: Vec<CustomDataTimeline>,
+    can_update_custom_data: Vec<TimedUpdatePermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetStandardsMsg {
+    creator: String,
+    collection_id: String,
+    standards_timeline: Vec<StandardsTimeline>,
+    can_update_standards: Vec<TimedUpdatePermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetCollectionApprovalsMsg {
+    creator: String,
+    collection_id: String,
+    collection_approvals: Vec<CollectionApproval>,
+    can_update_collection_approvals: Vec<CollectionApprovalPermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetIsArchivedMsg {
+    creator: String,
+    collection_id: String,
+    is_archived_timeline: Vec<IsArchivedTimeline>,
+    can_archive_collection: Vec<TimedUpdatePermission>,
   }
 }
 
@@ -512,6 +576,126 @@ pub fn purge_approvals_msg(
     approver_address,
     purge_counterparty_approvals,
     approvals_to_purge,
+  }
+  .into()
+}
+
+pub fn set_valid_badge_ids_msg(
+  creator: String,
+  collection_id: String,
+  valid_badge_ids: Vec<UintRange>,
+  can_update_valid_badge_ids: Vec<BadgeIdsActionPermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetValidBadgeIdsMsg {
+    creator,
+    collection_id,
+    valid_badge_ids,
+    can_update_valid_badge_ids,
+  }
+  .into()
+}
+
+pub fn set_manager_msg(
+  creator: String,
+  collection_id: String,
+  manager_timeline: Vec<ManagerTimeline>,
+  can_update_manager: Vec<TimedUpdatePermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetManagerMsg {
+    creator,
+    collection_id,
+    manager_timeline,
+    can_update_manager,
+  }
+  .into()
+}
+
+pub fn set_collection_metadata_msg(
+  creator: String,
+  collection_id: String,
+  collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
+  can_update_collection_metadata: Vec<TimedUpdatePermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetCollectionMetadataMsg {
+    creator,
+    collection_id,
+    collection_metadata_timeline,
+    can_update_collection_metadata,
+  }
+  .into()
+}
+
+pub fn set_badge_metadata_msg(
+  creator: String,
+  collection_id: String,
+  badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+  can_update_badge_metadata: Vec<TimedUpdateWithBadgeIdsPermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetBadgeMetadataMsg {
+    creator,
+    collection_id,
+    badge_metadata_timeline,
+    can_update_badge_metadata,
+  }
+  .into()
+}
+
+pub fn set_custom_data_msg(
+  creator: String,
+  collection_id: String,
+  custom_data_timeline: Vec<CustomDataTimeline>,
+  can_update_custom_data: Vec<TimedUpdatePermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetCustomDataMsg {
+    creator,
+    collection_id,
+    custom_data_timeline,
+    can_update_custom_data,
+  }
+  .into()
+}
+
+pub fn set_standards_msg(
+  creator: String,
+  collection_id: String,
+  standards_timeline: Vec<StandardsTimeline>,
+  can_update_standards: Vec<TimedUpdatePermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetStandardsMsg {
+    creator,
+    collection_id,
+    standards_timeline,
+    can_update_standards,
+  }
+  .into()
+}
+
+pub fn set_collection_approvals_msg(
+  creator: String,
+  collection_id: String,
+  collection_approvals: Vec<CollectionApproval>,
+  can_update_collection_approvals: Vec<CollectionApprovalPermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetCollectionApprovalsMsg {
+    creator,
+    collection_id,
+    collection_approvals,
+    can_update_collection_approvals,
+  }
+  .into()
+}
+
+pub fn set_is_archived_msg(
+  creator: String,
+  collection_id: String,
+  is_archived_timeline: Vec<IsArchivedTimeline>,
+  can_archive_collection: Vec<TimedUpdatePermission>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetIsArchivedMsg {
+    creator,
+    collection_id,
+    is_archived_timeline,
+    can_archive_collection,
   }
   .into()
 }

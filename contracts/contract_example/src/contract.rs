@@ -4,7 +4,9 @@ use bitbadges_cosmwasm::{
   OffChainBalancesMetadataTimeline, CustomDataTimeline, CollectionApproval, StandardsTimeline, IsArchivedTimeline,
   create_collection_msg, update_collection_msg, universal_update_collection_msg, UserBalanceStore,
   UintRange, update_user_approvals_msg, UserOutgoingApproval, UserIncomingApproval, UserPermissions,
-  CosmosCoin, CosmosCoinWrapperPathAddObject,
+  CosmosCoin, CosmosCoinWrapperPathAddObject, set_valid_badge_ids_msg, set_manager_msg, 
+  set_collection_metadata_msg, set_badge_metadata_msg, set_custom_data_msg, set_standards_msg,
+  set_collection_approvals_msg, set_is_archived_msg,
 };
 
 use cosmwasm_std::{
@@ -77,6 +79,30 @@ pub fn execute(
         }
         ExecuteMsg::UpdateUserApprovalsMsg { collection_id, update_outgoing_approvals, outgoing_approvals, update_incoming_approvals, incoming_approvals, update_auto_approve_self_initiated_outgoing_transfers, auto_approve_self_initiated_outgoing_transfers, update_auto_approve_self_initiated_incoming_transfers, auto_approve_self_initiated_incoming_transfers, update_auto_approve_all_incoming_transfers, auto_approve_all_incoming_transfers, update_user_permissions, user_permissions } => {
           execute_msg_update_user_approvals(collection_id, update_outgoing_approvals, outgoing_approvals, update_incoming_approvals, incoming_approvals, update_auto_approve_self_initiated_outgoing_transfers, auto_approve_self_initiated_outgoing_transfers, update_auto_approve_self_initiated_incoming_transfers, auto_approve_self_initiated_incoming_transfers, update_auto_approve_all_incoming_transfers, auto_approve_all_incoming_transfers, update_user_permissions, user_permissions)
+        }
+        ExecuteMsg::SetValidBadgeIdsMsg { collection_id, valid_badge_ids, can_update_valid_badge_ids } => {
+          execute_msg_set_valid_badge_ids(collection_id, valid_badge_ids, can_update_valid_badge_ids)
+        }
+        ExecuteMsg::SetManagerMsg { collection_id, manager_timeline, can_update_manager } => {
+          execute_msg_set_manager(collection_id, manager_timeline, can_update_manager)
+        }
+        ExecuteMsg::SetCollectionMetadataMsg { collection_id, collection_metadata_timeline, can_update_collection_metadata } => {
+          execute_msg_set_collection_metadata(collection_id, collection_metadata_timeline, can_update_collection_metadata)
+        }
+        ExecuteMsg::SetBadgeMetadataMsg { collection_id, badge_metadata_timeline, can_update_badge_metadata } => {
+          execute_msg_set_badge_metadata(collection_id, badge_metadata_timeline, can_update_badge_metadata)
+        }
+        ExecuteMsg::SetCustomDataMsg { collection_id, custom_data_timeline, can_update_custom_data } => {
+          execute_msg_set_custom_data(collection_id, custom_data_timeline, can_update_custom_data)
+        }
+        ExecuteMsg::SetStandardsMsg { collection_id, standards_timeline, can_update_standards } => {
+          execute_msg_set_standards(collection_id, standards_timeline, can_update_standards)
+        }
+        ExecuteMsg::SetCollectionApprovalsMsg { collection_id, collection_approvals, can_update_collection_approvals } => {
+          execute_msg_set_collection_approvals(collection_id, collection_approvals, can_update_collection_approvals)
+        }
+        ExecuteMsg::SetIsArchivedMsg { collection_id, is_archived_timeline, can_archive_collection } => {
+          execute_msg_set_is_archived(collection_id, is_archived_timeline, can_archive_collection)
         }
     }
 }
@@ -280,5 +306,116 @@ pub fn execute_msg_update_user_approvals(
         user_permissions,
     );
     Ok(Response::new().add_message(msg))
+}
 
+pub fn execute_msg_set_valid_badge_ids(
+    collection_id: String,
+    valid_badge_ids: Vec<UintRange>,
+    can_update_valid_badge_ids: Vec<bitbadges_cosmwasm::BadgeIdsActionPermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_valid_badge_ids_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        valid_badge_ids,
+        can_update_valid_badge_ids,
+    );
+    Ok(Response::new().add_message(msg))
+}
+
+pub fn execute_msg_set_manager(
+    collection_id: String,
+    manager_timeline: Vec<ManagerTimeline>,
+    can_update_manager: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_manager_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        manager_timeline,
+        can_update_manager,
+    );
+    Ok(Response::new().add_message(msg))
+}
+
+pub fn execute_msg_set_collection_metadata(
+    collection_id: String,
+    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
+    can_update_collection_metadata: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_collection_metadata_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        collection_metadata_timeline,
+        can_update_collection_metadata,
+    );
+    Ok(Response::new().add_message(msg))
+}
+
+pub fn execute_msg_set_badge_metadata(
+    collection_id: String,
+    badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+    can_update_badge_metadata: Vec<bitbadges_cosmwasm::TimedUpdateWithBadgeIdsPermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_badge_metadata_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        badge_metadata_timeline,
+        can_update_badge_metadata,
+    );
+    Ok(Response::new().add_message(msg))
+}
+
+pub fn execute_msg_set_custom_data(
+    collection_id: String,
+    custom_data_timeline: Vec<CustomDataTimeline>,
+    can_update_custom_data: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_custom_data_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        custom_data_timeline,
+        can_update_custom_data,
+    );
+    Ok(Response::new().add_message(msg))
+}
+
+pub fn execute_msg_set_standards(
+    collection_id: String,
+    standards_timeline: Vec<StandardsTimeline>,
+    can_update_standards: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_standards_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        standards_timeline,
+        can_update_standards,
+    );
+    Ok(Response::new().add_message(msg))
+}
+
+pub fn execute_msg_set_collection_approvals(
+    collection_id: String,
+    collection_approvals: Vec<CollectionApproval>,
+    can_update_collection_approvals: Vec<bitbadges_cosmwasm::CollectionApprovalPermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_collection_approvals_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        collection_approvals,
+        can_update_collection_approvals,
+    );
+    Ok(Response::new().add_message(msg))
+}
+
+pub fn execute_msg_set_is_archived(
+    collection_id: String,
+    is_archived_timeline: Vec<IsArchivedTimeline>,
+    can_archive_collection: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+) -> StdResult<Response<BitBadgesMsg>> {
+    let msg = set_is_archived_msg(
+        "".to_string(), // creator - will be set by the contract
+        collection_id,
+        is_archived_timeline,
+        can_archive_collection,
+    );
+    Ok(Response::new().add_message(msg))
 }

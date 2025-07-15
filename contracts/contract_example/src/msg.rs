@@ -4,7 +4,8 @@ use bitbadges_cosmwasm::{
   BadgeMetadataTimeline,   OffChainBalancesMetadataTimeline, CustomDataTimeline,
   CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, 
   UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions, 
-  CosmosCoin, CosmosCoinWrapperPathAddObject
+  CosmosCoin, CosmosCoinWrapperPathAddObject, BadgeIdsActionPermission, 
+  TimedUpdatePermission, TimedUpdateWithBadgeIdsPermission, CollectionApprovalPermission
 };
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -137,6 +138,62 @@ pub enum ExecuteMsg {
       auto_approve_all_incoming_transfers: bool,
       update_user_permissions: bool,
       user_permissions: UserPermissions,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetValidBadgeIdsMsg {
+      collection_id: String,
+      valid_badge_ids: Vec<UintRange>,
+      can_update_valid_badge_ids: Vec<BadgeIdsActionPermission>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetManagerMsg {
+      collection_id: String,
+      manager_timeline: Vec<ManagerTimeline>,
+      can_update_manager: Vec<TimedUpdatePermission>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetCollectionMetadataMsg {
+      collection_id: String,
+      collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
+      can_update_collection_metadata: Vec<TimedUpdatePermission>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetBadgeMetadataMsg {
+      collection_id: String,
+      badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+      can_update_badge_metadata: Vec<TimedUpdateWithBadgeIdsPermission>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetCustomDataMsg {
+      collection_id: String,
+      custom_data_timeline: Vec<CustomDataTimeline>,
+      can_update_custom_data: Vec<TimedUpdatePermission>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetStandardsMsg {
+      collection_id: String,
+      standards_timeline: Vec<StandardsTimeline>,
+      can_update_standards: Vec<TimedUpdatePermission>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetCollectionApprovalsMsg {
+      collection_id: String,
+      collection_approvals: Vec<CollectionApproval>,
+      can_update_collection_approvals: Vec<CollectionApprovalPermission>,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    SetIsArchivedMsg {
+      collection_id: String,
+      is_archived_timeline: Vec<IsArchivedTimeline>,
+      can_archive_collection: Vec<TimedUpdatePermission>,
     },
 
     // Add other messages here as needed

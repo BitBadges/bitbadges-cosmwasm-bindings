@@ -803,6 +803,310 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setValidBadgeIdsMsg"
+      ],
+      "properties": {
+        "setValidBadgeIdsMsg": {
+          "type": "object",
+          "required": [
+            "canUpdateValidBadgeIds",
+            "collectionId",
+            "creator",
+            "validBadgeIds"
+          ],
+          "properties": {
+            "canUpdateValidBadgeIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BadgeIdsActionPermission"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "validBadgeIds": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UintRange"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setManagerMsg"
+      ],
+      "properties": {
+        "setManagerMsg": {
+          "type": "object",
+          "required": [
+            "canUpdateManager",
+            "collectionId",
+            "creator",
+            "managerTimeline"
+          ],
+          "properties": {
+            "canUpdateManager": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TimedUpdatePermission"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "managerTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ManagerTimeline"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setCollectionMetadataMsg"
+      ],
+      "properties": {
+        "setCollectionMetadataMsg": {
+          "type": "object",
+          "required": [
+            "canUpdateCollectionMetadata",
+            "collectionId",
+            "collectionMetadataTimeline",
+            "creator"
+          ],
+          "properties": {
+            "canUpdateCollectionMetadata": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TimedUpdatePermission"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "collectionMetadataTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CollectionMetadataTimeline"
+              }
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setBadgeMetadataMsg"
+      ],
+      "properties": {
+        "setBadgeMetadataMsg": {
+          "type": "object",
+          "required": [
+            "badgeMetadataTimeline",
+            "canUpdateBadgeMetadata",
+            "collectionId",
+            "creator"
+          ],
+          "properties": {
+            "badgeMetadataTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/BadgeMetadataTimeline"
+              }
+            },
+            "canUpdateBadgeMetadata": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TimedUpdateWithBadgeIdsPermission"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setCustomDataMsg"
+      ],
+      "properties": {
+        "setCustomDataMsg": {
+          "type": "object",
+          "required": [
+            "canUpdateCustomData",
+            "collectionId",
+            "creator",
+            "customDataTimeline"
+          ],
+          "properties": {
+            "canUpdateCustomData": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TimedUpdatePermission"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "customDataTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CustomDataTimeline"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setStandardsMsg"
+      ],
+      "properties": {
+        "setStandardsMsg": {
+          "type": "object",
+          "required": [
+            "canUpdateStandards",
+            "collectionId",
+            "creator",
+            "standardsTimeline"
+          ],
+          "properties": {
+            "canUpdateStandards": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TimedUpdatePermission"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "standardsTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StandardsTimeline"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setCollectionApprovalsMsg"
+      ],
+      "properties": {
+        "setCollectionApprovalsMsg": {
+          "type": "object",
+          "required": [
+            "canUpdateCollectionApprovals",
+            "collectionApprovals",
+            "collectionId",
+            "creator"
+          ],
+          "properties": {
+            "canUpdateCollectionApprovals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CollectionApprovalPermission"
+              }
+            },
+            "collectionApprovals": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CollectionApproval"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setIsArchivedMsg"
+      ],
+      "properties": {
+        "setIsArchivedMsg": {
+          "type": "object",
+          "required": [
+            "canArchiveCollection",
+            "collectionId",
+            "creator",
+            "isArchivedTimeline"
+          ],
+          "properties": {
+            "canArchiveCollection": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TimedUpdatePermission"
+              }
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "isArchivedTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/IsArchivedTimeline"
+              }
+            }
+          }
+        }
+      },
+      "additionalProperties": false
     }
   ],
   "definitions": {
