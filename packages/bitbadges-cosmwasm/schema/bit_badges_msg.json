@@ -540,6 +540,269 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "createDynamicStoreMsg"
+      ],
+      "properties": {
+        "createDynamicStoreMsg": {
+          "type": "object",
+          "required": [
+            "creator",
+            "defaultValue"
+          ],
+          "properties": {
+            "creator": {
+              "type": "string"
+            },
+            "defaultValue": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "updateDynamicStoreMsg"
+      ],
+      "properties": {
+        "updateDynamicStoreMsg": {
+          "type": "object",
+          "required": [
+            "creator",
+            "defaultValue",
+            "storeId"
+          ],
+          "properties": {
+            "creator": {
+              "type": "string"
+            },
+            "defaultValue": {
+              "type": "boolean"
+            },
+            "storeId": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "deleteDynamicStoreMsg"
+      ],
+      "properties": {
+        "deleteDynamicStoreMsg": {
+          "type": "object",
+          "required": [
+            "creator",
+            "storeId"
+          ],
+          "properties": {
+            "creator": {
+              "type": "string"
+            },
+            "storeId": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setDynamicStoreValueMsg"
+      ],
+      "properties": {
+        "setDynamicStoreValueMsg": {
+          "type": "object",
+          "required": [
+            "address",
+            "creator",
+            "storeId",
+            "value"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "storeId": {
+              "type": "string"
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setIncomingApprovalMsg"
+      ],
+      "properties": {
+        "setIncomingApprovalMsg": {
+          "type": "object",
+          "required": [
+            "approval",
+            "collectionId",
+            "creator"
+          ],
+          "properties": {
+            "approval": {
+              "$ref": "#/definitions/UserIncomingApproval"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "deleteIncomingApprovalMsg"
+      ],
+      "properties": {
+        "deleteIncomingApprovalMsg": {
+          "type": "object",
+          "required": [
+            "approvalId",
+            "collectionId",
+            "creator"
+          ],
+          "properties": {
+            "approvalId": {
+              "type": "string"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setOutgoingApprovalMsg"
+      ],
+      "properties": {
+        "setOutgoingApprovalMsg": {
+          "type": "object",
+          "required": [
+            "approval",
+            "collectionId",
+            "creator"
+          ],
+          "properties": {
+            "approval": {
+              "$ref": "#/definitions/UserOutgoingApproval"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "deleteOutgoingApprovalMsg"
+      ],
+      "properties": {
+        "deleteOutgoingApprovalMsg": {
+          "type": "object",
+          "required": [
+            "approvalId",
+            "collectionId",
+            "creator"
+          ],
+          "properties": {
+            "approvalId": {
+              "type": "string"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "purgeApprovalsMsg"
+      ],
+      "properties": {
+        "purgeApprovalsMsg": {
+          "type": "object",
+          "required": [
+            "approvalsToPurge",
+            "approverAddress",
+            "collectionId",
+            "creator",
+            "purgeCounterpartyApprovals",
+            "purgeExpired"
+          ],
+          "properties": {
+            "approvalsToPurge": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApprovalIdentifierDetails"
+              }
+            },
+            "approverAddress": {
+              "type": "string"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "purgeCounterpartyApprovals": {
+              "type": "boolean"
+            },
+            "purgeExpired": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
     }
   ],
   "definitions": {
@@ -736,13 +999,21 @@
       "type": "object",
       "required": [
         "afterOneUse",
-        "afterOverallMaxNumTransfers"
+        "afterOverallMaxNumTransfers",
+        "allowCounterpartyPurge",
+        "allowPurgeIfExpired"
       ],
       "properties": {
         "afterOneUse": {
           "type": "boolean"
         },
         "afterOverallMaxNumTransfers": {
+          "type": "boolean"
+        },
+        "allowCounterpartyPurge": {
+          "type": "boolean"
+        },
+        "allowPurgeIfExpired": {
           "type": "boolean"
         }
       }

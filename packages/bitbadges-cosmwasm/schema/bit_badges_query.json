@@ -150,6 +150,50 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryDynamicStore"
+      ],
+      "properties": {
+        "queryDynamicStore": {
+          "type": "object",
+          "required": [
+            "storeId"
+          ],
+          "properties": {
+            "storeId": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryDynamicStoreValue"
+      ],
+      "properties": {
+        "queryDynamicStoreValue": {
+          "type": "object",
+          "required": [
+            "address",
+            "storeId"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "storeId": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
     }
   ]
 }

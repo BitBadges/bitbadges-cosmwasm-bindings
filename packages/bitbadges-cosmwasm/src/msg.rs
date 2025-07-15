@@ -151,6 +151,44 @@ pub enum BitBadgesMsg {
     store_id: String,
     address: String,
     value: bool,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetIncomingApprovalMsg {
+    creator: String,
+    collection_id: String,
+    approval: UserIncomingApproval,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  DeleteIncomingApprovalMsg {
+    creator: String,
+    collection_id: String,
+    approval_id: String,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetOutgoingApprovalMsg {
+    creator: String,
+    collection_id: String,
+    approval: UserOutgoingApproval,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  DeleteOutgoingApprovalMsg {
+    creator: String,
+    collection_id: String,
+    approval_id: String,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  PurgeApprovalsMsg {
+    creator: String,
+    collection_id: String,
+    purge_expired: bool,
+    approver_address: String,
+    purge_counterparty_approvals: bool,
+    approvals_to_purge: Vec<ApprovalIdentifierDetails>,
   }
 }
 
@@ -403,6 +441,77 @@ pub fn set_dynamic_store_value_msg(
     store_id,
     address,
     value,
+  }
+  .into()
+}
+
+pub fn set_incoming_approval_msg(
+  creator: String,
+  collection_id: String,
+  approval: UserIncomingApproval,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetIncomingApprovalMsg {
+    creator,
+    collection_id,
+    approval,
+  }
+  .into()
+}
+
+pub fn delete_incoming_approval_msg(
+  creator: String,
+  collection_id: String,
+  approval_id: String,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::DeleteIncomingApprovalMsg {
+    creator,
+    collection_id,
+    approval_id,
+  }
+  .into()
+}
+
+pub fn set_outgoing_approval_msg(
+  creator: String,
+  collection_id: String,
+  approval: UserOutgoingApproval,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetOutgoingApprovalMsg {
+    creator,
+    collection_id,
+    approval,
+  }
+  .into()
+}
+
+pub fn delete_outgoing_approval_msg(
+  creator: String,
+  collection_id: String,
+  approval_id: String,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::DeleteOutgoingApprovalMsg {
+    creator,
+    collection_id,
+    approval_id,
+  }
+  .into()
+}
+
+pub fn purge_approvals_msg(
+  creator: String,
+  collection_id: String,
+  purge_expired: bool,
+  approver_address: String,
+  purge_counterparty_approvals: bool,
+  approvals_to_purge: Vec<ApprovalIdentifierDetails>,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::PurgeApprovalsMsg {
+    creator,
+    collection_id,
+    purge_expired,
+    approver_address,
+    purge_counterparty_approvals,
+    approvals_to_purge,
   }
   .into()
 }
@@ -961,6 +1070,8 @@ pub struct DenomUnit {
 pub struct AutoDeletionOptions {
   pub after_one_use: bool,
   pub after_overall_max_num_transfers: bool,
+  pub allow_counterparty_purge: bool,
+  pub allow_purge_if_expired: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
