@@ -5,7 +5,8 @@ use bitbadges_cosmwasm::{
   CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, 
   UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions, 
   CosmosCoin, CosmosCoinWrapperPathAddObject, BadgeIdsActionPermission, 
-  TimedUpdatePermission, TimedUpdateWithBadgeIdsPermission, CollectionApprovalPermission
+  TimedUpdatePermission, TimedUpdateWithBadgeIdsPermission, CollectionApprovalPermission,
+  CollectionInvariants
 };
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -65,6 +66,7 @@ pub enum ExecuteMsg {
       is_archived_timeline: Vec<IsArchivedTimeline>,
       mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
       cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+      invariants: CollectionInvariants,
     },
 
     #[serde(rename_all = "camelCase")]
@@ -121,6 +123,7 @@ pub enum ExecuteMsg {
       is_archived_timeline: Vec<IsArchivedTimeline>,
       mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
       cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+      invariants: CollectionInvariants,
     },
 
     #[serde(rename_all = "camelCase")]

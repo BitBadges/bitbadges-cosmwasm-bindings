@@ -50,6 +50,7 @@ pub enum BitBadgesMsg {
     is_archived_timeline: Vec<IsArchivedTimeline>,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    invariants: CollectionInvariants,
   },
 
 
@@ -107,6 +108,7 @@ pub enum BitBadgesMsg {
     is_archived_timeline: Vec<IsArchivedTimeline>,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    invariants: CollectionInvariants,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -129,14 +131,14 @@ pub enum BitBadgesMsg {
   #[serde(rename_all = "camelCase")]
   CreateDynamicStoreMsg {
     creator: String,
-    default_value: bool,
+    default_value: String,
   },
 
   #[serde(rename_all = "camelCase")]
   UpdateDynamicStoreMsg {
     creator: String,
     store_id: String,
-    default_value: bool,
+    default_value: String,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -150,7 +152,24 @@ pub enum BitBadgesMsg {
     creator: String,
     store_id: String,
     address: String,
-    value: bool,
+    value: String,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  IncrementStoreValueMsg {
+    creator: String,
+    store_id: String,
+    address: String,
+    amount: String,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  DecrementStoreValueMsg {
+    creator: String,
+    store_id: String,
+    address: String,
+    amount: String,
+    set_to_zero_on_underflow: bool,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -296,7 +315,8 @@ pub fn create_collection_msg(
   standards_timeline: Vec<StandardsTimeline>,
   is_archived_timeline: Vec<IsArchivedTimeline>,
   mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
-  cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>
+  cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+  invariants: CollectionInvariants
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateCollectionMsg { 
     balances_type,
@@ -313,6 +333,7 @@ pub fn create_collection_msg(
     is_archived_timeline,
     mint_escrow_coins_to_transfer,
     cosmos_coin_wrapper_paths_to_add,
+    invariants,
   }.into()
 }
   
@@ -394,7 +415,8 @@ pub fn universal_update_collection_msg(
   update_is_archived_timeline: bool,
   is_archived_timeline: Vec<IsArchivedTimeline>,
   mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
-  cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>
+  cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+  invariants: CollectionInvariants
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UniversalUpdateCollectionMsg {
     collection_id,
@@ -421,7 +443,8 @@ pub fn universal_update_collection_msg(
       update_is_archived_timeline,
       is_archived_timeline,
       mint_escrow_coins_to_transfer,
-      cosmos_coin_wrapper_paths_to_add
+      cosmos_coin_wrapper_paths_to_add,
+      invariants,
   }
   .into()
 }
@@ -461,7 +484,7 @@ pub fn update_user_approvals_msg(
 
 pub fn create_dynamic_store_msg(
   creator: String,
-  default_value: bool,
+  default_value: String,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateDynamicStoreMsg {
     creator,
@@ -473,7 +496,7 @@ pub fn create_dynamic_store_msg(
 pub fn update_dynamic_store_msg(
   creator: String,
   store_id: String,
-  default_value: bool,
+  default_value: String,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateDynamicStoreMsg {
     creator,
@@ -498,13 +521,45 @@ pub fn set_dynamic_store_value_msg(
   creator: String,
   store_id: String,
   address: String,
-  value: bool,
+  value: String,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetDynamicStoreValueMsg {
     creator,
     store_id,
     address,
     value,
+  }
+  .into()
+}
+
+pub fn increment_store_value_msg(
+  creator: String,
+  store_id: String,
+  address: String,
+  amount: String,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::IncrementStoreValueMsg {
+    creator,
+    store_id,
+    address,
+    amount,
+  }
+  .into()
+}
+
+pub fn decrement_store_value_msg(
+  creator: String,
+  store_id: String,
+  address: String,
+  amount: String,
+  set_to_zero_on_underflow: bool,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::DecrementStoreValueMsg {
+    creator,
+    store_id,
+    address,
+    amount,
+    set_to_zero_on_underflow,
   }
   .into()
 }
@@ -724,6 +779,7 @@ pub struct Transfer {
     pub balances: Vec<Balance>,
     pub precalculate_balances_from_approval: Option<ApprovalIdentifierDetails>,
     pub merkle_proofs: Vec<MerkleProof>,
+    pub eth_signature_proofs: Vec<ETHSignatureProof>,
     pub memo: String,
     pub prioritized_approvals: Vec<ApprovalIdentifierDetails>,
     pub only_check_prioritized_collection_approvals: bool,
@@ -784,6 +840,13 @@ pub struct MerkleProof {
 pub struct MerklePathItem {
     pub aunt: String,
     pub on_right: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct ETHSignatureProof {
+    pub nonce: String,
+    pub signature: String,
 }
 
 
@@ -998,6 +1061,8 @@ pub struct ApprovalCriteria {
   pub auto_deletion_options: AutoDeletionOptions,
   pub user_royalties: UserRoyalties,
   pub must_own_badges: Vec<MustOwnBadges>,
+  pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
+  pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
 }
 
 
@@ -1013,6 +1078,8 @@ pub struct OutgoingApprovalCriteria {
   pub require_to_does_not_equal_initiated_by: bool,
   pub auto_deletion_options: AutoDeletionOptions,
   pub must_own_badges: Vec<MustOwnBadges>,
+  pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
+  pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
 }
 
 
@@ -1028,6 +1095,8 @@ pub struct IncomingApprovalCriteria {
   pub require_from_does_not_equal_initiated_by: bool,
   pub auto_deletion_options: AutoDeletionOptions,
   pub must_own_badges: Vec<MustOwnBadges>,
+  pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
+  pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
 }
 
 
@@ -1229,6 +1298,7 @@ pub struct BadgeCollection {
   pub valid_badge_ids: Vec<UintRange>,
   pub mint_escrow_address: String,
   pub cosmos_coin_wrapper_paths: Vec<CosmosCoinWrapperPath>,
+  pub invariants: CollectionInvariants,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1278,6 +1348,21 @@ pub struct MustOwnBadges {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
+pub struct DynamicStoreChallenge {
+  pub store_id: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct ETHSignatureChallenge {
+  pub signer: String,
+  pub challenge_tracker_id: String,
+  pub uri: String,
+  pub custom_data: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct CosmosCoinWrapperPathAddObject {
   pub denom: String,
   pub balances: Vec<Balance>,
@@ -1287,10 +1372,16 @@ pub struct CosmosCoinWrapperPathAddObject {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
+pub struct CollectionInvariants {
+  pub no_custom_ownership_times: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct DynamicStore {
   pub store_id: String,
   pub created_by: String,
-  pub default_value: bool,
+  pub default_value: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1298,7 +1389,7 @@ pub struct DynamicStore {
 pub struct DynamicStoreValue {
   pub store_id: String,
   pub address: String,
-  pub value: bool,
+  pub value: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

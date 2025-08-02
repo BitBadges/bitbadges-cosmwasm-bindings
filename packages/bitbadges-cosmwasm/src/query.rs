@@ -56,6 +56,16 @@ pub enum BitBadgesQuery {
       store_id: String,
       address: String,
     },
+
+    #[serde(rename_all = "camelCase")]
+    QueryGetETHSignatureTracker {
+      collection_id: String,
+      approval_level: String,
+      approver_address: String,
+      approval_id: String,
+      challenge_tracker_id: String,
+      signature: String,
+    },
 }
 
 
@@ -101,6 +111,11 @@ pub struct QueryGetDynamicStoreResponse {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct QueryGetDynamicStoreValueResponse {
     pub value: DynamicStoreValue,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryGetETHSignatureTrackerResponse {
+    pub num_used: String, //Uint
 }
 
 
