@@ -11,6 +11,15 @@ Add the crate to your smart contract's `Cargo.toml`:
 bitbadges-cosmwasm = { version = "X.X.X" }
 ```
 
+## Version Compatibility
+
+| Blockchain Version | Bindings Version                         | Repository Reference                                                                                                  |
+| ------------------ | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| v12                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v12 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
+| v13                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
+
+**Note:** The v12/v13 refer to our blockchain's versions. Make sure to use the appropriate bindings version for your target blockchain version.
+
 ## Features
 
 Currently, this crate exports bindings for the x/badges module. Additional custom bindings will be added in the future.

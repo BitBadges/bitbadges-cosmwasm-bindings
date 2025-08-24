@@ -194,6 +194,46 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryGetETHSignatureTracker"
+      ],
+      "properties": {
+        "queryGetETHSignatureTracker": {
+          "type": "object",
+          "required": [
+            "approvalId",
+            "approvalLevel",
+            "approverAddress",
+            "challengeTrackerId",
+            "collectionId",
+            "signature"
+          ],
+          "properties": {
+            "approvalId": {
+              "type": "string"
+            },
+            "approvalLevel": {
+              "type": "string"
+            },
+            "approverAddress": {
+              "type": "string"
+            },
+            "challengeTrackerId": {
+              "type": "string"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "signature": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
     }
   ]
 }

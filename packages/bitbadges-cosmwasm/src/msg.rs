@@ -1344,6 +1344,7 @@ pub struct MustOwnBadges {
   pub badge_ids: Vec<UintRange>,
   pub override_with_current_time: bool,
   pub must_satisfy_for_all_assets: bool,
+  pub ownership_check_party: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
