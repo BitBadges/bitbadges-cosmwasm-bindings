@@ -1651,9 +1651,13 @@
     "CollectionInvariants": {
       "type": "object",
       "required": [
+        "maxSupplyPerId",
         "noCustomOwnershipTimes"
       ],
       "properties": {
+        "maxSupplyPerId": {
+          "type": "string"
+        },
         "noCustomOwnershipTimes": {
           "type": "boolean"
         }
@@ -1787,12 +1791,16 @@
     "CosmosCoinWrapperPathAddObject": {
       "type": "object",
       "required": [
+        "allowOverrideWithAnyValidToken",
         "balances",
         "denom",
         "denomUnits",
         "symbol"
       ],
       "properties": {
+        "allowOverrideWithAnyValidToken": {
+          "type": "boolean"
+        },
         "balances": {
           "type": "array",
           "items": {

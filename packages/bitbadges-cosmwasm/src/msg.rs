@@ -1369,12 +1369,14 @@ pub struct CosmosCoinWrapperPathAddObject {
   pub balances: Vec<Balance>,
   pub symbol: String,
   pub denom_units: Vec<DenomUnit>,
+  pub allow_override_with_any_valid_token: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct CollectionInvariants {
   pub no_custom_ownership_times: bool,
+  pub max_supply_per_id: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
