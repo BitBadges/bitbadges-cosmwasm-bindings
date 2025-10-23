@@ -82,7 +82,6 @@
           "type": "object",
           "required": [
             "badgeMetadataTimeline",
-            "balancesType",
             "collectionApprovals",
             "collectionMetadataTimeline",
             "collectionPermissions",
@@ -93,7 +92,6 @@
             "isArchivedTimeline",
             "managerTimeline",
             "mintEscrowCoinsToTransfer",
-            "offChainBalancesMetadataTimeline",
             "standardsTimeline",
             "validBadgeIds"
           ],
@@ -103,9 +101,6 @@
               "items": {
                 "$ref": "#/definitions/BadgeMetadataTimeline"
               }
-            },
-            "balancesType": {
-              "type": "string"
             },
             "collectionApprovals": {
               "type": "array",
@@ -156,12 +151,6 @@
               "type": "array",
               "items": {
                 "$ref": "#/definitions/CosmosCoin"
-              }
-            },
-            "offChainBalancesMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OffChainBalancesMetadataTimeline"
               }
             },
             "standardsTimeline": {
@@ -200,7 +189,6 @@
             "isArchivedTimeline",
             "managerTimeline",
             "mintEscrowCoinsToTransfer",
-            "offChainBalancesMetadataTimeline",
             "standardsTimeline",
             "updateBadgeMetadataTimeline",
             "updateCollectionApprovals",
@@ -209,7 +197,6 @@
             "updateCustomDataTimeline",
             "updateIsArchivedTimeline",
             "updateManagerTimeline",
-            "updateOffChainBalancesMetadataTimeline",
             "updateStandardsTimeline",
             "updateValidBadgeIds",
             "validBadgeIds"
@@ -269,12 +256,6 @@
                 "$ref": "#/definitions/CosmosCoin"
               }
             },
-            "offChainBalancesMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OffChainBalancesMetadataTimeline"
-              }
-            },
             "standardsTimeline": {
               "type": "array",
               "items": {
@@ -300,9 +281,6 @@
               "type": "boolean"
             },
             "updateManagerTimeline": {
-              "type": "boolean"
-            },
-            "updateOffChainBalancesMetadataTimeline": {
               "type": "boolean"
             },
             "updateStandardsTimeline": {
@@ -332,7 +310,6 @@
           "type": "object",
           "required": [
             "badgeMetadataTimeline",
-            "balancesType",
             "collectionApprovals",
             "collectionId",
             "collectionMetadataTimeline",
@@ -344,7 +321,6 @@
             "isArchivedTimeline",
             "managerTimeline",
             "mintEscrowCoinsToTransfer",
-            "offChainBalancesMetadataTimeline",
             "standardsTimeline",
             "updateBadgeMetadataTimeline",
             "updateCollectionApprovals",
@@ -353,7 +329,6 @@
             "updateCustomDataTimeline",
             "updateIsArchivedTimeline",
             "updateManagerTimeline",
-            "updateOffChainBalancesMetadataTimeline",
             "updateStandardsTimeline",
             "updateValidBadgeIds",
             "validBadgeIds"
@@ -364,9 +339,6 @@
               "items": {
                 "$ref": "#/definitions/BadgeMetadataTimeline"
               }
-            },
-            "balancesType": {
-              "type": "string"
             },
             "collectionApprovals": {
               "type": "array",
@@ -422,12 +394,6 @@
                 "$ref": "#/definitions/CosmosCoin"
               }
             },
-            "offChainBalancesMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OffChainBalancesMetadataTimeline"
-              }
-            },
             "standardsTimeline": {
               "type": "array",
               "items": {
@@ -453,9 +419,6 @@
               "type": "boolean"
             },
             "updateManagerTimeline": {
-              "type": "boolean"
-            },
-            "updateOffChainBalancesMetadataTimeline": {
               "type": "boolean"
             },
             "updateStandardsTimeline": {
@@ -1706,7 +1669,6 @@
         "canUpdateCollectionMetadata",
         "canUpdateCustomData",
         "canUpdateManager",
-        "canUpdateOffChainBalancesMetadata",
         "canUpdateStandards",
         "canUpdateValidBadgeIds"
       ],
@@ -1748,12 +1710,6 @@
           }
         },
         "canUpdateManager": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TimedUpdatePermission"
-          }
-        },
-        "canUpdateOffChainBalancesMetadata": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/TimedUpdatePermission"
@@ -2202,39 +2158,6 @@
           "type": "string"
         },
         "ownershipTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
-    "OffChainBalancesMetadata": {
-      "type": "object",
-      "required": [
-        "customData",
-        "uri"
-      ],
-      "properties": {
-        "customData": {
-          "type": "string"
-        },
-        "uri": {
-          "type": "string"
-        }
-      }
-    },
-    "OffChainBalancesMetadataTimeline": {
-      "type": "object",
-      "required": [
-        "offChainBalancesMetadata",
-        "timelineTimes"
-      ],
-      "properties": {
-        "offChainBalancesMetadata": {
-          "$ref": "#/definitions/OffChainBalancesMetadata"
-        },
-        "timelineTimes": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/UintRange"

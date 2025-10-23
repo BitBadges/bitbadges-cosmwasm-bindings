@@ -36,14 +36,12 @@ pub enum BitBadgesMsg {
 
   #[serde(rename_all = "camelCase")]
   CreateCollectionMsg {
-    balances_type: String,
     default_balances: UserBalanceStore,
     valid_badge_ids: Vec<UintRange>,
     collection_permissions: CollectionPermissions,
     manager_timeline: Vec<ManagerTimeline>,
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
     badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-    off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
     custom_data_timeline: Vec<CustomDataTimeline>,
     collection_approvals: Vec<CollectionApproval>,
     standards_timeline: Vec<StandardsTimeline>,
@@ -67,8 +65,6 @@ pub enum BitBadgesMsg {
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
     update_badge_metadata_timeline: bool,
     badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-    update_off_chain_balances_metadata_timeline: bool,
-    off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
     update_custom_data_timeline: bool,
     custom_data_timeline: Vec<CustomDataTimeline>,
     update_collection_approvals: bool,
@@ -84,7 +80,6 @@ pub enum BitBadgesMsg {
   #[serde(rename_all = "camelCase")]
   UniversalUpdateCollectionMsg {
     collection_id: String,
-    balances_type: String,
     default_balances: UserBalanceStore,
     update_valid_badge_ids: bool,
     valid_badge_ids: Vec<UintRange>,
@@ -96,8 +91,6 @@ pub enum BitBadgesMsg {
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
     update_badge_metadata_timeline: bool,
     badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-    update_off_chain_balances_metadata_timeline: bool,
-    off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
     update_custom_data_timeline: bool,
     custom_data_timeline: Vec<CustomDataTimeline>,
     update_collection_approvals: bool,
@@ -302,14 +295,12 @@ pub fn transfer_badges_msg(
 }
 
 pub fn create_collection_msg(
-  balances_type: String,
   default_balances: UserBalanceStore,
   valid_badge_ids: Vec<UintRange>,
   collection_permissions: CollectionPermissions,
   manager_timeline: Vec<ManagerTimeline>,
   collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
   badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-  off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
   custom_data_timeline: Vec<CustomDataTimeline>,
   collection_approvals: Vec<CollectionApproval>,
   standards_timeline: Vec<StandardsTimeline>,
@@ -319,14 +310,12 @@ pub fn create_collection_msg(
   invariants: CollectionInvariants
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateCollectionMsg { 
-    balances_type,
     default_balances: default_balances,
     valid_badge_ids,
     collection_permissions,
     manager_timeline,
     collection_metadata_timeline,
     badge_metadata_timeline,
-    off_chain_balances_metadata_timeline,
     custom_data_timeline,
     collection_approvals,
     standards_timeline,
@@ -349,8 +338,6 @@ pub fn update_collection_msg(
   collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
   update_badge_metadata_timeline: bool,
   badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-  update_off_chain_balances_metadata_timeline: bool,
-  off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
   update_custom_data_timeline: bool,
   custom_data_timeline: Vec<CustomDataTimeline>,
   update_collection_approvals: bool,
@@ -374,8 +361,6 @@ pub fn update_collection_msg(
       collection_metadata_timeline,
       update_badge_metadata_timeline,
       badge_metadata_timeline,
-      update_off_chain_balances_metadata_timeline,
-      off_chain_balances_metadata_timeline,
       update_custom_data_timeline,
       custom_data_timeline,
       update_collection_approvals,
@@ -392,7 +377,6 @@ pub fn update_collection_msg(
 
 pub fn universal_update_collection_msg(
   collection_id: String,
-  balances_type: String,
   default_balances: UserBalanceStore,
   update_valid_badge_ids: bool,
   valid_badge_ids: Vec<UintRange>,
@@ -404,8 +388,6 @@ pub fn universal_update_collection_msg(
   collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
   update_badge_metadata_timeline: bool,
   badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-  update_off_chain_balances_metadata_timeline: bool,
-  off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
   update_custom_data_timeline: bool,
   custom_data_timeline: Vec<CustomDataTimeline>,
   update_collection_approvals: bool,
@@ -420,7 +402,6 @@ pub fn universal_update_collection_msg(
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UniversalUpdateCollectionMsg {
     collection_id,
-    balances_type,
     default_balances: default_balances,
     update_valid_badge_ids,
     valid_badge_ids,
@@ -432,8 +413,6 @@ pub fn universal_update_collection_msg(
       collection_metadata_timeline,
       update_badge_metadata_timeline,
       badge_metadata_timeline,
-      update_off_chain_balances_metadata_timeline,
-      off_chain_balances_metadata_timeline,
       update_custom_data_timeline,
       custom_data_timeline,
       update_collection_approvals,
@@ -868,12 +847,6 @@ pub struct CollectionMetadata {
 }
 
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct OffChainBalancesMetadata {
-    pub uri: String,
-    pub custom_data: String,
-}
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -892,12 +865,6 @@ pub struct BadgeMetadataTimeline {
 }
 
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct OffChainBalancesMetadataTimeline {
-    pub off_chain_balances_metadata: OffChainBalancesMetadata,
-    pub timeline_times: Vec<UintRange>,
-}
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1168,7 +1135,6 @@ pub struct CollectionApproval {
 pub struct CollectionPermissions {
     pub can_delete_collection: Vec<ActionPermission>,
     pub can_archive_collection: Vec<TimedUpdatePermission>,
-    pub can_update_off_chain_balances_metadata: Vec<TimedUpdatePermission>,
     pub can_update_standards: Vec<TimedUpdatePermission>,
     pub can_update_custom_data: Vec<TimedUpdatePermission>,
     pub can_update_manager: Vec<TimedUpdatePermission>,
@@ -1285,8 +1251,6 @@ pub struct BadgeCollection {
   pub collection_id: String,
   pub collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
   pub badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-  pub balances_type: String,
-  pub off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
   pub custom_data_timeline: Vec<CustomDataTimeline>,
   pub manager_timeline: Vec<ManagerTimeline>,
   pub collection_permissions: CollectionPermissions,

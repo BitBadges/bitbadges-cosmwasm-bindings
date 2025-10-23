@@ -1,7 +1,7 @@
 use bitbadges_cosmwasm::{
   delete_collection_msg, BitBadgesMsg, AddressList, address_lists_msg, Transfer, transfer_badges_msg,
   Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, BadgeMetadataTimeline, 
-  OffChainBalancesMetadataTimeline, CustomDataTimeline, CollectionApproval, StandardsTimeline, IsArchivedTimeline,
+  CustomDataTimeline, CollectionApproval, StandardsTimeline, IsArchivedTimeline,
   create_collection_msg, update_collection_msg, universal_update_collection_msg, UserBalanceStore,
   UintRange, update_user_approvals_msg, UserOutgoingApproval, UserIncomingApproval, UserPermissions,
   CosmosCoin, CosmosCoinWrapperPathAddObject, set_valid_badge_ids_msg, set_manager_msg, 
@@ -68,14 +68,14 @@ pub fn execute(
         ExecuteMsg::TransferBadgesMsg { collection_id, transfers } => {
           execute_msg_transfer_badges(collection_id, transfers)
         }
-        ExecuteMsg::CreateCollectionMsg { balances_type, default_balances, valid_badge_ids, collection_permissions, manager_timeline, collection_metadata_timeline, badge_metadata_timeline, off_chain_balances_metadata_timeline, custom_data_timeline, collection_approvals, standards_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants } => {
-          execute_msg_create_collection(balances_type, default_balances, valid_badge_ids, collection_permissions, manager_timeline, collection_metadata_timeline, badge_metadata_timeline, off_chain_balances_metadata_timeline, custom_data_timeline, collection_approvals, standards_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants)
+        ExecuteMsg::CreateCollectionMsg { default_balances, valid_badge_ids, collection_permissions, manager_timeline, collection_metadata_timeline, badge_metadata_timeline, custom_data_timeline, collection_approvals, standards_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants } => {
+          execute_msg_create_collection(default_balances, valid_badge_ids, collection_permissions, manager_timeline, collection_metadata_timeline, badge_metadata_timeline, custom_data_timeline, collection_approvals, standards_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants)
         }   
-        ExecuteMsg::UpdateCollectionMsg { collection_id, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_off_chain_balances_metadata_timeline, off_chain_balances_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add } => {
-          execute_msg_update_collection(collection_id, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_off_chain_balances_metadata_timeline, off_chain_balances_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add)
+        ExecuteMsg::UpdateCollectionMsg { collection_id, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add } => {
+          execute_msg_update_collection(collection_id, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add)
         }
-        ExecuteMsg::UniversalUpdateCollectionMsg { collection_id, balances_type, default_balances, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_off_chain_balances_metadata_timeline, off_chain_balances_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants } => {
-          execute_msg_universal_update_collection(collection_id, balances_type, default_balances, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_off_chain_balances_metadata_timeline, off_chain_balances_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants)
+        ExecuteMsg::UniversalUpdateCollectionMsg { collection_id, default_balances, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants } => {
+          execute_msg_universal_update_collection(collection_id, default_balances, update_valid_badge_ids, valid_badge_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_badge_metadata_timeline, badge_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants)
         }
         ExecuteMsg::UpdateUserApprovalsMsg { collection_id, update_outgoing_approvals, outgoing_approvals, update_incoming_approvals, incoming_approvals, update_auto_approve_self_initiated_outgoing_transfers, auto_approve_self_initiated_outgoing_transfers, update_auto_approve_self_initiated_incoming_transfers, auto_approve_self_initiated_incoming_transfers, update_auto_approve_all_incoming_transfers, auto_approve_all_incoming_transfers, update_user_permissions, user_permissions } => {
           execute_msg_update_user_approvals(collection_id, update_outgoing_approvals, outgoing_approvals, update_incoming_approvals, incoming_approvals, update_auto_approve_self_initiated_outgoing_transfers, auto_approve_self_initiated_outgoing_transfers, update_auto_approve_self_initiated_incoming_transfers, auto_approve_self_initiated_incoming_transfers, update_auto_approve_all_incoming_transfers, auto_approve_all_incoming_transfers, update_user_permissions, user_permissions)
@@ -131,14 +131,12 @@ pub fn execute_msg_transfer_badges(
 }
 
 pub fn execute_msg_create_collection(
-    balances_type: String,
     default_balanes: UserBalanceStore,
     valid_badge_ids: Vec<UintRange>,
     collection_permissions: CollectionPermissions,
     manager_timeline: Vec<ManagerTimeline>,
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
     badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-    off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
     custom_data_timeline: Vec<CustomDataTimeline>,
     collection_approvals: Vec<CollectionApproval>,
     standards_timeline: Vec<StandardsTimeline>,
@@ -148,14 +146,12 @@ pub fn execute_msg_create_collection(
     invariants: bitbadges_cosmwasm::CollectionInvariants,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = create_collection_msg(
-      balances_type,
       default_balanes,
       valid_badge_ids,
       collection_permissions,
       manager_timeline,
       collection_metadata_timeline,
       badge_metadata_timeline,
-      off_chain_balances_metadata_timeline,
       custom_data_timeline,
       collection_approvals,
       standards_timeline,
@@ -179,8 +175,6 @@ pub fn execute_msg_update_collection(
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
     update_badge_metadata_timeline: bool,
     badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-    update_off_chain_balances_metadata_timeline: bool,
-    off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
     update_custom_data_timeline: bool,
     custom_data_timeline: Vec<CustomDataTimeline>,
     update_collection_approvals: bool,
@@ -204,8 +198,6 @@ pub fn execute_msg_update_collection(
         collection_metadata_timeline,
         update_badge_metadata_timeline,
         badge_metadata_timeline,
-        update_off_chain_balances_metadata_timeline,
-        off_chain_balances_metadata_timeline,
         update_custom_data_timeline,
         custom_data_timeline,
         update_collection_approvals,
@@ -222,7 +214,6 @@ pub fn execute_msg_update_collection(
 
 pub fn execute_msg_universal_update_collection(
     collection_id: String,
-    balances_type: String,
     default_balanes: UserBalanceStore,
     update_valid_badge_ids: bool, 
     valid_badge_ids: Vec<UintRange>,
@@ -234,8 +225,6 @@ pub fn execute_msg_universal_update_collection(
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
     update_badge_metadata_timeline: bool,
     badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-    update_off_chain_balances_metadata_timeline: bool,
-    off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
     update_custom_data_timeline: bool,
     custom_data_timeline: Vec<CustomDataTimeline>,
     update_collection_approvals: bool,
@@ -250,7 +239,6 @@ pub fn execute_msg_universal_update_collection(
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = universal_update_collection_msg(
         collection_id,
-        balances_type,
         default_balanes,
         update_valid_badge_ids,
         valid_badge_ids,
@@ -262,8 +250,6 @@ pub fn execute_msg_universal_update_collection(
         collection_metadata_timeline,
         update_badge_metadata_timeline,
         badge_metadata_timeline,
-        update_off_chain_balances_metadata_timeline,
-        off_chain_balances_metadata_timeline,
         update_custom_data_timeline,
         custom_data_timeline,
         update_collection_approvals,

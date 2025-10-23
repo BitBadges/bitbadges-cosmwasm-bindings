@@ -1,7 +1,7 @@
 use bitbadges_cosmwasm::{
   AddressList, Transfer,
   Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, 
-  BadgeMetadataTimeline,   OffChainBalancesMetadataTimeline, CustomDataTimeline,
+  BadgeMetadataTimeline, CustomDataTimeline,
   CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, 
   UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions, 
   CosmosCoin, CosmosCoinWrapperPathAddObject, BadgeIdsActionPermission, 
@@ -52,14 +52,12 @@ pub enum ExecuteMsg {
 
     #[serde(rename_all = "camelCase")]
     CreateCollectionMsg {
-      balances_type: String,
       default_balances: UserBalanceStore,
       valid_badge_ids: Vec<UintRange>,
       collection_permissions: CollectionPermissions,
       manager_timeline: Vec<ManagerTimeline>,
       collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
       badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-      off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
       custom_data_timeline: Vec<CustomDataTimeline>,
       collection_approvals: Vec<CollectionApproval>,
       standards_timeline: Vec<StandardsTimeline>,
@@ -82,8 +80,6 @@ pub enum ExecuteMsg {
       collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
       update_badge_metadata_timeline: bool,
       badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-      update_off_chain_balances_metadata_timeline: bool,
-      off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
       update_custom_data_timeline: bool,
       custom_data_timeline: Vec<CustomDataTimeline>,
       update_collection_approvals: bool,
@@ -99,7 +95,6 @@ pub enum ExecuteMsg {
     #[serde(rename_all = "camelCase")]
     UniversalUpdateCollectionMsg {
       collection_id: String,
-      balances_type: String,
       default_balances: UserBalanceStore,
       update_valid_badge_ids: bool,
       valid_badge_ids: Vec<UintRange>,
@@ -111,8 +106,6 @@ pub enum ExecuteMsg {
       collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
       update_badge_metadata_timeline: bool,
       badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-      update_off_chain_balances_metadata_timeline: bool,
-      off_chain_balances_metadata_timeline: Vec<OffChainBalancesMetadataTimeline>,
       update_custom_data_timeline: bool,
       custom_data_timeline: Vec<CustomDataTimeline>,
       update_collection_approvals: bool,
