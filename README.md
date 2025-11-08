@@ -18,9 +18,10 @@ bitbadges-cosmwasm = { version = "X.X.X" }
 | v12                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v12 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
 | v13                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v13 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
 | v14                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v14 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
-| v16                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
+| v16                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v16 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
+| v17                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
 
-**Note:** The v12/v13/v14/v16 refer to our blockchain's versions. Make sure to use the appropriate bindings version for your target blockchain version.
+**Note:** The v12/v13/v14/v16/v17 refer to our blockchain's versions. Make sure to use the appropriate bindings version for your target blockchain version.
 
 ## Features
 
@@ -59,9 +60,9 @@ To use the query functions enabled by the bindings, create a `BitBadgesQuerier` 
 ```rust
 use bitbadges_cosmwasm::BitBadgesQuerier;
 
-pub fn query_collection(deps: Deps, id: u64) -> StdResult<BadgeCollection> {
+pub fn query_collection(deps: Deps, id: u64) -> StdResult<TokenCollection> {
     let querier = BitBadgesQuerier::new(&deps.querier);
-    let res: BadgeCollection = querier.query_collection(id)?;
+    let res: TokenCollection = querier.query_collection(id)?;
     Ok(res)
 }
 ```

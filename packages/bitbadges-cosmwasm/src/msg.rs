@@ -29,7 +29,7 @@ pub enum BitBadgesMsg {
   },
 
   #[serde(rename_all = "camelCase")]
-  TransferBadgesMsg {
+  TransferTokensMsg {
     collection_id: String,
     transfers: Vec<Transfer>,
   },
@@ -37,11 +37,11 @@ pub enum BitBadgesMsg {
   #[serde(rename_all = "camelCase")]
   CreateCollectionMsg {
     default_balances: UserBalanceStore,
-    valid_badge_ids: Vec<UintRange>,
+    valid_token_ids: Vec<UintRange>,
     collection_permissions: CollectionPermissions,
     manager_timeline: Vec<ManagerTimeline>,
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+    token_metadata_timeline: Vec<TokenMetadataTimeline>,
     custom_data_timeline: Vec<CustomDataTimeline>,
     collection_approvals: Vec<CollectionApproval>,
     standards_timeline: Vec<StandardsTimeline>,
@@ -55,16 +55,16 @@ pub enum BitBadgesMsg {
   #[serde(rename_all = "camelCase")]
   UpdateCollectionMsg {
     collection_id: String,
-    update_valid_badge_ids: bool,
-    valid_badge_ids: Vec<UintRange>,
+    update_valid_token_ids: bool,
+    valid_token_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
     update_manager_timeline: bool,
     manager_timeline: Vec<ManagerTimeline>,
     update_collection_metadata_timeline: bool,
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    update_badge_metadata_timeline: bool,
-    badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+    update_token_metadata_timeline: bool,
+    token_metadata_timeline: Vec<TokenMetadataTimeline>,
     update_custom_data_timeline: bool,
     custom_data_timeline: Vec<CustomDataTimeline>,
     update_collection_approvals: bool,
@@ -81,16 +81,16 @@ pub enum BitBadgesMsg {
   UniversalUpdateCollectionMsg {
     collection_id: String,
     default_balances: UserBalanceStore,
-    update_valid_badge_ids: bool,
-    valid_badge_ids: Vec<UintRange>,
+    update_valid_token_ids: bool,
+    valid_token_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
     update_manager_timeline: bool,
     manager_timeline: Vec<ManagerTimeline>,
     update_collection_metadata_timeline: bool,
     collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    update_badge_metadata_timeline: bool,
-    badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+    update_token_metadata_timeline: bool,
+    token_metadata_timeline: Vec<TokenMetadataTimeline>,
     update_custom_data_timeline: bool,
     custom_data_timeline: Vec<CustomDataTimeline>,
     update_collection_approvals: bool,
@@ -204,11 +204,11 @@ pub enum BitBadgesMsg {
   },
 
   #[serde(rename_all = "camelCase")]
-  SetValidBadgeIdsMsg {
+  SetValidTokenIdsMsg {
     creator: String,
     collection_id: String,
-    valid_badge_ids: Vec<UintRange>,
-    can_update_valid_badge_ids: Vec<BadgeIdsActionPermission>,
+    valid_token_ids: Vec<UintRange>,
+    can_update_valid_token_ids: Vec<TokenIdsActionPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -228,11 +228,11 @@ pub enum BitBadgesMsg {
   },
 
   #[serde(rename_all = "camelCase")]
-  SetBadgeMetadataMsg {
+  SetTokenMetadataMsg {
     creator: String,
     collection_id: String,
-    badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-    can_update_badge_metadata: Vec<TimedUpdateWithBadgeIdsPermission>,
+    token_metadata_timeline: Vec<TokenMetadataTimeline>,
+    can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -284,11 +284,11 @@ pub fn address_lists_msg(
   }.into()
 }
 
-pub fn transfer_badges_msg(
+pub fn transfer_tokens_msg(
   collection_id: String,
   transfers: Vec<Transfer>,
 ) -> CosmosMsg<BitBadgesMsg> {
-  BitBadgesMsg::TransferBadgesMsg {
+  BitBadgesMsg::TransferTokensMsg {
     collection_id,
     transfers,
     }.into()
@@ -296,11 +296,11 @@ pub fn transfer_badges_msg(
 
 pub fn create_collection_msg(
   default_balances: UserBalanceStore,
-  valid_badge_ids: Vec<UintRange>,
+  valid_token_ids: Vec<UintRange>,
   collection_permissions: CollectionPermissions,
   manager_timeline: Vec<ManagerTimeline>,
   collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+  token_metadata_timeline: Vec<TokenMetadataTimeline>,
   custom_data_timeline: Vec<CustomDataTimeline>,
   collection_approvals: Vec<CollectionApproval>,
   standards_timeline: Vec<StandardsTimeline>,
@@ -311,11 +311,11 @@ pub fn create_collection_msg(
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateCollectionMsg { 
     default_balances: default_balances,
-    valid_badge_ids,
+    valid_token_ids,
     collection_permissions,
     manager_timeline,
     collection_metadata_timeline,
-    badge_metadata_timeline,
+    token_metadata_timeline,
     custom_data_timeline,
     collection_approvals,
     standards_timeline,
@@ -328,16 +328,16 @@ pub fn create_collection_msg(
   
 pub fn update_collection_msg(
   collection_id: String,
-  update_valid_badge_ids: bool,
-  valid_badge_ids: Vec<UintRange>,
+  update_valid_token_ids: bool,
+  valid_token_ids: Vec<UintRange>,
   update_collection_permissions: bool,
   collection_permissions: CollectionPermissions,
   update_manager_timeline: bool,
   manager_timeline: Vec<ManagerTimeline>,
   update_collection_metadata_timeline: bool,
   collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  update_badge_metadata_timeline: bool,
-  badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+  update_token_metadata_timeline: bool,
+  token_metadata_timeline: Vec<TokenMetadataTimeline>,
   update_custom_data_timeline: bool,
   custom_data_timeline: Vec<CustomDataTimeline>,
   update_collection_approvals: bool,
@@ -351,16 +351,16 @@ pub fn update_collection_msg(
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateCollectionMsg {
     collection_id,
-    update_valid_badge_ids,
-    valid_badge_ids,
+    update_valid_token_ids,
+    valid_token_ids,
     update_collection_permissions,
     collection_permissions,
     update_manager_timeline,
     manager_timeline,
       update_collection_metadata_timeline,
       collection_metadata_timeline,
-      update_badge_metadata_timeline,
-      badge_metadata_timeline,
+      update_token_metadata_timeline,
+      token_metadata_timeline,
       update_custom_data_timeline,
       custom_data_timeline,
       update_collection_approvals,
@@ -378,16 +378,16 @@ pub fn update_collection_msg(
 pub fn universal_update_collection_msg(
   collection_id: String,
   default_balances: UserBalanceStore,
-  update_valid_badge_ids: bool,
-  valid_badge_ids: Vec<UintRange>,
+  update_valid_token_ids: bool,
+  valid_token_ids: Vec<UintRange>,
   update_collection_permissions: bool,
   collection_permissions: CollectionPermissions,
   update_manager_timeline: bool,
   manager_timeline: Vec<ManagerTimeline>,
   update_collection_metadata_timeline: bool,
   collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  update_badge_metadata_timeline: bool,
-  badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+  update_token_metadata_timeline: bool,
+  token_metadata_timeline: Vec<TokenMetadataTimeline>,
   update_custom_data_timeline: bool,
   custom_data_timeline: Vec<CustomDataTimeline>,
   update_collection_approvals: bool,
@@ -403,16 +403,16 @@ pub fn universal_update_collection_msg(
   BitBadgesMsg::UniversalUpdateCollectionMsg {
     collection_id,
     default_balances: default_balances,
-    update_valid_badge_ids,
-    valid_badge_ids,
+    update_valid_token_ids,
+    valid_token_ids,
     update_collection_permissions,
     collection_permissions,
     update_manager_timeline,
       manager_timeline,
       update_collection_metadata_timeline,
       collection_metadata_timeline,
-      update_badge_metadata_timeline,
-      badge_metadata_timeline,
+      update_token_metadata_timeline,
+      token_metadata_timeline,
       update_custom_data_timeline,
       custom_data_timeline,
       update_collection_approvals,
@@ -614,17 +614,17 @@ pub fn purge_approvals_msg(
   .into()
 }
 
-pub fn set_valid_badge_ids_msg(
+pub fn set_valid_token_ids_msg(
   creator: String,
   collection_id: String,
-  valid_badge_ids: Vec<UintRange>,
-  can_update_valid_badge_ids: Vec<BadgeIdsActionPermission>,
+  valid_token_ids: Vec<UintRange>,
+  can_update_valid_token_ids: Vec<TokenIdsActionPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
-  BitBadgesMsg::SetValidBadgeIdsMsg {
+  BitBadgesMsg::SetValidTokenIdsMsg {
     creator,
     collection_id,
-    valid_badge_ids,
-    can_update_valid_badge_ids,
+    valid_token_ids,
+    can_update_valid_token_ids,
   }
   .into()
 }
@@ -659,17 +659,17 @@ pub fn set_collection_metadata_msg(
   .into()
 }
 
-pub fn set_badge_metadata_msg(
+pub fn set_token_metadata_msg(
   creator: String,
   collection_id: String,
-  badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-  can_update_badge_metadata: Vec<TimedUpdateWithBadgeIdsPermission>,
+  token_metadata_timeline: Vec<TokenMetadataTimeline>,
+  can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
-  BitBadgesMsg::SetBadgeMetadataMsg {
+  BitBadgesMsg::SetTokenMetadataMsg {
     creator,
     collection_id,
-    badge_metadata_timeline,
-    can_update_badge_metadata,
+    token_metadata_timeline,
+    can_update_token_metadata,
   }
   .into()
 }
@@ -773,7 +773,7 @@ pub struct Transfer {
 #[serde(rename_all = "camelCase")]
 pub struct PrecalculationOptions {
     pub override_timestamp: String,
-    pub badge_ids_override: Vec<UintRange>,
+    pub token_ids_override: Vec<UintRange>,
 }
 
 
@@ -783,7 +783,7 @@ pub struct PrecalculationOptions {
 pub struct Balance {
     pub amount: String,
     pub ownership_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
 }
 
 
@@ -832,10 +832,10 @@ pub struct ETHSignatureProof {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct BadgeMetadata {
+pub struct TokenMetadata {
     pub uri: String,
     pub custom_data: String,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
 }
 
 
@@ -859,8 +859,8 @@ pub struct CollectionMetadataTimeline {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct BadgeMetadataTimeline {
-    pub badge_metadata: Vec<BadgeMetadata>,
+pub struct TokenMetadataTimeline {
+    pub token_metadata: Vec<TokenMetadata>,
     pub timeline_times: Vec<UintRange>,
 }
 
@@ -918,12 +918,12 @@ pub struct ManualBalances {
 #[serde(rename_all = "camelCase")]
 pub struct IncrementedBalances {
     pub start_balances: Vec<Balance>,
-    pub increment_badge_ids_by: String,
+    pub increment_token_ids_by: String,
     pub increment_ownership_times_by: String,
     pub duration_from_timestamp: String,
     pub allow_override_timestamp: bool,
     pub recurring_ownership_times: RecurringOwnershipTimes,
-    pub allow_override_with_any_valid_badge: bool,
+    pub allow_override_with_any_valid_token: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1027,7 +1027,7 @@ pub struct ApprovalCriteria {
   pub overrides_to_incoming_approvals: bool,
   pub auto_deletion_options: AutoDeletionOptions,
   pub user_royalties: UserRoyalties,
-  pub must_own_badges: Vec<MustOwnBadges>,
+  pub must_own_tokens: Vec<MustOwnTokens>,
   pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
 }
@@ -1044,7 +1044,7 @@ pub struct OutgoingApprovalCriteria {
   pub require_to_equals_initiated_by: bool,
   pub require_to_does_not_equal_initiated_by: bool,
   pub auto_deletion_options: AutoDeletionOptions,
-  pub must_own_badges: Vec<MustOwnBadges>,
+  pub must_own_tokens: Vec<MustOwnTokens>,
   pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
 }
@@ -1061,7 +1061,7 @@ pub struct IncomingApprovalCriteria {
   pub require_from_equals_initiated_by: bool,
   pub require_from_does_not_equal_initiated_by: bool,
   pub auto_deletion_options: AutoDeletionOptions,
-  pub must_own_badges: Vec<MustOwnBadges>,
+  pub must_own_tokens: Vec<MustOwnTokens>,
   pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
 }
@@ -1087,7 +1087,7 @@ pub struct UserOutgoingApproval {
     pub to_list_id: String,
     pub initiated_by_list_id: String,
     pub transfer_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
     pub ownership_times: Vec<UintRange>,
     pub uri: String,
     pub custom_data: String,
@@ -1103,7 +1103,7 @@ pub struct UserIncomingApproval {
     pub from_list_id: String,
     pub initiated_by_list_id: String,
     pub transfer_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
     pub ownership_times: Vec<UintRange>,
     pub uri: String,
     pub custom_data: String,
@@ -1120,7 +1120,7 @@ pub struct CollectionApproval {
     pub to_list_id: String,
     pub initiated_by_list_id: String,
     pub transfer_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
     pub ownership_times: Vec<UintRange>,
     pub uri: String,
     pub custom_data: String,
@@ -1139,8 +1139,8 @@ pub struct CollectionPermissions {
     pub can_update_custom_data: Vec<TimedUpdatePermission>,
     pub can_update_manager: Vec<TimedUpdatePermission>,
     pub can_update_collection_metadata: Vec<TimedUpdatePermission>,
-    pub can_update_valid_badge_ids: Vec<BadgeIdsActionPermission>,
-    pub can_update_badge_metadata: Vec<TimedUpdateWithBadgeIdsPermission>,
+    pub can_update_valid_token_ids: Vec<TokenIdsActionPermission>,
+    pub can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
     pub can_update_collection_approvals: Vec<CollectionApprovalPermission>,
 }
 
@@ -1163,7 +1163,7 @@ pub struct CollectionApprovalPermission {
     pub to_list_id: String,
     pub initiated_by_list_id: String,
     pub transfer_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
     pub ownership_times: Vec<UintRange>,
     pub permanently_permitted_times: Vec<UintRange>,
     pub permanenty_forbidden_times: Vec<UintRange>,
@@ -1176,7 +1176,7 @@ pub struct UserOutgoingApprovalPermission {
     pub to_list_id: String,
     pub initiated_by_list_id: String,
     pub transfer_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
     pub ownership_times: Vec<UintRange>,
     pub permanently_permitted_times: Vec<UintRange>,
     pub permanenty_forbidden_times: Vec<UintRange>,
@@ -1189,7 +1189,7 @@ pub struct UserIncomingApprovalPermission {
     pub from_list_id: String,
     pub initiated_by_list_id: String,
     pub transfer_times: Vec<UintRange>,
-    pub badge_ids: Vec<UintRange>,
+    pub token_ids: Vec<UintRange>,
     pub ownership_times: Vec<UintRange>,
     pub permanently_permitted_times: Vec<UintRange>,
     pub permanenty_forbidden_times: Vec<UintRange>,
@@ -1198,8 +1198,8 @@ pub struct UserIncomingApprovalPermission {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct BadgeIdsActionPermission {
-    pub badge_ids: Vec<UintRange>,
+pub struct TokenIdsActionPermission {
+    pub token_ids: Vec<UintRange>,
     pub permanently_permitted_times: Vec<UintRange>,
     pub permanenty_forbidden_times: Vec<UintRange>,
 }
@@ -1224,8 +1224,8 @@ pub struct TimedUpdatePermission {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct TimedUpdateWithBadgeIdsPermission {
-    pub badge_ids: Vec<UintRange>,
+pub struct TimedUpdateWithTokenIdsPermission {
+    pub token_ids: Vec<UintRange>,
     pub permanently_permitted_times: Vec<UintRange>,
     pub permanenty_forbidden_times: Vec<UintRange>,
     pub timeline_times: Vec<UintRange>,
@@ -1247,10 +1247,10 @@ pub struct UserBalanceStore {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct BadgeCollection {
+pub struct TokenCollection {
   pub collection_id: String,
   pub collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  pub badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+  pub token_metadata_timeline: Vec<TokenMetadataTimeline>,
   pub custom_data_timeline: Vec<CustomDataTimeline>,
   pub manager_timeline: Vec<ManagerTimeline>,
   pub collection_permissions: CollectionPermissions,
@@ -1259,7 +1259,7 @@ pub struct BadgeCollection {
   pub is_archived_timeline: Vec<IsArchivedTimeline>,
   pub default_balances: UserBalanceStore,
   pub created_by: String,
-  pub valid_badge_ids: Vec<UintRange>,
+  pub valid_token_ids: Vec<UintRange>,
   pub mint_escrow_address: String,
   pub cosmos_coin_wrapper_paths: Vec<CosmosCoinWrapperPath>,
   pub invariants: CollectionInvariants,
@@ -1301,11 +1301,11 @@ pub struct UserRoyalties {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct MustOwnBadges {
+pub struct MustOwnTokens {
   pub collection_id: String,
   pub amount_range: UintRange,
   pub ownership_times: Vec<UintRange>,
-  pub badge_ids: Vec<UintRange>,
+  pub token_ids: Vec<UintRange>,
   pub override_with_current_time: bool,
   pub must_satisfy_for_all_assets: bool,
   pub ownership_check_party: String,

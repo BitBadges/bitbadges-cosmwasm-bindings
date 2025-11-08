@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use cosmwasm_std::CustomQuery;
 
-use crate::{AddressList, ApprovalTracker, BadgeCollection, UserBalanceStore, DynamicStore, DynamicStoreValue};
+use crate::{AddressList, ApprovalTracker, TokenCollection, UserBalanceStore, DynamicStore, DynamicStoreValue};
 
 // implement custom query
 impl CustomQuery for BitBadgesQuery {}
@@ -81,7 +81,7 @@ pub struct QueryAddressByIdResponse {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct QueryGetCollectionResponse {
-    pub collection: BadgeCollection,
+    pub collection: TokenCollection,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

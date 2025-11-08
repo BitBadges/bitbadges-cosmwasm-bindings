@@ -48,10 +48,10 @@
     {
       "type": "object",
       "required": [
-        "transferBadgesMsg"
+        "transferTokensMsg"
       ],
       "properties": {
-        "transferBadgesMsg": {
+        "transferTokensMsg": {
           "type": "object",
           "required": [
             "collectionId",
@@ -81,7 +81,6 @@
         "createCollectionMsg": {
           "type": "object",
           "required": [
-            "badgeMetadataTimeline",
             "collectionApprovals",
             "collectionMetadataTimeline",
             "collectionPermissions",
@@ -93,15 +92,10 @@
             "managerTimeline",
             "mintEscrowCoinsToTransfer",
             "standardsTimeline",
-            "validBadgeIds"
+            "tokenMetadataTimeline",
+            "validTokenIds"
           ],
           "properties": {
-            "badgeMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/BadgeMetadataTimeline"
-              }
-            },
             "collectionApprovals": {
               "type": "array",
               "items": {
@@ -159,7 +153,13 @@
                 "$ref": "#/definitions/StandardsTimeline"
               }
             },
-            "validBadgeIds": {
+            "tokenMetadataTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TokenMetadataTimeline"
+              }
+            },
+            "validTokenIds": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/UintRange"
@@ -179,7 +179,6 @@
         "updateCollectionMsg": {
           "type": "object",
           "required": [
-            "badgeMetadataTimeline",
             "collectionApprovals",
             "collectionId",
             "collectionMetadataTimeline",
@@ -190,7 +189,7 @@
             "managerTimeline",
             "mintEscrowCoinsToTransfer",
             "standardsTimeline",
-            "updateBadgeMetadataTimeline",
+            "tokenMetadataTimeline",
             "updateCollectionApprovals",
             "updateCollectionMetadataTimeline",
             "updateCollectionPermissions",
@@ -198,16 +197,11 @@
             "updateIsArchivedTimeline",
             "updateManagerTimeline",
             "updateStandardsTimeline",
-            "updateValidBadgeIds",
-            "validBadgeIds"
+            "updateTokenMetadataTimeline",
+            "updateValidTokenIds",
+            "validTokenIds"
           ],
           "properties": {
-            "badgeMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/BadgeMetadataTimeline"
-              }
-            },
             "collectionApprovals": {
               "type": "array",
               "items": {
@@ -262,8 +256,11 @@
                 "$ref": "#/definitions/StandardsTimeline"
               }
             },
-            "updateBadgeMetadataTimeline": {
-              "type": "boolean"
+            "tokenMetadataTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TokenMetadataTimeline"
+              }
             },
             "updateCollectionApprovals": {
               "type": "boolean"
@@ -286,10 +283,13 @@
             "updateStandardsTimeline": {
               "type": "boolean"
             },
-            "updateValidBadgeIds": {
+            "updateTokenMetadataTimeline": {
               "type": "boolean"
             },
-            "validBadgeIds": {
+            "updateValidTokenIds": {
+              "type": "boolean"
+            },
+            "validTokenIds": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/UintRange"
@@ -309,7 +309,6 @@
         "universalUpdateCollectionMsg": {
           "type": "object",
           "required": [
-            "badgeMetadataTimeline",
             "collectionApprovals",
             "collectionId",
             "collectionMetadataTimeline",
@@ -322,7 +321,7 @@
             "managerTimeline",
             "mintEscrowCoinsToTransfer",
             "standardsTimeline",
-            "updateBadgeMetadataTimeline",
+            "tokenMetadataTimeline",
             "updateCollectionApprovals",
             "updateCollectionMetadataTimeline",
             "updateCollectionPermissions",
@@ -330,16 +329,11 @@
             "updateIsArchivedTimeline",
             "updateManagerTimeline",
             "updateStandardsTimeline",
-            "updateValidBadgeIds",
-            "validBadgeIds"
+            "updateTokenMetadataTimeline",
+            "updateValidTokenIds",
+            "validTokenIds"
           ],
           "properties": {
-            "badgeMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/BadgeMetadataTimeline"
-              }
-            },
             "collectionApprovals": {
               "type": "array",
               "items": {
@@ -400,8 +394,11 @@
                 "$ref": "#/definitions/StandardsTimeline"
               }
             },
-            "updateBadgeMetadataTimeline": {
-              "type": "boolean"
+            "tokenMetadataTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TokenMetadataTimeline"
+              }
             },
             "updateCollectionApprovals": {
               "type": "boolean"
@@ -424,10 +421,13 @@
             "updateStandardsTimeline": {
               "type": "boolean"
             },
-            "updateValidBadgeIds": {
+            "updateTokenMetadataTimeline": {
               "type": "boolean"
             },
-            "validBadgeIds": {
+            "updateValidTokenIds": {
+              "type": "boolean"
+            },
+            "validTokenIds": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/UintRange"
@@ -846,22 +846,22 @@
     {
       "type": "object",
       "required": [
-        "setValidBadgeIdsMsg"
+        "setValidTokenIdsMsg"
       ],
       "properties": {
-        "setValidBadgeIdsMsg": {
+        "setValidTokenIdsMsg": {
           "type": "object",
           "required": [
-            "canUpdateValidBadgeIds",
+            "canUpdateValidTokenIds",
             "collectionId",
             "creator",
-            "validBadgeIds"
+            "validTokenIds"
           ],
           "properties": {
-            "canUpdateValidBadgeIds": {
+            "canUpdateValidTokenIds": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/BadgeIdsActionPermission"
+                "$ref": "#/definitions/TokenIdsActionPermission"
               }
             },
             "collectionId": {
@@ -870,7 +870,7 @@
             "creator": {
               "type": "string"
             },
-            "validBadgeIds": {
+            "validTokenIds": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/UintRange"
@@ -960,28 +960,22 @@
     {
       "type": "object",
       "required": [
-        "setBadgeMetadataMsg"
+        "setTokenMetadataMsg"
       ],
       "properties": {
-        "setBadgeMetadataMsg": {
+        "setTokenMetadataMsg": {
           "type": "object",
           "required": [
-            "badgeMetadataTimeline",
-            "canUpdateBadgeMetadata",
+            "canUpdateTokenMetadata",
             "collectionId",
-            "creator"
+            "creator",
+            "tokenMetadataTimeline"
           ],
           "properties": {
-            "badgeMetadataTimeline": {
+            "canUpdateTokenMetadata": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/BadgeMetadataTimeline"
-              }
-            },
-            "canUpdateBadgeMetadata": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/TimedUpdateWithBadgeIdsPermission"
+                "$ref": "#/definitions/TimedUpdateWithTokenIdsPermission"
               }
             },
             "collectionId": {
@@ -989,6 +983,12 @@
             },
             "creator": {
               "type": "string"
+            },
+            "tokenMetadataTimeline": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TokenMetadataTimeline"
+              }
             }
           }
         }
@@ -1253,7 +1253,7 @@
         "ethSignatureChallenges",
         "maxNumTransfers",
         "merkleChallenges",
-        "mustOwnBadges",
+        "mustOwnTokens",
         "overridesFromOutgoingApprovals",
         "overridesToIncomingApprovals",
         "predeterminedBalances",
@@ -1297,10 +1297,10 @@
             "$ref": "#/definitions/MerkleChallenge"
           }
         },
-        "mustOwnBadges": {
+        "mustOwnTokens": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/MustOwnBadges"
+            "$ref": "#/definitions/MustOwnTokens"
           }
         },
         "overridesFromOutgoingApprovals": {
@@ -1375,95 +1375,24 @@
         }
       }
     },
-    "BadgeIdsActionPermission": {
-      "type": "object",
-      "required": [
-        "badgeIds",
-        "permanentlyPermittedTimes",
-        "permanentyForbiddenTimes"
-      ],
-      "properties": {
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "permanentlyPermittedTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "permanentyForbiddenTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
-    "BadgeMetadata": {
-      "type": "object",
-      "required": [
-        "badgeIds",
-        "customData",
-        "uri"
-      ],
-      "properties": {
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "customData": {
-          "type": "string"
-        },
-        "uri": {
-          "type": "string"
-        }
-      }
-    },
-    "BadgeMetadataTimeline": {
-      "type": "object",
-      "required": [
-        "badgeMetadata",
-        "timelineTimes"
-      ],
-      "properties": {
-        "badgeMetadata": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BadgeMetadata"
-          }
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
     "Balance": {
       "type": "object",
       "required": [
         "amount",
-        "badgeIds",
-        "ownershipTimes"
+        "ownershipTimes",
+        "tokenIds"
       ],
       "properties": {
         "amount": {
           "type": "string"
         },
-        "badgeIds": {
+        "ownershipTimes": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/UintRange"
           }
         },
-        "ownershipTimes": {
+        "tokenIds": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/UintRange"
@@ -1502,12 +1431,12 @@
       "required": [
         "approvalCriteria",
         "approvalId",
-        "badgeIds",
         "customData",
         "fromListId",
         "initiatedByListId",
         "ownershipTimes",
         "toListId",
+        "tokenIds",
         "transferTimes",
         "uri",
         "version"
@@ -1518,12 +1447,6 @@
         },
         "approvalId": {
           "type": "string"
-        },
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
         },
         "customData": {
           "type": "string"
@@ -1543,6 +1466,12 @@
         "toListId": {
           "type": "string"
         },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
         "transferTimes": {
           "type": "array",
           "items": {
@@ -1560,22 +1489,16 @@
     "CollectionApprovalPermission": {
       "type": "object",
       "required": [
-        "badgeIds",
         "fromListId",
         "initiatedByListId",
         "ownershipTimes",
         "permanentlyPermittedTimes",
         "permanentyForbiddenTimes",
         "toListId",
+        "tokenIds",
         "transferTimes"
       ],
       "properties": {
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
         "fromListId": {
           "type": "string"
         },
@@ -1602,6 +1525,12 @@
         },
         "toListId": {
           "type": "string"
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
         },
         "transferTimes": {
           "type": "array",
@@ -1664,13 +1593,13 @@
       "required": [
         "canArchiveCollection",
         "canDeleteCollection",
-        "canUpdateBadgeMetadata",
         "canUpdateCollectionApprovals",
         "canUpdateCollectionMetadata",
         "canUpdateCustomData",
         "canUpdateManager",
         "canUpdateStandards",
-        "canUpdateValidBadgeIds"
+        "canUpdateTokenMetadata",
+        "canUpdateValidTokenIds"
       ],
       "properties": {
         "canArchiveCollection": {
@@ -1683,12 +1612,6 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/ActionPermission"
-          }
-        },
-        "canUpdateBadgeMetadata": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TimedUpdateWithBadgeIdsPermission"
           }
         },
         "canUpdateCollectionApprovals": {
@@ -1721,10 +1644,16 @@
             "$ref": "#/definitions/TimedUpdatePermission"
           }
         },
-        "canUpdateValidBadgeIds": {
+        "canUpdateTokenMetadata": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/BadgeIdsActionPermission"
+            "$ref": "#/definitions/TimedUpdateWithTokenIdsPermission"
+          }
+        },
+        "canUpdateValidTokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TokenIdsActionPermission"
           }
         }
       }
@@ -1873,7 +1802,7 @@
         "ethSignatureChallenges",
         "maxNumTransfers",
         "merkleChallenges",
-        "mustOwnBadges",
+        "mustOwnTokens",
         "predeterminedBalances",
         "requireFromDoesNotEqualInitiatedBy",
         "requireFromEqualsInitiatedBy"
@@ -1912,10 +1841,10 @@
             "$ref": "#/definitions/MerkleChallenge"
           }
         },
-        "mustOwnBadges": {
+        "mustOwnTokens": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/MustOwnBadges"
+            "$ref": "#/definitions/MustOwnTokens"
           }
         },
         "predeterminedBalances": {
@@ -1933,10 +1862,10 @@
       "type": "object",
       "required": [
         "allowOverrideTimestamp",
-        "allowOverrideWithAnyValidBadge",
+        "allowOverrideWithAnyValidToken",
         "durationFromTimestamp",
-        "incrementBadgeIdsBy",
         "incrementOwnershipTimesBy",
+        "incrementTokenIdsBy",
         "recurringOwnershipTimes",
         "startBalances"
       ],
@@ -1944,16 +1873,16 @@
         "allowOverrideTimestamp": {
           "type": "boolean"
         },
-        "allowOverrideWithAnyValidBadge": {
+        "allowOverrideWithAnyValidToken": {
           "type": "boolean"
         },
         "durationFromTimestamp": {
           "type": "string"
         },
-        "incrementBadgeIdsBy": {
+        "incrementOwnershipTimesBy": {
           "type": "string"
         },
-        "incrementOwnershipTimesBy": {
+        "incrementTokenIdsBy": {
           "type": "string"
         },
         "recurringOwnershipTimes": {
@@ -2124,26 +2053,20 @@
         }
       }
     },
-    "MustOwnBadges": {
+    "MustOwnTokens": {
       "type": "object",
       "required": [
         "amountRange",
-        "badgeIds",
         "collectionId",
         "mustSatisfyForAllAssets",
         "overrideWithCurrentTime",
         "ownershipCheckParty",
-        "ownershipTimes"
+        "ownershipTimes",
+        "tokenIds"
       ],
       "properties": {
         "amountRange": {
           "$ref": "#/definitions/UintRange"
-        },
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
         },
         "collectionId": {
           "type": "string"
@@ -2162,6 +2085,12 @@
           "items": {
             "$ref": "#/definitions/UintRange"
           }
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
         }
       }
     },
@@ -2175,7 +2104,7 @@
         "ethSignatureChallenges",
         "maxNumTransfers",
         "merkleChallenges",
-        "mustOwnBadges",
+        "mustOwnTokens",
         "predeterminedBalances",
         "requireToDoesNotEqualInitiatedBy",
         "requireToEqualsInitiatedBy"
@@ -2214,10 +2143,10 @@
             "$ref": "#/definitions/MerkleChallenge"
           }
         },
-        "mustOwnBadges": {
+        "mustOwnTokens": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/MustOwnBadges"
+            "$ref": "#/definitions/MustOwnTokens"
           }
         },
         "predeterminedBalances": {
@@ -2234,18 +2163,18 @@
     "PrecalculationOptions": {
       "type": "object",
       "required": [
-        "badgeIdsOverride",
-        "overrideTimestamp"
+        "overrideTimestamp",
+        "tokenIdsOverride"
       ],
       "properties": {
-        "badgeIdsOverride": {
+        "overrideTimestamp": {
+          "type": "string"
+        },
+        "tokenIdsOverride": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/UintRange"
           }
-        },
-        "overrideTimestamp": {
-          "type": "string"
         }
       }
     },
@@ -2385,21 +2314,15 @@
         }
       }
     },
-    "TimedUpdateWithBadgeIdsPermission": {
+    "TimedUpdateWithTokenIdsPermission": {
       "type": "object",
       "required": [
-        "badgeIds",
         "permanentlyPermittedTimes",
         "permanentyForbiddenTimes",
-        "timelineTimes"
+        "timelineTimes",
+        "tokenIds"
       ],
       "properties": {
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
         "permanentlyPermittedTimes": {
           "type": "array",
           "items": {
@@ -2416,6 +2339,83 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/UintRange"
+          }
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        }
+      }
+    },
+    "TokenIdsActionPermission": {
+      "type": "object",
+      "required": [
+        "permanentlyPermittedTimes",
+        "permanentyForbiddenTimes",
+        "tokenIds"
+      ],
+      "properties": {
+        "permanentlyPermittedTimes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
+        "permanentyForbiddenTimes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        }
+      }
+    },
+    "TokenMetadata": {
+      "type": "object",
+      "required": [
+        "customData",
+        "tokenIds",
+        "uri"
+      ],
+      "properties": {
+        "customData": {
+          "type": "string"
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "TokenMetadataTimeline": {
+      "type": "object",
+      "required": [
+        "timelineTimes",
+        "tokenMetadata"
+      ],
+      "properties": {
+        "timelineTimes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
+        "tokenMetadata": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TokenMetadata"
           }
         }
       }
@@ -2568,11 +2568,11 @@
       "required": [
         "approvalCriteria",
         "approvalId",
-        "badgeIds",
         "customData",
         "fromListId",
         "initiatedByListId",
         "ownershipTimes",
+        "tokenIds",
         "transferTimes",
         "uri",
         "version"
@@ -2584,12 +2584,6 @@
         "approvalId": {
           "type": "string"
         },
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
         "customData": {
           "type": "string"
         },
@@ -2600,6 +2594,12 @@
           "type": "string"
         },
         "ownershipTimes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
+        "tokenIds": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/UintRange"
@@ -2622,21 +2622,15 @@
     "UserIncomingApprovalPermission": {
       "type": "object",
       "required": [
-        "badgeIds",
         "fromListId",
         "initiatedByListId",
         "ownershipTimes",
         "permanentlyPermittedTimes",
         "permanentyForbiddenTimes",
+        "tokenIds",
         "transferTimes"
       ],
       "properties": {
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
         "fromListId": {
           "type": "string"
         },
@@ -2661,6 +2655,12 @@
             "$ref": "#/definitions/UintRange"
           }
         },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
         "transferTimes": {
           "type": "array",
           "items": {
@@ -2674,11 +2674,11 @@
       "required": [
         "approvalCriteria",
         "approvalId",
-        "badgeIds",
         "customData",
         "initiatedByListId",
         "ownershipTimes",
         "toListId",
+        "tokenIds",
         "transferTimes",
         "uri",
         "version"
@@ -2689,12 +2689,6 @@
         },
         "approvalId": {
           "type": "string"
-        },
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
         },
         "customData": {
           "type": "string"
@@ -2710,6 +2704,12 @@
         },
         "toListId": {
           "type": "string"
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
         },
         "transferTimes": {
           "type": "array",
@@ -2728,21 +2728,15 @@
     "UserOutgoingApprovalPermission": {
       "type": "object",
       "required": [
-        "badgeIds",
         "initiatedByListId",
         "ownershipTimes",
         "permanentlyPermittedTimes",
         "permanentyForbiddenTimes",
         "toListId",
+        "tokenIds",
         "transferTimes"
       ],
       "properties": {
-        "badgeIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
         "initiatedByListId": {
           "type": "string"
         },
@@ -2766,6 +2760,12 @@
         },
         "toListId": {
           "type": "string"
+        },
+        "tokenIds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
         },
         "transferTimes": {
           "type": "array",

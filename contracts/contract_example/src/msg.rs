@@ -1,11 +1,11 @@
 use bitbadges_cosmwasm::{
   AddressList, Transfer,
   Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, 
-  BadgeMetadataTimeline, CustomDataTimeline,
+  TokenMetadataTimeline, CustomDataTimeline,
   CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, 
   UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions, 
-  CosmosCoin, CosmosCoinWrapperPathAddObject, BadgeIdsActionPermission, 
-  TimedUpdatePermission, TimedUpdateWithBadgeIdsPermission, CollectionApprovalPermission,
+  CosmosCoin, CosmosCoinWrapperPathAddObject, TokenIdsActionPermission, 
+  TimedUpdatePermission, TimedUpdateWithTokenIdsPermission, CollectionApprovalPermission,
   CollectionInvariants
 };
 use schemars::JsonSchema;
@@ -45,7 +45,7 @@ pub enum ExecuteMsg {
     },
 
     #[serde(rename_all = "camelCase")]
-    TransferBadgesMsg {
+    TransferTokensMsg {
         collection_id: String ,
         transfers: Vec<Transfer>,
     },
@@ -53,11 +53,11 @@ pub enum ExecuteMsg {
     #[serde(rename_all = "camelCase")]
     CreateCollectionMsg {
       default_balances: UserBalanceStore,
-      valid_badge_ids: Vec<UintRange>,
+      valid_token_ids: Vec<UintRange>,
       collection_permissions: CollectionPermissions,
       manager_timeline: Vec<ManagerTimeline>,
       collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-      badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+      token_metadata_timeline: Vec<TokenMetadataTimeline>,
       custom_data_timeline: Vec<CustomDataTimeline>,
       collection_approvals: Vec<CollectionApproval>,
       standards_timeline: Vec<StandardsTimeline>,
@@ -70,16 +70,16 @@ pub enum ExecuteMsg {
     #[serde(rename_all = "camelCase")]
     UpdateCollectionMsg {
       collection_id: String,
-      update_valid_badge_ids: bool,
-      valid_badge_ids: Vec<UintRange>,
+      update_valid_token_ids: bool,
+      valid_token_ids: Vec<UintRange>,
       update_collection_permissions: bool,
       collection_permissions: CollectionPermissions,
       update_manager_timeline: bool,
       manager_timeline: Vec<ManagerTimeline>,
       update_collection_metadata_timeline: bool,
       collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-      update_badge_metadata_timeline: bool,
-      badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+      update_token_metadata_timeline: bool,
+      token_metadata_timeline: Vec<TokenMetadataTimeline>,
       update_custom_data_timeline: bool,
       custom_data_timeline: Vec<CustomDataTimeline>,
       update_collection_approvals: bool,
@@ -96,16 +96,16 @@ pub enum ExecuteMsg {
     UniversalUpdateCollectionMsg {
       collection_id: String,
       default_balances: UserBalanceStore,
-      update_valid_badge_ids: bool,
-      valid_badge_ids: Vec<UintRange>,
+      update_valid_token_ids: bool,
+      valid_token_ids: Vec<UintRange>,
       update_collection_permissions: bool,
       collection_permissions: CollectionPermissions,
       update_manager_timeline: bool,
       manager_timeline: Vec<ManagerTimeline>,
       update_collection_metadata_timeline: bool,
       collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-      update_badge_metadata_timeline: bool,
-      badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
+      update_token_metadata_timeline: bool,
+      token_metadata_timeline: Vec<TokenMetadataTimeline>,
       update_custom_data_timeline: bool,
       custom_data_timeline: Vec<CustomDataTimeline>,
       update_collection_approvals: bool,
@@ -137,10 +137,10 @@ pub enum ExecuteMsg {
     },
 
     #[serde(rename_all = "camelCase")]
-    SetValidBadgeIdsMsg {
+    SetValidTokenIdsMsg {
       collection_id: String,
-      valid_badge_ids: Vec<UintRange>,
-      can_update_valid_badge_ids: Vec<BadgeIdsActionPermission>,
+      valid_token_ids: Vec<UintRange>,
+      can_update_valid_token_ids: Vec<TokenIdsActionPermission>,
     },
 
     #[serde(rename_all = "camelCase")]
@@ -158,10 +158,10 @@ pub enum ExecuteMsg {
     },
 
     #[serde(rename_all = "camelCase")]
-    SetBadgeMetadataMsg {
+    SetTokenMetadataMsg {
       collection_id: String,
-      badge_metadata_timeline: Vec<BadgeMetadataTimeline>,
-      can_update_badge_metadata: Vec<TimedUpdateWithBadgeIdsPermission>,
+      token_metadata_timeline: Vec<TokenMetadataTimeline>,
+      can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
     },
 
     #[serde(rename_all = "camelCase")]

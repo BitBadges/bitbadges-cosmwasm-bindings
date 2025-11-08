@@ -1,39 +1,45 @@
- # BitBadges bindings for CosmWasm
+# BitBadges bindings for CosmWasm
 
- This crate provides the custom bindings that are used to communicate with the custom modules (x/badges) on the BitBadges network from a CosmWasm smart contract.
+This crate provides the custom bindings that are used to communicate with the custom modules (x/badges) on the BitBadges network from a CosmWasm smart contract.
 
- # Installation
- Add the crate to your smart contract's' Cargo.toml
- ```toml
+# Installation
+
+Add the crate to your smart contract's' Cargo.toml
+
+```toml
 [dependencies]
 bitbadges-cosmwasm = { version = "X.X.X" }
 ```
 
 # Exposed bindings
+
 This crate, as of now, exports binding only for the x/badges module. In the future, more custom bindings will be added.
 
 ## Creating Messages
+
 ​
 **NOTE:** The BitBadges bindings do not cover messages that have already been implemented by the CosmWasm team, such as staking-related messages and fundamental ones like `MsgSend`.
 ​
-You may want your contract to perform messages such as `DeleteCollection` and `TransferBadges` operations at the end of its execution. To do this, create a message using the predefined functions:
+You may want your contract to perform messages such as `DeleteCollection` and `TransferTokens` operations at the end of its execution. To do this, create a message using the predefined functions:
 ​
-- `transfer_badges_msg`
-- ...
+
+-   `transfer_tokens_msg`
+-   ...
 
 And add it to your response, like below
 ​
+
 ```rust
 use cosmwasm_std::CosmosMsg;
-use bitbadges_cosmwasm::{transfer_badges_msg};
+use bitbadges_cosmwasm::{transfer_tokens_msg};
 ​
 ...
 ​
-pub fn execute_msg_transfer_badges(
+pub fn execute_msg_transfer_tokens(
     collection_id: String,
     transfers: Vec<Transfer>,
 ) -> StdResult<Response<BitBadgesMsg>> {
-    let msg = transfer_badges_msg(
+    let msg = transfer_tokens_msg(
         collection_id,
         transfers,
     );
@@ -43,17 +49,19 @@ pub fn execute_msg_transfer_badges(
 ```
 
 ### Querying
+
 ​
 In order to use the query functions enabled by the bindings, create a `BitBadgesQuerier` instance within your contract logic -- in either `init()` or `query()` entrypoints. You can access all the enabled queries through this object.
 ​
+
 ```rust
 // src/contract.rs
 use bitbadges_cosmwasm::{ BitBadgesQuerier };
 ​
 ...
-​pub fn query_collection(deps: Deps, collection_id: String) -> StdResult<BadgeCollection> {
+​pub fn query_collection(deps: Deps, collection_id: String) -> StdResult<TokenCollection> {
     let querier = BitBadgesQuerier::new(&deps.querier);
-    let res: BadgeCollection = querier.query_collection(collection_id)?;
+    let res: TokenCollection = querier.query_collection(collection_id)?;
 
     Ok(res)
 }
@@ -92,9 +100,10 @@ msgDetails='{
         ]
     }
 }'
-bitbadgeschaind tx wasm execute $TESTER $msgDetails --from=<address> --chain-id=<chain-id> --gas=auto -y 
+bitbadgeschaind tx wasm execute $TESTER $msgDetails --from=<address> --chain-id=<chain-id> --gas=auto -y
 ```
 
 ## Acknowledgements
-This repository was forked form the Cudos cosmwasm bindings. 
+
+This repository was forked form the Cudos cosmwasm bindings.
 We would like to thank the Cudos team for their work on this project.
