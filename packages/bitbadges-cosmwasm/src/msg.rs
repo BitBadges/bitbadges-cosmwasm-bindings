@@ -788,7 +788,6 @@ pub struct Transfer {
     pub only_check_prioritized_incoming_approvals: bool,
     pub only_check_prioritized_outgoing_approvals: bool,
     pub precalculation_options: PrecalculationOptions,
-    pub affiliate_address: String,
     pub num_attempts: String,
 }
 

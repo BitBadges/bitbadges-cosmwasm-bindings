@@ -2653,7 +2653,6 @@
     "Transfer": {
       "type": "object",
       "required": [
-        "affiliateAddress",
         "balances",
         "ethSignatureProofs",
         "from",
@@ -2668,9 +2667,6 @@
         "toAddresses"
       ],
       "properties": {
-        "affiliateAddress": {
-          "type": "string"
-        },
         "balances": {
           "type": "array",
           "items": {

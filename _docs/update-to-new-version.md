@@ -76,6 +76,7 @@ Update the README.md with the newest version support:
 ## Version History
 
 -   v19: Added support for:
+
     -   `SetReservedProtocolAddressMsg` message type
     -   `QueryGetWrappableBalances` query type
     -   `QueryIsAddressReservedProtocol` query type
@@ -90,3 +91,6 @@ Update the README.md with the newest version support:
         -   `ApprovalCriteria`: `sender_checks`, `recipient_checks`, `initiator_checks` (all optional `AddressChecks`)
         -   `OutgoingApprovalCriteria`: `recipient_checks`, `initiator_checks` (both optional `AddressChecks`)
         -   `IncomingApprovalCriteria`: `sender_checks`, `initiator_checks` (both optional `AddressChecks`)
+
+-   v20: Changes:
+    -   Removed `affiliate_address` field from `Transfer` struct (removed from `MsgTransferTokens`)
