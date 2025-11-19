@@ -66,4 +66,27 @@ impl<'a> BitBadgesQuerier<'a> {
         .into();
         self.querier.query(&request)
     }
+
+    pub fn query_wrappable_balances<T: Into<String>>(&self, denom: String, address: String) -> StdResult<String> {
+        let request = BitBadgesQuery::QueryGetWrappableBalances { 
+            denom,
+            address
+        }
+        .into();
+        self.querier.query(&request)
+    }
+
+    pub fn query_is_address_reserved_protocol<T: Into<String>>(&self, address: String) -> StdResult<String> {
+        let request = BitBadgesQuery::QueryIsAddressReservedProtocol { 
+            address
+        }
+        .into();
+        self.querier.query(&request)
+    }
+
+    pub fn query_all_reserved_protocol_addresses(&self) -> StdResult<String> {
+        let request = BitBadgesQuery::QueryGetAllReservedProtocolAddresses {}
+        .into();
+        self.querier.query(&request)
+    }
 }

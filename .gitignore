@@ -16,3 +16,6 @@ artifacts/
 # Auto-gen
 .cargo-ok
 bitbadges-data/
+
+scripts/
+proto/

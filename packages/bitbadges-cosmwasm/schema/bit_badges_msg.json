@@ -232,6 +232,16 @@
                 "$ref": "#/definitions/CustomDataTimeline"
               }
             },
+            "invariants": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/InvariantsAddObject"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "isArchivedTimeline": {
               "type": "array",
               "items": {
@@ -1146,6 +1156,34 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "setReservedProtocolAddressMsg"
+      ],
+      "properties": {
+        "setReservedProtocolAddressMsg": {
+          "type": "object",
+          "required": [
+            "address",
+            "authority",
+            "isReservedProtocol"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "authority": {
+              "type": "string"
+            },
+            "isReservedProtocol": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
     }
   ],
   "definitions": {
@@ -1167,6 +1205,29 @@
           "items": {
             "$ref": "#/definitions/UintRange"
           }
+        }
+      }
+    },
+    "AddressChecks": {
+      "type": "object",
+      "required": [
+        "mustBeLiquidityPool",
+        "mustBeWasmContract",
+        "mustNotBeLiquidityPool",
+        "mustNotBeWasmContract"
+      ],
+      "properties": {
+        "mustBeLiquidityPool": {
+          "type": "boolean"
+        },
+        "mustBeWasmContract": {
+          "type": "boolean"
+        },
+        "mustNotBeLiquidityPool": {
+          "type": "boolean"
+        },
+        "mustNotBeWasmContract": {
+          "type": "boolean"
         }
       }
     },
@@ -1288,6 +1349,16 @@
             "$ref": "#/definitions/ETHSignatureChallenge"
           }
         },
+        "initiatorChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AddressChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "maxNumTransfers": {
           "$ref": "#/definitions/MaxNumTransfers"
         },
@@ -1312,6 +1383,16 @@
         "predeterminedBalances": {
           "$ref": "#/definitions/PredeterminedBalances"
         },
+        "recipientChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AddressChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "requireFromDoesNotEqualInitiatedBy": {
           "type": "boolean"
         },
@@ -1323,6 +1404,16 @@
         },
         "requireToEqualsInitiatedBy": {
           "type": "boolean"
+        },
+        "senderChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AddressChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "userRoyalties": {
           "$ref": "#/definitions/UserRoyalties"
@@ -1543,14 +1634,32 @@
     "CollectionInvariants": {
       "type": "object",
       "required": [
+        "disablePoolCreation",
         "maxSupplyPerId",
-        "noCustomOwnershipTimes"
+        "noCustomOwnershipTimes",
+        "noForcefulPostMintTransfers"
       ],
       "properties": {
+        "cosmosCoinBackedPath": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CosmosCoinBackedPath"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disablePoolCreation": {
+          "type": "boolean"
+        },
         "maxSupplyPerId": {
           "type": "string"
         },
         "noCustomOwnershipTimes": {
+          "type": "boolean"
+        },
+        "noForcefulPostMintTransfers": {
           "type": "boolean"
         }
       }
@@ -1669,6 +1778,54 @@
           "type": "string"
         },
         "denom": {
+          "type": "string"
+        }
+      }
+    },
+    "CosmosCoinBackedPath": {
+      "type": "object",
+      "required": [
+        "address",
+        "balances",
+        "ibcAmount",
+        "ibcDenom"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "balances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Balance"
+          }
+        },
+        "ibcAmount": {
+          "type": "string"
+        },
+        "ibcDenom": {
+          "type": "string"
+        }
+      }
+    },
+    "CosmosCoinBackedPathAddObject": {
+      "type": "object",
+      "required": [
+        "balances",
+        "ibcAmount",
+        "ibcDenom"
+      ],
+      "properties": {
+        "balances": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Balance"
+          }
+        },
+        "ibcAmount": {
+          "type": "string"
+        },
+        "ibcDenom": {
           "type": "string"
         }
       }
@@ -1832,6 +1989,16 @@
             "$ref": "#/definitions/ETHSignatureChallenge"
           }
         },
+        "initiatorChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AddressChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "maxNumTransfers": {
           "$ref": "#/definitions/MaxNumTransfers"
         },
@@ -1855,6 +2022,16 @@
         },
         "requireFromEqualsInitiatedBy": {
           "type": "boolean"
+        },
+        "senderChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AddressChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
@@ -1893,6 +2070,39 @@
           "items": {
             "$ref": "#/definitions/Balance"
           }
+        }
+      }
+    },
+    "InvariantsAddObject": {
+      "type": "object",
+      "required": [
+        "disablePoolCreation",
+        "maxSupplyPerId",
+        "noCustomOwnershipTimes",
+        "noForcefulPostMintTransfers"
+      ],
+      "properties": {
+        "cosmosCoinBackedPath": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CosmosCoinBackedPathAddObject"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "disablePoolCreation": {
+          "type": "boolean"
+        },
+        "maxSupplyPerId": {
+          "type": "string"
+        },
+        "noCustomOwnershipTimes": {
+          "type": "boolean"
+        },
+        "noForcefulPostMintTransfers": {
+          "type": "boolean"
         }
       }
     },
@@ -2134,6 +2344,16 @@
             "$ref": "#/definitions/ETHSignatureChallenge"
           }
         },
+        "initiatorChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AddressChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "maxNumTransfers": {
           "$ref": "#/definitions/MaxNumTransfers"
         },
@@ -2151,6 +2371,16 @@
         },
         "predeterminedBalances": {
           "$ref": "#/definitions/PredeterminedBalances"
+        },
+        "recipientChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AddressChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "requireToDoesNotEqualInitiatedBy": {
           "type": "boolean"

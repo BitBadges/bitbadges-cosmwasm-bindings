@@ -208,6 +208,7 @@ pub fn execute_msg_update_collection(
         is_archived_timeline,
         mint_escrow_coins_to_transfer,
         cosmos_coin_wrapper_paths_to_add,
+        None, // invariants are set on creation and cannot be modified
     );
     Ok(Response::new().add_message(msg))
 }

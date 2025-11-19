@@ -75,6 +75,7 @@ pub enum BitBadgesMsg {
     is_archived_timeline: Vec<IsArchivedTimeline>,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    invariants: Option<InvariantsAddObject>,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -265,6 +266,13 @@ pub enum BitBadgesMsg {
     collection_id: String,
     is_archived_timeline: Vec<IsArchivedTimeline>,
     can_archive_collection: Vec<TimedUpdatePermission>,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  SetReservedProtocolAddressMsg {
+    authority: String,
+    address: String,
+    is_reserved_protocol: bool,
   }
 }
 
@@ -348,6 +356,7 @@ pub fn update_collection_msg(
   is_archived_timeline: Vec<IsArchivedTimeline>,
   mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
   cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+  invariants: Option<InvariantsAddObject>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateCollectionMsg {
     collection_id,
@@ -371,6 +380,7 @@ pub fn update_collection_msg(
       is_archived_timeline,
       mint_escrow_coins_to_transfer,
       cosmos_coin_wrapper_paths_to_add,
+      invariants,
   }
   .into()
 }
@@ -734,6 +744,19 @@ pub fn set_is_archived_msg(
   .into()
 }
 
+pub fn set_reserved_protocol_address_msg(
+  authority: String,
+  address: String,
+  is_reserved_protocol: bool,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::SetReservedProtocolAddressMsg {
+    authority,
+    address,
+    is_reserved_protocol,
+  }
+  .into()
+}
+
 
 
 
@@ -1030,6 +1053,9 @@ pub struct ApprovalCriteria {
   pub must_own_tokens: Vec<MustOwnTokens>,
   pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
+  pub sender_checks: Option<AddressChecks>,
+  pub recipient_checks: Option<AddressChecks>,
+  pub initiator_checks: Option<AddressChecks>,
 }
 
 
@@ -1047,6 +1073,8 @@ pub struct OutgoingApprovalCriteria {
   pub must_own_tokens: Vec<MustOwnTokens>,
   pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
+  pub recipient_checks: Option<AddressChecks>,
+  pub initiator_checks: Option<AddressChecks>,
 }
 
 
@@ -1064,6 +1092,8 @@ pub struct IncomingApprovalCriteria {
   pub must_own_tokens: Vec<MustOwnTokens>,
   pub dynamic_store_challenges: Vec<DynamicStoreChallenge>,
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
+  pub sender_checks: Option<AddressChecks>,
+  pub initiator_checks: Option<AddressChecks>,
 }
 
 
@@ -1273,6 +1303,8 @@ pub struct CosmosCoinWrapperPath {
   pub balances: Vec<Balance>,
   pub symbol: String,
   pub denom_units: Vec<DenomUnit>,
+  pub allow_override_with_any_valid_token: bool,
+  pub allow_cosmos_wrapping: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1328,6 +1360,15 @@ pub struct ETHSignatureChallenge {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
+pub struct AddressChecks {
+  pub must_be_wasm_contract: bool,
+  pub must_not_be_wasm_contract: bool,
+  pub must_be_liquidity_pool: bool,
+  pub must_not_be_liquidity_pool: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct CosmosCoinWrapperPathAddObject {
   pub denom: String,
   pub balances: Vec<Balance>,
@@ -1341,6 +1382,36 @@ pub struct CosmosCoinWrapperPathAddObject {
 pub struct CollectionInvariants {
   pub no_custom_ownership_times: bool,
   pub max_supply_per_id: String,
+  pub cosmos_coin_backed_path: Option<CosmosCoinBackedPath>,
+  pub no_forceful_post_mint_transfers: bool,
+  pub disable_pool_creation: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct CosmosCoinBackedPath {
+  pub address: String,
+  pub ibc_denom: String,
+  pub balances: Vec<Balance>,
+  pub ibc_amount: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct CosmosCoinBackedPathAddObject {
+  pub ibc_denom: String,
+  pub balances: Vec<Balance>,
+  pub ibc_amount: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct InvariantsAddObject {
+  pub no_custom_ownership_times: bool,
+  pub max_supply_per_id: String,
+  pub cosmos_coin_backed_path: Option<CosmosCoinBackedPathAddObject>,
+  pub no_forceful_post_mint_transfers: bool,
+  pub disable_pool_creation: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

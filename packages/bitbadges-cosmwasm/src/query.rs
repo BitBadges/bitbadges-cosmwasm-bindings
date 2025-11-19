@@ -66,6 +66,20 @@ pub enum BitBadgesQuery {
       challenge_tracker_id: String,
       signature: String,
     },
+
+    #[serde(rename_all = "camelCase")]
+    QueryGetWrappableBalances {
+      denom: String,
+      address: String,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    QueryIsAddressReservedProtocol {
+      address: String,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    QueryGetAllReservedProtocolAddresses {},
 }
 
 
@@ -116,6 +130,21 @@ pub struct QueryGetDynamicStoreValueResponse {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct QueryGetETHSignatureTrackerResponse {
     pub num_used: String, //Uint
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryGetWrappableBalancesResponse {
+    pub max_wrappable_amount: String, //Uint
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryIsAddressReservedProtocolResponse {
+    pub is_reserved_protocol: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryGetAllReservedProtocolAddressesResponse {
+    pub addresses: Vec<String>,
 }
 
 

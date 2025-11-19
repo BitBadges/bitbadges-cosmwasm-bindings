@@ -234,6 +234,62 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryGetWrappableBalances"
+      ],
+      "properties": {
+        "queryGetWrappableBalances": {
+          "type": "object",
+          "required": [
+            "address",
+            "denom"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "denom": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryIsAddressReservedProtocol"
+      ],
+      "properties": {
+        "queryIsAddressReservedProtocol": {
+          "type": "object",
+          "required": [
+            "address"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryGetAllReservedProtocolAddresses"
+      ],
+      "properties": {
+        "queryGetAllReservedProtocolAddresses": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
     }
   ]
 }
