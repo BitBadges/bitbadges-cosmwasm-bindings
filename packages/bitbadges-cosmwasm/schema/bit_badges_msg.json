@@ -1273,6 +1273,27 @@
         }
       }
     },
+    "AltTimeChecks": {
+      "type": "object",
+      "required": [
+        "offlineDays",
+        "offlineHours"
+      ],
+      "properties": {
+        "offlineDays": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        },
+        "offlineHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/UintRange"
+          }
+        }
+      }
+    },
     "ApprovalAmounts": {
       "type": "object",
       "required": [
@@ -1325,6 +1346,16 @@
         "userRoyalties"
       ],
       "properties": {
+        "altTimeChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AltTimeChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "approvalAmounts": {
           "$ref": "#/definitions/ApprovalAmounts"
         },
@@ -1965,6 +1996,16 @@
         "requireFromEqualsInitiatedBy"
       ],
       "properties": {
+        "altTimeChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AltTimeChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "approvalAmounts": {
           "$ref": "#/definitions/ApprovalAmounts"
         },
@@ -2320,6 +2361,16 @@
         "requireToEqualsInitiatedBy"
       ],
       "properties": {
+        "altTimeChecks": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/AltTimeChecks"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "approvalAmounts": {
           "$ref": "#/definitions/ApprovalAmounts"
         },

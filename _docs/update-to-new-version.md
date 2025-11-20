@@ -94,3 +94,8 @@ Update the README.md with the newest version support:
 
 -   v20: Changes:
     -   Removed `affiliate_address` field from `Transfer` struct (removed from `MsgTransferTokens`)
+    -   Added `AltTimeChecks` type for alternative time-based checks (offline hours/days for approval denial)
+    -   Added `alt_time_checks` field to approval criteria:
+        -   `ApprovalCriteria`: `alt_time_checks` (optional `AltTimeChecks`)
+        -   `OutgoingApprovalCriteria`: `alt_time_checks` (optional `AltTimeChecks`)
+        -   `IncomingApprovalCriteria`: `alt_time_checks` (optional `AltTimeChecks`)

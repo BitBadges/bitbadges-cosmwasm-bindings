@@ -1055,6 +1055,7 @@ pub struct ApprovalCriteria {
   pub sender_checks: Option<AddressChecks>,
   pub recipient_checks: Option<AddressChecks>,
   pub initiator_checks: Option<AddressChecks>,
+  pub alt_time_checks: Option<AltTimeChecks>,
 }
 
 
@@ -1074,6 +1075,7 @@ pub struct OutgoingApprovalCriteria {
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
   pub recipient_checks: Option<AddressChecks>,
   pub initiator_checks: Option<AddressChecks>,
+  pub alt_time_checks: Option<AltTimeChecks>,
 }
 
 
@@ -1093,6 +1095,7 @@ pub struct IncomingApprovalCriteria {
   pub eth_signature_challenges: Vec<ETHSignatureChallenge>,
   pub sender_checks: Option<AddressChecks>,
   pub initiator_checks: Option<AddressChecks>,
+  pub alt_time_checks: Option<AltTimeChecks>,
 }
 
 
@@ -1364,6 +1367,13 @@ pub struct AddressChecks {
   pub must_not_be_wasm_contract: bool,
   pub must_be_liquidity_pool: bool,
   pub must_not_be_liquidity_pool: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct AltTimeChecks {
+  pub offline_hours: Vec<UintRange>,
+  pub offline_days: Vec<UintRange>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
