@@ -93,9 +93,17 @@ Update the README.md with the newest version support:
         -   `IncomingApprovalCriteria`: `sender_checks`, `initiator_checks` (both optional `AddressChecks`)
 
 -   v20: Changes:
+
     -   Removed `affiliate_address` field from `Transfer` struct (removed from `MsgTransferTokens`)
     -   Added `AltTimeChecks` type for alternative time-based checks (offline hours/days for approval denial)
     -   Added `alt_time_checks` field to approval criteria:
         -   `ApprovalCriteria`: `alt_time_checks` (optional `AltTimeChecks`)
         -   `OutgoingApprovalCriteria`: `alt_time_checks` (optional `AltTimeChecks`)
         -   `IncomingApprovalCriteria`: `alt_time_checks` (optional `AltTimeChecks`)
+
+-   v21: Changes:
+    -   Added `allow_cosmos_wrapping` field to `CosmosCoinWrapperPathAddObject` struct
+    -   Added `must_prioritize` field to approval criteria:
+        -   `ApprovalCriteria`: `must_prioritize` (bool - if true, this approval must be explicitly prioritized in PrioritizedApprovals to be used)
+        -   `OutgoingApprovalCriteria`: `must_prioritize` (bool)
+        -   `IncomingApprovalCriteria`: `must_prioritize` (bool)

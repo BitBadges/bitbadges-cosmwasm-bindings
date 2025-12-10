@@ -1336,6 +1336,7 @@
         "maxNumTransfers",
         "merkleChallenges",
         "mustOwnTokens",
+        "mustPrioritize",
         "overridesFromOutgoingApprovals",
         "overridesToIncomingApprovals",
         "predeterminedBalances",
@@ -1404,6 +1405,9 @@
           "items": {
             "$ref": "#/definitions/MustOwnTokens"
           }
+        },
+        "mustPrioritize": {
+          "type": "boolean"
         },
         "overridesFromOutgoingApprovals": {
           "type": "boolean"
@@ -1864,6 +1868,7 @@
     "CosmosCoinWrapperPathAddObject": {
       "type": "object",
       "required": [
+        "allowCosmosWrapping",
         "allowOverrideWithAnyValidToken",
         "balances",
         "denom",
@@ -1871,6 +1876,9 @@
         "symbol"
       ],
       "properties": {
+        "allowCosmosWrapping": {
+          "type": "boolean"
+        },
         "allowOverrideWithAnyValidToken": {
           "type": "boolean"
         },
@@ -1991,6 +1999,7 @@
         "maxNumTransfers",
         "merkleChallenges",
         "mustOwnTokens",
+        "mustPrioritize",
         "predeterminedBalances",
         "requireFromDoesNotEqualInitiatedBy",
         "requireFromEqualsInitiatedBy"
@@ -2054,6 +2063,9 @@
           "items": {
             "$ref": "#/definitions/MustOwnTokens"
           }
+        },
+        "mustPrioritize": {
+          "type": "boolean"
         },
         "predeterminedBalances": {
           "$ref": "#/definitions/PredeterminedBalances"
@@ -2356,6 +2368,7 @@
         "maxNumTransfers",
         "merkleChallenges",
         "mustOwnTokens",
+        "mustPrioritize",
         "predeterminedBalances",
         "requireToDoesNotEqualInitiatedBy",
         "requireToEqualsInitiatedBy"
@@ -2419,6 +2432,9 @@
           "items": {
             "$ref": "#/definitions/MustOwnTokens"
           }
+        },
+        "mustPrioritize": {
+          "type": "boolean"
         },
         "predeterminedBalances": {
           "$ref": "#/definitions/PredeterminedBalances"

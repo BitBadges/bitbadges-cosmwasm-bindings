@@ -1056,6 +1056,7 @@ pub struct ApprovalCriteria {
   pub recipient_checks: Option<AddressChecks>,
   pub initiator_checks: Option<AddressChecks>,
   pub alt_time_checks: Option<AltTimeChecks>,
+  pub must_prioritize: bool,
 }
 
 
@@ -1076,6 +1077,7 @@ pub struct OutgoingApprovalCriteria {
   pub recipient_checks: Option<AddressChecks>,
   pub initiator_checks: Option<AddressChecks>,
   pub alt_time_checks: Option<AltTimeChecks>,
+  pub must_prioritize: bool,
 }
 
 
@@ -1096,6 +1098,7 @@ pub struct IncomingApprovalCriteria {
   pub sender_checks: Option<AddressChecks>,
   pub initiator_checks: Option<AddressChecks>,
   pub alt_time_checks: Option<AltTimeChecks>,
+  pub must_prioritize: bool,
 }
 
 
@@ -1384,6 +1387,7 @@ pub struct CosmosCoinWrapperPathAddObject {
   pub symbol: String,
   pub denom_units: Vec<DenomUnit>,
   pub allow_override_with_any_valid_token: bool,
+  pub allow_cosmos_wrapping: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
