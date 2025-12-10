@@ -20,9 +20,9 @@ bitbadges-cosmwasm = { version = "X.X.X" }
 | v14                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v14 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
 | v16                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v16 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
 | v17                | a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068 | [v17 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/a3dad84d0ed7b8fdcb789a5cc8fbd04562e8b068) |
-| v18                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
-| v19                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
-| v20                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
+| v18                | 1955d43920a390cb451a68e4e5ef1b3e4e867d8d | [v18 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/1955d43920a390cb451a68e4e5ef1b3e4e867d8d) |
+| v19                | 1955d43920a390cb451a68e4e5ef1b3e4e867d8d | [v19 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/1955d43920a390cb451a68e4e5ef1b3e4e867d8d) |
+| v20                | 75c82042ba5a4bbceaa48d972cc0e2792902357b | [v20 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/75c82042ba5a4bbceaa48d972cc0e2792902357b) |
 | v21                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
 
 **Note:** The v12/v13/v14/v16/v17/v18/v19/v20/v21 refer to our blockchain's versions. Make sure to use the appropriate bindings version for your target blockchain version.
