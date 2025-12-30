@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use cosmwasm_std::CustomQuery;
 
-use crate::{AddressList, ApprovalTracker, TokenCollection, UserBalanceStore, DynamicStore, DynamicStoreValue};
+use crate::{AddressList, ApprovalTracker, TokenCollection, UserBalanceStore, DynamicStore, DynamicStoreValue, VoteProof};
 
 // implement custom query
 impl CustomQuery for BitBadgesQuery {}
@@ -80,6 +80,25 @@ pub enum BitBadgesQuery {
 
     #[serde(rename_all = "camelCase")]
     QueryGetAllReservedProtocolAddresses {},
+
+    #[serde(rename_all = "camelCase")]
+    QueryGetVote {
+      collection_id: String,
+      approval_level: String,
+      approver_address: String,
+      approval_id: String,
+      proposal_id: String,
+      voter_address: String,
+    },
+
+    #[serde(rename_all = "camelCase")]
+    QueryGetVotes {
+      collection_id: String,
+      approval_level: String,
+      approver_address: String,
+      approval_id: String,
+      proposal_id: String,
+    },
 }
 
 
@@ -145,6 +164,16 @@ pub struct QueryIsAddressReservedProtocolResponse {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct QueryGetAllReservedProtocolAddressesResponse {
     pub addresses: Vec<String>,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryGetVoteResponse {
+    pub vote: VoteProof,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct QueryGetVotesResponse {
+    pub votes: Vec<VoteProof>,
 }
 
 

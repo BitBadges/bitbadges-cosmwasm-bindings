@@ -1,11 +1,10 @@
 use bitbadges_cosmwasm::{
   AddressList, Transfer,
-  Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, 
-  TokenMetadataTimeline, CustomDataTimeline,
-  CollectionApproval, StandardsTimeline, IsArchivedTimeline, UserBalanceStore, 
+  CollectionPermissions, CollectionMetadata, TokenMetadata,
+  CollectionApproval, UserBalanceStore, 
   UintRange, UserOutgoingApproval, UserIncomingApproval, UserPermissions, 
-  CosmosCoin, CosmosCoinWrapperPathAddObject, TokenIdsActionPermission, 
-  TimedUpdatePermission, TimedUpdateWithTokenIdsPermission, CollectionApprovalPermission,
+  CosmosCoin, CosmosCoinWrapperPathAddObject, AliasPathAddObject, TokenIdsActionPermission, 
+  ActionPermission, CollectionApprovalPermission,
   CollectionInvariants
 };
 use schemars::JsonSchema;
@@ -55,15 +54,16 @@ pub enum ExecuteMsg {
       default_balances: UserBalanceStore,
       valid_token_ids: Vec<UintRange>,
       collection_permissions: CollectionPermissions,
-      manager_timeline: Vec<ManagerTimeline>,
-      collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-      token_metadata_timeline: Vec<TokenMetadataTimeline>,
-      custom_data_timeline: Vec<CustomDataTimeline>,
+      manager: String,
+      collection_metadata: CollectionMetadata,
+      token_metadata: Vec<TokenMetadata>,
+      custom_data: String,
       collection_approvals: Vec<CollectionApproval>,
-      standards_timeline: Vec<StandardsTimeline>,
-      is_archived_timeline: Vec<IsArchivedTimeline>,
+      standards: Vec<String>,
+      is_archived: bool,
       mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
       cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+      alias_paths_to_add: Vec<AliasPathAddObject>,
       invariants: CollectionInvariants,
     },
 
@@ -74,22 +74,23 @@ pub enum ExecuteMsg {
       valid_token_ids: Vec<UintRange>,
       update_collection_permissions: bool,
       collection_permissions: CollectionPermissions,
-      update_manager_timeline: bool,
-      manager_timeline: Vec<ManagerTimeline>,
-      update_collection_metadata_timeline: bool,
-      collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-      update_token_metadata_timeline: bool,
-      token_metadata_timeline: Vec<TokenMetadataTimeline>,
-      update_custom_data_timeline: bool,
-      custom_data_timeline: Vec<CustomDataTimeline>,
+      update_manager: bool,
+      manager: String,
+      update_collection_metadata: bool,
+      collection_metadata: CollectionMetadata,
+      update_token_metadata: bool,
+      token_metadata: Vec<TokenMetadata>,
+      update_custom_data: bool,
+      custom_data: String,
       update_collection_approvals: bool,
       collection_approvals: Vec<CollectionApproval>,
-      update_standards_timeline: bool,
-      standards_timeline: Vec<StandardsTimeline>,
-      update_is_archived_timeline: bool,
-      is_archived_timeline: Vec<IsArchivedTimeline>,
+      update_standards: bool,
+      standards: Vec<String>,
+      update_is_archived: bool,
+      is_archived: bool,
       mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
       cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+      alias_paths_to_add: Vec<AliasPathAddObject>,
     },
 
     #[serde(rename_all = "camelCase")]
@@ -100,22 +101,23 @@ pub enum ExecuteMsg {
       valid_token_ids: Vec<UintRange>,
       update_collection_permissions: bool,
       collection_permissions: CollectionPermissions,
-      update_manager_timeline: bool,
-      manager_timeline: Vec<ManagerTimeline>,
-      update_collection_metadata_timeline: bool,
-      collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-      update_token_metadata_timeline: bool,
-      token_metadata_timeline: Vec<TokenMetadataTimeline>,
-      update_custom_data_timeline: bool,
-      custom_data_timeline: Vec<CustomDataTimeline>,
+      update_manager: bool,
+      manager: String,
+      update_collection_metadata: bool,
+      collection_metadata: CollectionMetadata,
+      update_token_metadata: bool,
+      token_metadata: Vec<TokenMetadata>,
+      update_custom_data: bool,
+      custom_data: String,
       update_collection_approvals: bool,
       collection_approvals: Vec<CollectionApproval>,
-      update_standards_timeline: bool,
-      standards_timeline: Vec<StandardsTimeline>,
-      update_is_archived_timeline: bool,
-      is_archived_timeline: Vec<IsArchivedTimeline>,
+      update_standards: bool,
+      standards: Vec<String>,
+      update_is_archived: bool,
+      is_archived: bool,
       mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
       cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+      alias_paths_to_add: Vec<AliasPathAddObject>,
       invariants: CollectionInvariants,
     },
 
@@ -146,36 +148,36 @@ pub enum ExecuteMsg {
     #[serde(rename_all = "camelCase")]
     SetManagerMsg {
       collection_id: String,
-      manager_timeline: Vec<ManagerTimeline>,
-      can_update_manager: Vec<TimedUpdatePermission>,
+      manager: String,
+      can_update_manager: Vec<ActionPermission>,
     },
 
     #[serde(rename_all = "camelCase")]
     SetCollectionMetadataMsg {
       collection_id: String,
-      collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-      can_update_collection_metadata: Vec<TimedUpdatePermission>,
+      collection_metadata: CollectionMetadata,
+      can_update_collection_metadata: Vec<ActionPermission>,
     },
 
     #[serde(rename_all = "camelCase")]
     SetTokenMetadataMsg {
       collection_id: String,
-      token_metadata_timeline: Vec<TokenMetadataTimeline>,
-      can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
+      token_metadata: Vec<TokenMetadata>,
+      can_update_token_metadata: Vec<TokenIdsActionPermission>,
     },
 
     #[serde(rename_all = "camelCase")]
     SetCustomDataMsg {
       collection_id: String,
-      custom_data_timeline: Vec<CustomDataTimeline>,
-      can_update_custom_data: Vec<TimedUpdatePermission>,
+      custom_data: String,
+      can_update_custom_data: Vec<ActionPermission>,
     },
 
     #[serde(rename_all = "camelCase")]
     SetStandardsMsg {
       collection_id: String,
-      standards_timeline: Vec<StandardsTimeline>,
-      can_update_standards: Vec<TimedUpdatePermission>,
+      standards: Vec<String>,
+      can_update_standards: Vec<ActionPermission>,
     },
 
     #[serde(rename_all = "camelCase")]
@@ -188,8 +190,8 @@ pub enum ExecuteMsg {
     #[serde(rename_all = "camelCase")]
     SetIsArchivedMsg {
       collection_id: String,
-      is_archived_timeline: Vec<IsArchivedTimeline>,
-      can_archive_collection: Vec<TimedUpdatePermission>,
+      is_archived: bool,
+      can_archive_collection: Vec<ActionPermission>,
     },
 
     // Add other messages here as needed

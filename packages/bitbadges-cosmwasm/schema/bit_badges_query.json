@@ -290,6 +290,82 @@
         }
       },
       "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryGetVote"
+      ],
+      "properties": {
+        "queryGetVote": {
+          "type": "object",
+          "required": [
+            "approvalId",
+            "approvalLevel",
+            "approverAddress",
+            "collectionId",
+            "proposalId",
+            "voterAddress"
+          ],
+          "properties": {
+            "approvalId": {
+              "type": "string"
+            },
+            "approvalLevel": {
+              "type": "string"
+            },
+            "approverAddress": {
+              "type": "string"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "proposalId": {
+              "type": "string"
+            },
+            "voterAddress": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "queryGetVotes"
+      ],
+      "properties": {
+        "queryGetVotes": {
+          "type": "object",
+          "required": [
+            "approvalId",
+            "approvalLevel",
+            "approverAddress",
+            "collectionId",
+            "proposalId"
+          ],
+          "properties": {
+            "approvalId": {
+              "type": "string"
+            },
+            "approvalLevel": {
+              "type": "string"
+            },
+            "approverAddress": {
+              "type": "string"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "proposalId": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
     }
   ]
 }

@@ -107,3 +107,33 @@ Update the README.md with the newest version support:
         -   `ApprovalCriteria`: `must_prioritize` (bool - if true, this approval must be explicitly prioritized in PrioritizedApprovals to be used)
         -   `OutgoingApprovalCriteria`: `must_prioritize` (bool)
         -   `IncomingApprovalCriteria`: `must_prioritize` (bool)
+
+-   v22: Major Changes:
+    -   **Timeline Functionality Removal**: Removed all timeline-based functionality. Timeline fields have been converted to direct values:
+        -   `manager_timeline: Vec<ManagerTimeline>` → `manager: String`
+        -   `collection_metadata_timeline: Vec<CollectionMetadataTimeline>` → `collection_metadata: CollectionMetadata`
+        -   `token_metadata_timeline: Vec<TokenMetadataTimeline>` → `token_metadata: Vec<TokenMetadata>`
+        -   `custom_data_timeline: Vec<CustomDataTimeline>` → `custom_data: String`
+        -   `standards_timeline: Vec<StandardsTimeline>` → `standards: Vec<String>`
+        -   `is_archived_timeline: Vec<IsArchivedTimeline>` → `is_archived: bool`
+    -   **Permission Updates**: Replaced `TimedUpdatePermission` and `TimedUpdateWithTokenIdsPermission` with `ActionPermission` and `TokenIdsActionPermission` in `CollectionPermissions`
+    -   **Removed Timeline Types**: Removed all timeline-related structs (`ManagerTimeline`, `CollectionMetadataTimeline`, `TokenMetadataTimeline`, `CustomDataTimeline`, `StandardsTimeline`, `IsArchivedTimeline`, `TimedUpdatePermission`, `TimedUpdateWithTokenIdsPermission`)
+    -   **Precalculation Options**: Moved `precalculation_options` from `Transfer` struct to `PrecalculateBalancesFromApprovalDetails` struct. Removed `num_attempts` field from `Transfer` struct.
+    -   **New Message Type**: Added `CastVoteMsg` for voting challenges with fields: `collection_id`, `approval_level`, `approver_address`, `approval_id`, `proposal_id`, `yes_weight`
+    -   **Alias Path Support**: Added `alias_paths_to_add: Vec<AliasPathAddObject>` to `CreateCollectionMsg`, `UpdateCollectionMsg`, and `UniversalUpdateCollectionMsg`
+    -   **Path Redesign**: Updated path structures with new conversion and metadata fields:
+        -   `CosmosCoinWrapperPath`: Now uses `conversion: ConversionWithoutDenom` and `metadata: PathMetadata` instead of `balances: Vec<Balance>`
+        -   `CosmosCoinWrapperPathAddObject`: Updated to match new structure
+        -   `CosmosCoinBackedPath`: Now uses `conversion: Conversion` instead of `balances` and `ibc_amount`
+        -   `CosmosCoinBackedPathAddObject`: Updated to match new structure
+        -   `DenomUnit`: Added `metadata: PathMetadata` field
+        -   Added new types: `AliasPath`, `AliasPathAddObject`, `PathMetadata`, `Conversion`, `ConversionWithoutDenom`, `ConversionSideA`, `ConversionSideAWithDenom`
+    -   **Voting Challenges**: Added voting challenge support:
+        -   Added `VotingChallenge` struct with `proposal_id`, `quorum_threshold`, `voters`, `uri`, `custom_data`
+        -   Added `Voter` struct with `address` and `weight`
+        -   Added `VoteProof` struct with `proposal_id`, `voter`, `yes_weight`
+        -   Added `voting_challenges: Vec<VotingChallenge>` to `ApprovalCriteria`, `OutgoingApprovalCriteria`, and `IncomingApprovalCriteria`
+    -   **Vote Queries**: Added vote query types:
+        -   `QueryGetVote`: Query a single vote by collection ID, approval level, approver address, approval ID, proposal ID, and voter address
+        -   `QueryGetVotes`: Query all votes for a proposal
+        -   Added corresponding response types and querier helper methods

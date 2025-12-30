@@ -1,12 +1,11 @@
 use bitbadges_cosmwasm::{
   delete_collection_msg, BitBadgesMsg, AddressList, address_lists_msg, Transfer, transfer_tokens_msg,
-  Balance, CollectionPermissions, ManagerTimeline, CollectionMetadataTimeline, TokenMetadataTimeline, 
-  CustomDataTimeline, CollectionApproval, StandardsTimeline, IsArchivedTimeline,
+  CollectionPermissions, CollectionMetadata, TokenMetadata, CollectionApproval,
   create_collection_msg, update_collection_msg, universal_update_collection_msg, UserBalanceStore,
   UintRange, update_user_approvals_msg, UserOutgoingApproval, UserIncomingApproval, UserPermissions,
-  CosmosCoin, CosmosCoinWrapperPathAddObject, set_valid_token_ids_msg, set_manager_msg, 
+  CosmosCoin, CosmosCoinWrapperPathAddObject, AliasPathAddObject, set_valid_token_ids_msg, set_manager_msg, 
   set_collection_metadata_msg, set_token_metadata_msg, set_custom_data_msg, set_standards_msg,
-  set_collection_approvals_msg, set_is_archived_msg,
+  set_collection_approvals_msg, set_is_archived_msg, ActionPermission, TokenIdsActionPermission,
 };
 
 use cosmwasm_std::{
@@ -68,14 +67,14 @@ pub fn execute(
         ExecuteMsg::TransferTokensMsg { collection_id, transfers } => {
           execute_msg_transfer_tokens(collection_id, transfers)
         }
-        ExecuteMsg::CreateCollectionMsg { default_balances, valid_token_ids, collection_permissions, manager_timeline, collection_metadata_timeline, token_metadata_timeline, custom_data_timeline, collection_approvals, standards_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants } => {
-          execute_msg_create_collection(default_balances, valid_token_ids, collection_permissions, manager_timeline, collection_metadata_timeline, token_metadata_timeline, custom_data_timeline, collection_approvals, standards_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants)
+        ExecuteMsg::CreateCollectionMsg { default_balances, valid_token_ids, collection_permissions, manager, collection_metadata, token_metadata, custom_data, collection_approvals, standards, is_archived, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, alias_paths_to_add, invariants } => {
+          execute_msg_create_collection(default_balances, valid_token_ids, collection_permissions, manager, collection_metadata, token_metadata, custom_data, collection_approvals, standards, is_archived, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, alias_paths_to_add, invariants)
         }   
-        ExecuteMsg::UpdateCollectionMsg { collection_id, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_token_metadata_timeline, token_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add } => {
-          execute_msg_update_collection(collection_id, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_token_metadata_timeline, token_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add)
+        ExecuteMsg::UpdateCollectionMsg { collection_id, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager, manager, update_collection_metadata, collection_metadata, update_token_metadata, token_metadata, update_custom_data, custom_data, update_collection_approvals, collection_approvals, update_standards, standards, update_is_archived, is_archived, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, alias_paths_to_add } => {
+          execute_msg_update_collection(collection_id, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager, manager, update_collection_metadata, collection_metadata, update_token_metadata, token_metadata, update_custom_data, custom_data, update_collection_approvals, collection_approvals, update_standards, standards, update_is_archived, is_archived, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, alias_paths_to_add)
         }
-        ExecuteMsg::UniversalUpdateCollectionMsg { collection_id, default_balances, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_token_metadata_timeline, token_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants } => {
-          execute_msg_universal_update_collection(collection_id, default_balances, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager_timeline, manager_timeline, update_collection_metadata_timeline, collection_metadata_timeline, update_token_metadata_timeline, token_metadata_timeline, update_custom_data_timeline, custom_data_timeline, update_collection_approvals, collection_approvals, update_standards_timeline, standards_timeline, update_is_archived_timeline, is_archived_timeline, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, invariants)
+        ExecuteMsg::UniversalUpdateCollectionMsg { collection_id, default_balances, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager, manager, update_collection_metadata, collection_metadata, update_token_metadata, token_metadata, update_custom_data, custom_data, update_collection_approvals, collection_approvals, update_standards, standards, update_is_archived, is_archived, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, alias_paths_to_add, invariants } => {
+          execute_msg_universal_update_collection(collection_id, default_balances, update_valid_token_ids, valid_token_ids, update_collection_permissions, collection_permissions, update_manager, manager, update_collection_metadata, collection_metadata, update_token_metadata, token_metadata, update_custom_data, custom_data, update_collection_approvals, collection_approvals, update_standards, standards, update_is_archived, is_archived, mint_escrow_coins_to_transfer, cosmos_coin_wrapper_paths_to_add, alias_paths_to_add, invariants)
         }
         ExecuteMsg::UpdateUserApprovalsMsg { collection_id, update_outgoing_approvals, outgoing_approvals, update_incoming_approvals, incoming_approvals, update_auto_approve_self_initiated_outgoing_transfers, auto_approve_self_initiated_outgoing_transfers, update_auto_approve_self_initiated_incoming_transfers, auto_approve_self_initiated_incoming_transfers, update_auto_approve_all_incoming_transfers, auto_approve_all_incoming_transfers, update_user_permissions, user_permissions } => {
           execute_msg_update_user_approvals(collection_id, update_outgoing_approvals, outgoing_approvals, update_incoming_approvals, incoming_approvals, update_auto_approve_self_initiated_outgoing_transfers, auto_approve_self_initiated_outgoing_transfers, update_auto_approve_self_initiated_incoming_transfers, auto_approve_self_initiated_incoming_transfers, update_auto_approve_all_incoming_transfers, auto_approve_all_incoming_transfers, update_user_permissions, user_permissions)
@@ -83,26 +82,26 @@ pub fn execute(
         ExecuteMsg::SetValidTokenIdsMsg { collection_id, valid_token_ids, can_update_valid_token_ids } => {
           execute_msg_set_valid_token_ids(collection_id, valid_token_ids, can_update_valid_token_ids)
         }
-        ExecuteMsg::SetManagerMsg { collection_id, manager_timeline, can_update_manager } => {
-          execute_msg_set_manager(collection_id, manager_timeline, can_update_manager)
+        ExecuteMsg::SetManagerMsg { collection_id, manager, can_update_manager } => {
+          execute_msg_set_manager(collection_id, manager, can_update_manager)
         }
-        ExecuteMsg::SetCollectionMetadataMsg { collection_id, collection_metadata_timeline, can_update_collection_metadata } => {
-          execute_msg_set_collection_metadata(collection_id, collection_metadata_timeline, can_update_collection_metadata)
+        ExecuteMsg::SetCollectionMetadataMsg { collection_id, collection_metadata, can_update_collection_metadata } => {
+          execute_msg_set_collection_metadata(collection_id, collection_metadata, can_update_collection_metadata)
         }
-        ExecuteMsg::SetTokenMetadataMsg { collection_id, token_metadata_timeline, can_update_token_metadata } => {
-          execute_msg_set_token_metadata(collection_id, token_metadata_timeline, can_update_token_metadata)
+        ExecuteMsg::SetTokenMetadataMsg { collection_id, token_metadata, can_update_token_metadata } => {
+          execute_msg_set_token_metadata(collection_id, token_metadata, can_update_token_metadata)
         }
-        ExecuteMsg::SetCustomDataMsg { collection_id, custom_data_timeline, can_update_custom_data } => {
-          execute_msg_set_custom_data(collection_id, custom_data_timeline, can_update_custom_data)
+        ExecuteMsg::SetCustomDataMsg { collection_id, custom_data, can_update_custom_data } => {
+          execute_msg_set_custom_data(collection_id, custom_data, can_update_custom_data)
         }
-        ExecuteMsg::SetStandardsMsg { collection_id, standards_timeline, can_update_standards } => {
-          execute_msg_set_standards(collection_id, standards_timeline, can_update_standards)
+        ExecuteMsg::SetStandardsMsg { collection_id, standards, can_update_standards } => {
+          execute_msg_set_standards(collection_id, standards, can_update_standards)
         }
         ExecuteMsg::SetCollectionApprovalsMsg { collection_id, collection_approvals, can_update_collection_approvals } => {
           execute_msg_set_collection_approvals(collection_id, collection_approvals, can_update_collection_approvals)
         }
-        ExecuteMsg::SetIsArchivedMsg { collection_id, is_archived_timeline, can_archive_collection } => {
-          execute_msg_set_is_archived(collection_id, is_archived_timeline, can_archive_collection)
+        ExecuteMsg::SetIsArchivedMsg { collection_id, is_archived, can_archive_collection } => {
+          execute_msg_set_is_archived(collection_id, is_archived, can_archive_collection)
         }
     }
 }
@@ -134,30 +133,32 @@ pub fn execute_msg_create_collection(
     default_balanes: UserBalanceStore,
     valid_token_ids: Vec<UintRange>,
     collection_permissions: CollectionPermissions,
-    manager_timeline: Vec<ManagerTimeline>,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    custom_data_timeline: Vec<CustomDataTimeline>,
+    manager: String,
+    collection_metadata: CollectionMetadata,
+    token_metadata: Vec<TokenMetadata>,
+    custom_data: String,
     collection_approvals: Vec<CollectionApproval>,
-    standards_timeline: Vec<StandardsTimeline>,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
+    standards: Vec<String>,
+    is_archived: bool,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    alias_paths_to_add: Vec<AliasPathAddObject>,
     invariants: bitbadges_cosmwasm::CollectionInvariants,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = create_collection_msg(
       default_balanes,
       valid_token_ids,
       collection_permissions,
-      manager_timeline,
-      collection_metadata_timeline,
-      token_metadata_timeline,
-      custom_data_timeline,
+      manager,
+      collection_metadata,
+      token_metadata,
+      custom_data,
       collection_approvals,
-      standards_timeline,
-      is_archived_timeline,
+      standards,
+      is_archived,
       mint_escrow_coins_to_transfer,
       cosmos_coin_wrapper_paths_to_add,
+      alias_paths_to_add,
       invariants,
     );
     Ok(Response::new().add_message(msg))
@@ -169,22 +170,23 @@ pub fn execute_msg_update_collection(
     valid_token_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
-    update_manager_timeline: bool,
-    manager_timeline: Vec<ManagerTimeline>,
-    update_collection_metadata_timeline: bool,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    update_token_metadata_timeline: bool,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    update_custom_data_timeline: bool,
-    custom_data_timeline: Vec<CustomDataTimeline>,
+    update_manager: bool,
+    manager: String,
+    update_collection_metadata: bool,
+    collection_metadata: CollectionMetadata,
+    update_token_metadata: bool,
+    token_metadata: Vec<TokenMetadata>,
+    update_custom_data: bool,
+    custom_data: String,
     update_collection_approvals: bool,
     collection_approvals: Vec<CollectionApproval>,
-    update_standards_timeline: bool,
-    standards_timeline: Vec<StandardsTimeline>,
-    update_is_archived_timeline: bool,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
+    update_standards: bool,
+    standards: Vec<String>,
+    update_is_archived: bool,
+    is_archived: bool,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    alias_paths_to_add: Vec<AliasPathAddObject>,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = update_collection_msg(
         collection_id,
@@ -192,22 +194,23 @@ pub fn execute_msg_update_collection(
         valid_token_ids,
         update_collection_permissions,
         collection_permissions,
-        update_manager_timeline,
-        manager_timeline,
-        update_collection_metadata_timeline,
-        collection_metadata_timeline,
-        update_token_metadata_timeline,
-        token_metadata_timeline,
-        update_custom_data_timeline,
-        custom_data_timeline,
+        update_manager,
+        manager,
+        update_collection_metadata,
+        collection_metadata,
+        update_token_metadata,
+        token_metadata,
+        update_custom_data,
+        custom_data,
         update_collection_approvals,
         collection_approvals,
-        update_standards_timeline,
-        standards_timeline,
-        update_is_archived_timeline,
-        is_archived_timeline,
+        update_standards,
+        standards,
+        update_is_archived,
+        is_archived,
         mint_escrow_coins_to_transfer,
         cosmos_coin_wrapper_paths_to_add,
+        alias_paths_to_add,
         None, // invariants are set on creation and cannot be modified
     );
     Ok(Response::new().add_message(msg))
@@ -220,22 +223,23 @@ pub fn execute_msg_universal_update_collection(
     valid_token_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
-    update_manager_timeline: bool,
-    manager_timeline: Vec<ManagerTimeline>,
-    update_collection_metadata_timeline: bool,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    update_token_metadata_timeline: bool,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    update_custom_data_timeline: bool,
-    custom_data_timeline: Vec<CustomDataTimeline>,
+    update_manager: bool,
+    manager: String,
+    update_collection_metadata: bool,
+    collection_metadata: CollectionMetadata,
+    update_token_metadata: bool,
+    token_metadata: Vec<TokenMetadata>,
+    update_custom_data: bool,
+    custom_data: String,
     update_collection_approvals: bool,
     collection_approvals: Vec<CollectionApproval>,
-    update_standards_timeline: bool,
-    standards_timeline: Vec<StandardsTimeline>,
-    update_is_archived_timeline: bool,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
+    update_standards: bool,
+    standards: Vec<String>,
+    update_is_archived: bool,
+    is_archived: bool,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    alias_paths_to_add: Vec<AliasPathAddObject>,
     invariants: bitbadges_cosmwasm::CollectionInvariants,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = universal_update_collection_msg(
@@ -245,22 +249,23 @@ pub fn execute_msg_universal_update_collection(
         valid_token_ids,
         update_collection_permissions,
         collection_permissions,
-        update_manager_timeline,
-        manager_timeline,
-        update_collection_metadata_timeline,
-        collection_metadata_timeline,
-        update_token_metadata_timeline,
-        token_metadata_timeline,
-        update_custom_data_timeline,
-        custom_data_timeline,
+        update_manager,
+        manager,
+        update_collection_metadata,
+        collection_metadata,
+        update_token_metadata,
+        token_metadata,
+        update_custom_data,
+        custom_data,
         update_collection_approvals,
         collection_approvals,
-        update_standards_timeline,
-        standards_timeline,
-        update_is_archived_timeline,
-        is_archived_timeline,
+        update_standards,
+        standards,
+        update_is_archived,
+        is_archived,
         mint_escrow_coins_to_transfer,
         cosmos_coin_wrapper_paths_to_add,
+        alias_paths_to_add,
         invariants,
     );
     Ok(Response::new().add_message(msg))
@@ -315,13 +320,13 @@ pub fn execute_msg_set_valid_token_ids(
 
 pub fn execute_msg_set_manager(
     collection_id: String,
-    manager_timeline: Vec<ManagerTimeline>,
-    can_update_manager: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+    manager: String,
+    can_update_manager: Vec<ActionPermission>,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = set_manager_msg(
         "".to_string(), // creator - will be set by the contract
         collection_id,
-        manager_timeline,
+        manager,
         can_update_manager,
     );
     Ok(Response::new().add_message(msg))
@@ -329,13 +334,13 @@ pub fn execute_msg_set_manager(
 
 pub fn execute_msg_set_collection_metadata(
     collection_id: String,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    can_update_collection_metadata: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+    collection_metadata: CollectionMetadata,
+    can_update_collection_metadata: Vec<ActionPermission>,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = set_collection_metadata_msg(
         "".to_string(), // creator - will be set by the contract
         collection_id,
-        collection_metadata_timeline,
+        collection_metadata,
         can_update_collection_metadata,
     );
     Ok(Response::new().add_message(msg))
@@ -343,13 +348,13 @@ pub fn execute_msg_set_collection_metadata(
 
 pub fn execute_msg_set_token_metadata(
     collection_id: String,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    can_update_token_metadata: Vec<bitbadges_cosmwasm::TimedUpdateWithTokenIdsPermission>,
+    token_metadata: Vec<TokenMetadata>,
+    can_update_token_metadata: Vec<TokenIdsActionPermission>,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = set_token_metadata_msg(
         "".to_string(), // creator - will be set by the contract
         collection_id,
-        token_metadata_timeline,
+        token_metadata,
         can_update_token_metadata,
     );
     Ok(Response::new().add_message(msg))
@@ -357,13 +362,13 @@ pub fn execute_msg_set_token_metadata(
 
 pub fn execute_msg_set_custom_data(
     collection_id: String,
-    custom_data_timeline: Vec<CustomDataTimeline>,
-    can_update_custom_data: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+    custom_data: String,
+    can_update_custom_data: Vec<ActionPermission>,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = set_custom_data_msg(
         "".to_string(), // creator - will be set by the contract
         collection_id,
-        custom_data_timeline,
+        custom_data,
         can_update_custom_data,
     );
     Ok(Response::new().add_message(msg))
@@ -371,13 +376,13 @@ pub fn execute_msg_set_custom_data(
 
 pub fn execute_msg_set_standards(
     collection_id: String,
-    standards_timeline: Vec<StandardsTimeline>,
-    can_update_standards: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+    standards: Vec<String>,
+    can_update_standards: Vec<ActionPermission>,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = set_standards_msg(
         "".to_string(), // creator - will be set by the contract
         collection_id,
-        standards_timeline,
+        standards,
         can_update_standards,
     );
     Ok(Response::new().add_message(msg))
@@ -399,13 +404,13 @@ pub fn execute_msg_set_collection_approvals(
 
 pub fn execute_msg_set_is_archived(
     collection_id: String,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
-    can_archive_collection: Vec<bitbadges_cosmwasm::TimedUpdatePermission>,
+    is_archived: bool,
+    can_archive_collection: Vec<ActionPermission>,
 ) -> StdResult<Response<BitBadgesMsg>> {
     let msg = set_is_archived_msg(
         "".to_string(), // creator - will be set by the contract
         collection_id,
-        is_archived_timeline,
+        is_archived,
         can_archive_collection,
     );
     Ok(Response::new().add_message(msg))

@@ -89,4 +89,29 @@ impl<'a> BitBadgesQuerier<'a> {
         .into();
         self.querier.query(&request)
     }
+
+    pub fn query_get_vote<T: Into<String>>(&self, collection_id: String, approval_level: String, approver_address: String, approval_id: String, proposal_id: String, voter_address: String) -> StdResult<String> {
+        let request = BitBadgesQuery::QueryGetVote { 
+            collection_id,
+            approval_level,
+            approver_address,
+            approval_id,
+            proposal_id,
+            voter_address
+        }
+        .into();
+        self.querier.query(&request)
+    }
+
+    pub fn query_get_votes<T: Into<String>>(&self, collection_id: String, approval_level: String, approver_address: String, approval_id: String, proposal_id: String) -> StdResult<String> {
+        let request = BitBadgesQuery::QueryGetVotes { 
+            collection_id,
+            approval_level,
+            approver_address,
+            approval_id,
+            proposal_id
+        }
+        .into();
+        self.querier.query(&request)
+    }
 }

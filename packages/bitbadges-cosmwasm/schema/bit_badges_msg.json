@@ -81,32 +81,36 @@
         "createCollectionMsg": {
           "type": "object",
           "required": [
+            "aliasPathsToAdd",
             "collectionApprovals",
-            "collectionMetadataTimeline",
+            "collectionMetadata",
             "collectionPermissions",
             "cosmosCoinWrapperPathsToAdd",
-            "customDataTimeline",
+            "customData",
             "defaultBalances",
             "invariants",
-            "isArchivedTimeline",
-            "managerTimeline",
+            "isArchived",
+            "manager",
             "mintEscrowCoinsToTransfer",
-            "standardsTimeline",
-            "tokenMetadataTimeline",
+            "standards",
+            "tokenMetadata",
             "validTokenIds"
           ],
           "properties": {
+            "aliasPathsToAdd": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AliasPathAddObject"
+              }
+            },
             "collectionApprovals": {
               "type": "array",
               "items": {
                 "$ref": "#/definitions/CollectionApproval"
               }
             },
-            "collectionMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CollectionMetadataTimeline"
-              }
+            "collectionMetadata": {
+              "$ref": "#/definitions/CollectionMetadata"
             },
             "collectionPermissions": {
               "$ref": "#/definitions/CollectionPermissions"
@@ -117,11 +121,8 @@
                 "$ref": "#/definitions/CosmosCoinWrapperPathAddObject"
               }
             },
-            "customDataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CustomDataTimeline"
-              }
+            "customData": {
+              "type": "string"
             },
             "defaultBalances": {
               "$ref": "#/definitions/UserBalanceStore"
@@ -129,17 +130,11 @@
             "invariants": {
               "$ref": "#/definitions/CollectionInvariants"
             },
-            "isArchivedTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/IsArchivedTimeline"
-              }
+            "isArchived": {
+              "type": "boolean"
             },
-            "managerTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ManagerTimeline"
-              }
+            "manager": {
+              "type": "string"
             },
             "mintEscrowCoinsToTransfer": {
               "type": "array",
@@ -147,16 +142,16 @@
                 "$ref": "#/definitions/CosmosCoin"
               }
             },
-            "standardsTimeline": {
+            "standards": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/StandardsTimeline"
+                "type": "string"
               }
             },
-            "tokenMetadataTimeline": {
+            "tokenMetadata": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TokenMetadataTimeline"
+                "$ref": "#/definitions/TokenMetadata"
               }
             },
             "validTokenIds": {
@@ -179,29 +174,36 @@
         "updateCollectionMsg": {
           "type": "object",
           "required": [
+            "aliasPathsToAdd",
             "collectionApprovals",
             "collectionId",
-            "collectionMetadataTimeline",
+            "collectionMetadata",
             "collectionPermissions",
             "cosmosCoinWrapperPathsToAdd",
-            "customDataTimeline",
-            "isArchivedTimeline",
-            "managerTimeline",
+            "customData",
+            "isArchived",
+            "manager",
             "mintEscrowCoinsToTransfer",
-            "standardsTimeline",
-            "tokenMetadataTimeline",
+            "standards",
+            "tokenMetadata",
             "updateCollectionApprovals",
-            "updateCollectionMetadataTimeline",
+            "updateCollectionMetadata",
             "updateCollectionPermissions",
-            "updateCustomDataTimeline",
-            "updateIsArchivedTimeline",
-            "updateManagerTimeline",
-            "updateStandardsTimeline",
-            "updateTokenMetadataTimeline",
+            "updateCustomData",
+            "updateIsArchived",
+            "updateManager",
+            "updateStandards",
+            "updateTokenMetadata",
             "updateValidTokenIds",
             "validTokenIds"
           ],
           "properties": {
+            "aliasPathsToAdd": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AliasPathAddObject"
+              }
+            },
             "collectionApprovals": {
               "type": "array",
               "items": {
@@ -211,11 +213,8 @@
             "collectionId": {
               "type": "string"
             },
-            "collectionMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CollectionMetadataTimeline"
-              }
+            "collectionMetadata": {
+              "$ref": "#/definitions/CollectionMetadata"
             },
             "collectionPermissions": {
               "$ref": "#/definitions/CollectionPermissions"
@@ -226,11 +225,8 @@
                 "$ref": "#/definitions/CosmosCoinWrapperPathAddObject"
               }
             },
-            "customDataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CustomDataTimeline"
-              }
+            "customData": {
+              "type": "string"
             },
             "invariants": {
               "anyOf": [
@@ -242,17 +238,11 @@
                 }
               ]
             },
-            "isArchivedTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/IsArchivedTimeline"
-              }
+            "isArchived": {
+              "type": "boolean"
             },
-            "managerTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ManagerTimeline"
-              }
+            "manager": {
+              "type": "string"
             },
             "mintEscrowCoinsToTransfer": {
               "type": "array",
@@ -260,40 +250,40 @@
                 "$ref": "#/definitions/CosmosCoin"
               }
             },
-            "standardsTimeline": {
+            "standards": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/StandardsTimeline"
+                "type": "string"
               }
             },
-            "tokenMetadataTimeline": {
+            "tokenMetadata": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TokenMetadataTimeline"
+                "$ref": "#/definitions/TokenMetadata"
               }
             },
             "updateCollectionApprovals": {
               "type": "boolean"
             },
-            "updateCollectionMetadataTimeline": {
+            "updateCollectionMetadata": {
               "type": "boolean"
             },
             "updateCollectionPermissions": {
               "type": "boolean"
             },
-            "updateCustomDataTimeline": {
+            "updateCustomData": {
               "type": "boolean"
             },
-            "updateIsArchivedTimeline": {
+            "updateIsArchived": {
               "type": "boolean"
             },
-            "updateManagerTimeline": {
+            "updateManager": {
               "type": "boolean"
             },
-            "updateStandardsTimeline": {
+            "updateStandards": {
               "type": "boolean"
             },
-            "updateTokenMetadataTimeline": {
+            "updateTokenMetadata": {
               "type": "boolean"
             },
             "updateValidTokenIds": {
@@ -319,31 +309,38 @@
         "universalUpdateCollectionMsg": {
           "type": "object",
           "required": [
+            "aliasPathsToAdd",
             "collectionApprovals",
             "collectionId",
-            "collectionMetadataTimeline",
+            "collectionMetadata",
             "collectionPermissions",
             "cosmosCoinWrapperPathsToAdd",
-            "customDataTimeline",
+            "customData",
             "defaultBalances",
             "invariants",
-            "isArchivedTimeline",
-            "managerTimeline",
+            "isArchived",
+            "manager",
             "mintEscrowCoinsToTransfer",
-            "standardsTimeline",
-            "tokenMetadataTimeline",
+            "standards",
+            "tokenMetadata",
             "updateCollectionApprovals",
-            "updateCollectionMetadataTimeline",
+            "updateCollectionMetadata",
             "updateCollectionPermissions",
-            "updateCustomDataTimeline",
-            "updateIsArchivedTimeline",
-            "updateManagerTimeline",
-            "updateStandardsTimeline",
-            "updateTokenMetadataTimeline",
+            "updateCustomData",
+            "updateIsArchived",
+            "updateManager",
+            "updateStandards",
+            "updateTokenMetadata",
             "updateValidTokenIds",
             "validTokenIds"
           ],
           "properties": {
+            "aliasPathsToAdd": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AliasPathAddObject"
+              }
+            },
             "collectionApprovals": {
               "type": "array",
               "items": {
@@ -353,11 +350,8 @@
             "collectionId": {
               "type": "string"
             },
-            "collectionMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CollectionMetadataTimeline"
-              }
+            "collectionMetadata": {
+              "$ref": "#/definitions/CollectionMetadata"
             },
             "collectionPermissions": {
               "$ref": "#/definitions/CollectionPermissions"
@@ -368,11 +362,8 @@
                 "$ref": "#/definitions/CosmosCoinWrapperPathAddObject"
               }
             },
-            "customDataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CustomDataTimeline"
-              }
+            "customData": {
+              "type": "string"
             },
             "defaultBalances": {
               "$ref": "#/definitions/UserBalanceStore"
@@ -380,17 +371,11 @@
             "invariants": {
               "$ref": "#/definitions/CollectionInvariants"
             },
-            "isArchivedTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/IsArchivedTimeline"
-              }
+            "isArchived": {
+              "type": "boolean"
             },
-            "managerTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ManagerTimeline"
-              }
+            "manager": {
+              "type": "string"
             },
             "mintEscrowCoinsToTransfer": {
               "type": "array",
@@ -398,40 +383,40 @@
                 "$ref": "#/definitions/CosmosCoin"
               }
             },
-            "standardsTimeline": {
+            "standards": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/StandardsTimeline"
+                "type": "string"
               }
             },
-            "tokenMetadataTimeline": {
+            "tokenMetadata": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TokenMetadataTimeline"
+                "$ref": "#/definitions/TokenMetadata"
               }
             },
             "updateCollectionApprovals": {
               "type": "boolean"
             },
-            "updateCollectionMetadataTimeline": {
+            "updateCollectionMetadata": {
               "type": "boolean"
             },
             "updateCollectionPermissions": {
               "type": "boolean"
             },
-            "updateCustomDataTimeline": {
+            "updateCustomData": {
               "type": "boolean"
             },
-            "updateIsArchivedTimeline": {
+            "updateIsArchived": {
               "type": "boolean"
             },
-            "updateManagerTimeline": {
+            "updateManager": {
               "type": "boolean"
             },
-            "updateStandardsTimeline": {
+            "updateStandards": {
               "type": "boolean"
             },
-            "updateTokenMetadataTimeline": {
+            "updateTokenMetadata": {
               "type": "boolean"
             },
             "updateValidTokenIds": {
@@ -531,15 +516,11 @@
         "createDynamicStoreMsg": {
           "type": "object",
           "required": [
-            "creator",
             "defaultValue"
           ],
           "properties": {
-            "creator": {
-              "type": "string"
-            },
             "defaultValue": {
-              "type": "string"
+              "type": "boolean"
             }
           }
         }
@@ -555,16 +536,12 @@
         "updateDynamicStoreMsg": {
           "type": "object",
           "required": [
-            "creator",
             "defaultValue",
             "storeId"
           ],
           "properties": {
-            "creator": {
-              "type": "string"
-            },
             "defaultValue": {
-              "type": "string"
+              "type": "boolean"
             },
             "storeId": {
               "type": "string"
@@ -583,13 +560,9 @@
         "deleteDynamicStoreMsg": {
           "type": "object",
           "required": [
-            "creator",
             "storeId"
           ],
           "properties": {
-            "creator": {
-              "type": "string"
-            },
             "storeId": {
               "type": "string"
             }
@@ -608,7 +581,6 @@
           "type": "object",
           "required": [
             "address",
-            "creator",
             "storeId",
             "value"
           ],
@@ -616,82 +588,11 @@
             "address": {
               "type": "string"
             },
-            "creator": {
-              "type": "string"
-            },
             "storeId": {
               "type": "string"
             },
             "value": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    {
-      "type": "object",
-      "required": [
-        "incrementStoreValueMsg"
-      ],
-      "properties": {
-        "incrementStoreValueMsg": {
-          "type": "object",
-          "required": [
-            "address",
-            "amount",
-            "creator",
-            "storeId"
-          ],
-          "properties": {
-            "address": {
-              "type": "string"
-            },
-            "amount": {
-              "type": "string"
-            },
-            "creator": {
-              "type": "string"
-            },
-            "storeId": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    {
-      "type": "object",
-      "required": [
-        "decrementStoreValueMsg"
-      ],
-      "properties": {
-        "decrementStoreValueMsg": {
-          "type": "object",
-          "required": [
-            "address",
-            "amount",
-            "creator",
-            "setToZeroOnUnderflow",
-            "storeId"
-          ],
-          "properties": {
-            "address": {
-              "type": "string"
-            },
-            "amount": {
-              "type": "string"
-            },
-            "creator": {
-              "type": "string"
-            },
-            "setToZeroOnUnderflow": {
               "type": "boolean"
-            },
-            "storeId": {
-              "type": "string"
             }
           }
         }
@@ -903,13 +804,13 @@
             "canUpdateManager",
             "collectionId",
             "creator",
-            "managerTimeline"
+            "manager"
           ],
           "properties": {
             "canUpdateManager": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TimedUpdatePermission"
+                "$ref": "#/definitions/ActionPermission"
               }
             },
             "collectionId": {
@@ -918,11 +819,8 @@
             "creator": {
               "type": "string"
             },
-            "managerTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ManagerTimeline"
-              }
+            "manager": {
+              "type": "string"
             }
           }
         }
@@ -940,24 +838,21 @@
           "required": [
             "canUpdateCollectionMetadata",
             "collectionId",
-            "collectionMetadataTimeline",
+            "collectionMetadata",
             "creator"
           ],
           "properties": {
             "canUpdateCollectionMetadata": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TimedUpdatePermission"
+                "$ref": "#/definitions/ActionPermission"
               }
             },
             "collectionId": {
               "type": "string"
             },
-            "collectionMetadataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CollectionMetadataTimeline"
-              }
+            "collectionMetadata": {
+              "$ref": "#/definitions/CollectionMetadata"
             },
             "creator": {
               "type": "string"
@@ -979,13 +874,13 @@
             "canUpdateTokenMetadata",
             "collectionId",
             "creator",
-            "tokenMetadataTimeline"
+            "tokenMetadata"
           ],
           "properties": {
             "canUpdateTokenMetadata": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TimedUpdateWithTokenIdsPermission"
+                "$ref": "#/definitions/TokenIdsActionPermission"
               }
             },
             "collectionId": {
@@ -994,10 +889,10 @@
             "creator": {
               "type": "string"
             },
-            "tokenMetadataTimeline": {
+            "tokenMetadata": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TokenMetadataTimeline"
+                "$ref": "#/definitions/TokenMetadata"
               }
             }
           }
@@ -1017,13 +912,13 @@
             "canUpdateCustomData",
             "collectionId",
             "creator",
-            "customDataTimeline"
+            "customData"
           ],
           "properties": {
             "canUpdateCustomData": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TimedUpdatePermission"
+                "$ref": "#/definitions/ActionPermission"
               }
             },
             "collectionId": {
@@ -1032,11 +927,8 @@
             "creator": {
               "type": "string"
             },
-            "customDataTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/CustomDataTimeline"
-              }
+            "customData": {
+              "type": "string"
             }
           }
         }
@@ -1055,13 +947,13 @@
             "canUpdateStandards",
             "collectionId",
             "creator",
-            "standardsTimeline"
+            "standards"
           ],
           "properties": {
             "canUpdateStandards": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TimedUpdatePermission"
+                "$ref": "#/definitions/ActionPermission"
               }
             },
             "collectionId": {
@@ -1070,10 +962,10 @@
             "creator": {
               "type": "string"
             },
-            "standardsTimeline": {
+            "standards": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/StandardsTimeline"
+                "type": "string"
               }
             }
           }
@@ -1131,13 +1023,13 @@
             "canArchiveCollection",
             "collectionId",
             "creator",
-            "isArchivedTimeline"
+            "isArchived"
           ],
           "properties": {
             "canArchiveCollection": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/TimedUpdatePermission"
+                "$ref": "#/definitions/ActionPermission"
               }
             },
             "collectionId": {
@@ -1146,11 +1038,8 @@
             "creator": {
               "type": "string"
             },
-            "isArchivedTimeline": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/IsArchivedTimeline"
-              }
+            "isArchived": {
+              "type": "boolean"
             }
           }
         }
@@ -1179,6 +1068,46 @@
             },
             "isReservedProtocol": {
               "type": "boolean"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "castVoteMsg"
+      ],
+      "properties": {
+        "castVoteMsg": {
+          "type": "object",
+          "required": [
+            "approvalId",
+            "approvalLevel",
+            "approverAddress",
+            "collectionId",
+            "proposalId",
+            "yesWeight"
+          ],
+          "properties": {
+            "approvalId": {
+              "type": "string"
+            },
+            "approvalLevel": {
+              "type": "string"
+            },
+            "approverAddress": {
+              "type": "string"
+            },
+            "collectionId": {
+              "type": "string"
+            },
+            "proposalId": {
+              "type": "string"
+            },
+            "yesWeight": {
+              "type": "string"
             }
           }
         }
@@ -1247,12 +1176,6 @@
             "type": "string"
           }
         },
-        "aliasAddress": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
         "createdBy": {
           "type": [
             "string",
@@ -1270,6 +1193,36 @@
         },
         "whitelist": {
           "type": "boolean"
+        }
+      }
+    },
+    "AliasPathAddObject": {
+      "type": "object",
+      "required": [
+        "conversion",
+        "denom",
+        "denomUnits",
+        "metadata",
+        "symbol"
+      ],
+      "properties": {
+        "conversion": {
+          "$ref": "#/definitions/ConversionWithoutDenom"
+        },
+        "denom": {
+          "type": "string"
+        },
+        "denomUnits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DenomUnit"
+          }
+        },
+        "metadata": {
+          "$ref": "#/definitions/PathMetadata"
+        },
+        "symbol": {
+          "type": "string"
         }
       }
     },
@@ -1344,7 +1297,8 @@
         "requireFromEqualsInitiatedBy",
         "requireToDoesNotEqualInitiatedBy",
         "requireToEqualsInitiatedBy",
-        "userRoyalties"
+        "userRoyalties",
+        "votingChallenges"
       ],
       "properties": {
         "altTimeChecks": {
@@ -1452,6 +1406,12 @@
         },
         "userRoyalties": {
           "$ref": "#/definitions/UserRoyalties"
+        },
+        "votingChallenges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VotingChallenge"
+          }
         }
       }
     },
@@ -1714,24 +1674,6 @@
         }
       }
     },
-    "CollectionMetadataTimeline": {
-      "type": "object",
-      "required": [
-        "collectionMetadata",
-        "timelineTimes"
-      ],
-      "properties": {
-        "collectionMetadata": {
-          "$ref": "#/definitions/CollectionMetadata"
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
     "CollectionPermissions": {
       "type": "object",
       "required": [
@@ -1749,7 +1691,7 @@
         "canArchiveCollection": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TimedUpdatePermission"
+            "$ref": "#/definitions/ActionPermission"
           }
         },
         "canDeleteCollection": {
@@ -1767,37 +1709,99 @@
         "canUpdateCollectionMetadata": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TimedUpdatePermission"
+            "$ref": "#/definitions/ActionPermission"
           }
         },
         "canUpdateCustomData": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TimedUpdatePermission"
+            "$ref": "#/definitions/ActionPermission"
           }
         },
         "canUpdateManager": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TimedUpdatePermission"
+            "$ref": "#/definitions/ActionPermission"
           }
         },
         "canUpdateStandards": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TimedUpdatePermission"
+            "$ref": "#/definitions/ActionPermission"
           }
         },
         "canUpdateTokenMetadata": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/TimedUpdateWithTokenIdsPermission"
+            "$ref": "#/definitions/TokenIdsActionPermission"
           }
         },
         "canUpdateValidTokenIds": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/TokenIdsActionPermission"
+          }
+        }
+      }
+    },
+    "Conversion": {
+      "type": "object",
+      "required": [
+        "sideA",
+        "sideB"
+      ],
+      "properties": {
+        "sideA": {
+          "$ref": "#/definitions/ConversionSideAWithDenom"
+        },
+        "sideB": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Balance"
+          }
+        }
+      }
+    },
+    "ConversionSideA": {
+      "type": "object",
+      "required": [
+        "amount"
+      ],
+      "properties": {
+        "amount": {
+          "type": "string"
+        }
+      }
+    },
+    "ConversionSideAWithDenom": {
+      "type": "object",
+      "required": [
+        "amount",
+        "denom"
+      ],
+      "properties": {
+        "amount": {
+          "type": "string"
+        },
+        "denom": {
+          "type": "string"
+        }
+      }
+    },
+    "ConversionWithoutDenom": {
+      "type": "object",
+      "required": [
+        "sideA",
+        "sideB"
+      ],
+      "properties": {
+        "sideA": {
+          "$ref": "#/definitions/ConversionSideA"
+        },
+        "sideB": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Balance"
           }
         }
       }
@@ -1821,72 +1825,44 @@
       "type": "object",
       "required": [
         "address",
-        "balances",
-        "ibcAmount",
-        "ibcDenom"
+        "conversion"
       ],
       "properties": {
         "address": {
           "type": "string"
         },
-        "balances": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Balance"
-          }
-        },
-        "ibcAmount": {
-          "type": "string"
-        },
-        "ibcDenom": {
-          "type": "string"
+        "conversion": {
+          "$ref": "#/definitions/Conversion"
         }
       }
     },
     "CosmosCoinBackedPathAddObject": {
       "type": "object",
       "required": [
-        "balances",
-        "ibcAmount",
-        "ibcDenom"
+        "conversion"
       ],
       "properties": {
-        "balances": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Balance"
-          }
-        },
-        "ibcAmount": {
-          "type": "string"
-        },
-        "ibcDenom": {
-          "type": "string"
+        "conversion": {
+          "$ref": "#/definitions/Conversion"
         }
       }
     },
     "CosmosCoinWrapperPathAddObject": {
       "type": "object",
       "required": [
-        "allowCosmosWrapping",
         "allowOverrideWithAnyValidToken",
-        "balances",
+        "conversion",
         "denom",
         "denomUnits",
+        "metadata",
         "symbol"
       ],
       "properties": {
-        "allowCosmosWrapping": {
-          "type": "boolean"
-        },
         "allowOverrideWithAnyValidToken": {
           "type": "boolean"
         },
-        "balances": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Balance"
-          }
+        "conversion": {
+          "$ref": "#/definitions/ConversionWithoutDenom"
         },
         "denom": {
           "type": "string"
@@ -1897,26 +1873,11 @@
             "$ref": "#/definitions/DenomUnit"
           }
         },
+        "metadata": {
+          "$ref": "#/definitions/PathMetadata"
+        },
         "symbol": {
           "type": "string"
-        }
-      }
-    },
-    "CustomDataTimeline": {
-      "type": "object",
-      "required": [
-        "customData",
-        "timelineTimes"
-      ],
-      "properties": {
-        "customData": {
-          "type": "string"
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
         }
       }
     },
@@ -1925,6 +1886,7 @@
       "required": [
         "decimals",
         "isDefaultDisplay",
+        "metadata",
         "symbol"
       ],
       "properties": {
@@ -1933,6 +1895,9 @@
         },
         "isDefaultDisplay": {
           "type": "boolean"
+        },
+        "metadata": {
+          "$ref": "#/definitions/PathMetadata"
         },
         "symbol": {
           "type": "string"
@@ -2002,7 +1967,8 @@
         "mustPrioritize",
         "predeterminedBalances",
         "requireFromDoesNotEqualInitiatedBy",
-        "requireFromEqualsInitiatedBy"
+        "requireFromEqualsInitiatedBy",
+        "votingChallenges"
       ],
       "properties": {
         "altTimeChecks": {
@@ -2085,6 +2051,12 @@
               "type": "null"
             }
           ]
+        },
+        "votingChallenges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VotingChallenge"
+          }
         }
       }
     },
@@ -2156,42 +2128,6 @@
         },
         "noForcefulPostMintTransfers": {
           "type": "boolean"
-        }
-      }
-    },
-    "IsArchivedTimeline": {
-      "type": "object",
-      "required": [
-        "isArchived",
-        "timelineTimes"
-      ],
-      "properties": {
-        "isArchived": {
-          "type": "boolean"
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
-    "ManagerTimeline": {
-      "type": "object",
-      "required": [
-        "manager",
-        "timelineTimes"
-      ],
-      "properties": {
-        "manager": {
-          "type": "string"
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
         }
       }
     },
@@ -2371,7 +2307,8 @@
         "mustPrioritize",
         "predeterminedBalances",
         "requireToDoesNotEqualInitiatedBy",
-        "requireToEqualsInitiatedBy"
+        "requireToEqualsInitiatedBy",
+        "votingChallenges"
       ],
       "properties": {
         "altTimeChecks": {
@@ -2454,6 +2391,54 @@
         },
         "requireToEqualsInitiatedBy": {
           "type": "boolean"
+        },
+        "votingChallenges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/VotingChallenge"
+          }
+        }
+      }
+    },
+    "PathMetadata": {
+      "type": "object",
+      "required": [
+        "customData",
+        "uri"
+      ],
+      "properties": {
+        "customData": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        }
+      }
+    },
+    "PrecalculateBalancesFromApprovalDetails": {
+      "type": "object",
+      "required": [
+        "approvalId",
+        "approvalLevel",
+        "approverAddress",
+        "precalculationOptions",
+        "version"
+      ],
+      "properties": {
+        "approvalId": {
+          "type": "string"
+        },
+        "approvalLevel": {
+          "type": "string"
+        },
+        "approverAddress": {
+          "type": "string"
+        },
+        "precalculationOptions": {
+          "$ref": "#/definitions/PrecalculationOptions"
+        },
+        "version": {
+          "type": "string"
         }
       }
     },
@@ -2562,90 +2547,6 @@
         }
       }
     },
-    "StandardsTimeline": {
-      "type": "object",
-      "required": [
-        "standards",
-        "timelineTimes"
-      ],
-      "properties": {
-        "standards": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
-    "TimedUpdatePermission": {
-      "type": "object",
-      "required": [
-        "permanentlyPermittedTimes",
-        "permanentyForbiddenTimes",
-        "timelineTimes"
-      ],
-      "properties": {
-        "permanentlyPermittedTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "permanentyForbiddenTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
-    "TimedUpdateWithTokenIdsPermission": {
-      "type": "object",
-      "required": [
-        "permanentlyPermittedTimes",
-        "permanentyForbiddenTimes",
-        "timelineTimes",
-        "tokenIds"
-      ],
-      "properties": {
-        "permanentlyPermittedTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "permanentyForbiddenTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "tokenIds": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        }
-      }
-    },
     "TokenIdsActionPermission": {
       "type": "object",
       "required": [
@@ -2696,27 +2597,6 @@
         }
       }
     },
-    "TokenMetadataTimeline": {
-      "type": "object",
-      "required": [
-        "timelineTimes",
-        "tokenMetadata"
-      ],
-      "properties": {
-        "timelineTimes": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UintRange"
-          }
-        },
-        "tokenMetadata": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TokenMetadata"
-          }
-        }
-      }
-    },
     "Transfer": {
       "type": "object",
       "required": [
@@ -2725,11 +2605,9 @@
         "from",
         "memo",
         "merkleProofs",
-        "numAttempts",
         "onlyCheckPrioritizedCollectionApprovals",
         "onlyCheckPrioritizedIncomingApprovals",
         "onlyCheckPrioritizedOutgoingApprovals",
-        "precalculationOptions",
         "prioritizedApprovals",
         "toAddresses"
       ],
@@ -2758,9 +2636,6 @@
             "$ref": "#/definitions/MerkleProof"
           }
         },
-        "numAttempts": {
-          "type": "string"
-        },
         "onlyCheckPrioritizedCollectionApprovals": {
           "type": "boolean"
         },
@@ -2773,15 +2648,12 @@
         "precalculateBalancesFromApproval": {
           "anyOf": [
             {
-              "$ref": "#/definitions/ApprovalIdentifierDetails"
+              "$ref": "#/definitions/PrecalculateBalancesFromApprovalDetails"
             },
             {
               "type": "null"
             }
           ]
-        },
-        "precalculationOptions": {
-          "$ref": "#/definitions/PrecalculationOptions"
         },
         "prioritizedApprovals": {
           "type": "array",
@@ -3122,6 +2994,51 @@
         },
         "percentage": {
           "type": "string"
+        }
+      }
+    },
+    "Voter": {
+      "type": "object",
+      "required": [
+        "address",
+        "weight"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "string"
+        }
+      }
+    },
+    "VotingChallenge": {
+      "type": "object",
+      "required": [
+        "customData",
+        "proposalId",
+        "quorumThreshold",
+        "uri",
+        "voters"
+      ],
+      "properties": {
+        "customData": {
+          "type": "string"
+        },
+        "proposalId": {
+          "type": "string"
+        },
+        "quorumThreshold": {
+          "type": "string"
+        },
+        "uri": {
+          "type": "string"
+        },
+        "voters": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Voter"
+          }
         }
       }
     }

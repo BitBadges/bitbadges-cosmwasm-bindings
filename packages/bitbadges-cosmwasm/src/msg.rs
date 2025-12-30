@@ -39,15 +39,16 @@ pub enum BitBadgesMsg {
     default_balances: UserBalanceStore,
     valid_token_ids: Vec<UintRange>,
     collection_permissions: CollectionPermissions,
-    manager_timeline: Vec<ManagerTimeline>,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    custom_data_timeline: Vec<CustomDataTimeline>,
+    manager: String,
+    collection_metadata: CollectionMetadata,
+    token_metadata: Vec<TokenMetadata>,
+    custom_data: String,
     collection_approvals: Vec<CollectionApproval>,
-    standards_timeline: Vec<StandardsTimeline>,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
+    standards: Vec<String>,
+    is_archived: bool,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    alias_paths_to_add: Vec<AliasPathAddObject>,
     invariants: CollectionInvariants,
   },
 
@@ -59,22 +60,23 @@ pub enum BitBadgesMsg {
     valid_token_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
-    update_manager_timeline: bool,
-    manager_timeline: Vec<ManagerTimeline>,
-    update_collection_metadata_timeline: bool,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    update_token_metadata_timeline: bool,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    update_custom_data_timeline: bool,
-    custom_data_timeline: Vec<CustomDataTimeline>,
+    update_manager: bool,
+    manager: String,
+    update_collection_metadata: bool,
+    collection_metadata: CollectionMetadata,
+    update_token_metadata: bool,
+    token_metadata: Vec<TokenMetadata>,
+    update_custom_data: bool,
+    custom_data: String,
     update_collection_approvals: bool,
     collection_approvals: Vec<CollectionApproval>,
-    update_standards_timeline: bool,
-    standards_timeline: Vec<StandardsTimeline>,
-    update_is_archived_timeline: bool,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
+    update_standards: bool,
+    standards: Vec<String>,
+    update_is_archived: bool,
+    is_archived: bool,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    alias_paths_to_add: Vec<AliasPathAddObject>,
     invariants: Option<InvariantsAddObject>,
   },
 
@@ -86,22 +88,23 @@ pub enum BitBadgesMsg {
     valid_token_ids: Vec<UintRange>,
     update_collection_permissions: bool,
     collection_permissions: CollectionPermissions,
-    update_manager_timeline: bool,
-    manager_timeline: Vec<ManagerTimeline>,
-    update_collection_metadata_timeline: bool,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    update_token_metadata_timeline: bool,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    update_custom_data_timeline: bool,
-    custom_data_timeline: Vec<CustomDataTimeline>,
+    update_manager: bool,
+    manager: String,
+    update_collection_metadata: bool,
+    collection_metadata: CollectionMetadata,
+    update_token_metadata: bool,
+    token_metadata: Vec<TokenMetadata>,
+    update_custom_data: bool,
+    custom_data: String,
     update_collection_approvals: bool,
     collection_approvals: Vec<CollectionApproval>,
-    update_standards_timeline: bool,
-    standards_timeline: Vec<StandardsTimeline>,
-    update_is_archived_timeline: bool,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
+    update_standards: bool,
+    standards: Vec<String>,
+    update_is_archived: bool,
+    is_archived: bool,
     mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
     cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+    alias_paths_to_add: Vec<AliasPathAddObject>,
     invariants: CollectionInvariants,
   },
 
@@ -124,47 +127,27 @@ pub enum BitBadgesMsg {
 
   #[serde(rename_all = "camelCase")]
   CreateDynamicStoreMsg {
-    creator: String,
-    default_value: String,
+    default_value: bool,
   },
 
   #[serde(rename_all = "camelCase")]
   UpdateDynamicStoreMsg {
-    creator: String,
     store_id: String,
-    default_value: String,
+    default_value: bool,
   },
 
   #[serde(rename_all = "camelCase")]
   DeleteDynamicStoreMsg {
-    creator: String,
     store_id: String,
   },
 
   #[serde(rename_all = "camelCase")]
   SetDynamicStoreValueMsg {
-    creator: String,
     store_id: String,
     address: String,
-    value: String,
+    value: bool,
   },
 
-  #[serde(rename_all = "camelCase")]
-  IncrementStoreValueMsg {
-    creator: String,
-    store_id: String,
-    address: String,
-    amount: String,
-  },
-
-  #[serde(rename_all = "camelCase")]
-  DecrementStoreValueMsg {
-    creator: String,
-    store_id: String,
-    address: String,
-    amount: String,
-    set_to_zero_on_underflow: bool,
-  },
 
   #[serde(rename_all = "camelCase")]
   SetIncomingApprovalMsg {
@@ -216,40 +199,40 @@ pub enum BitBadgesMsg {
   SetManagerMsg {
     creator: String,
     collection_id: String,
-    manager_timeline: Vec<ManagerTimeline>,
-    can_update_manager: Vec<TimedUpdatePermission>,
+    manager: String,
+    can_update_manager: Vec<ActionPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
   SetCollectionMetadataMsg {
     creator: String,
     collection_id: String,
-    collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-    can_update_collection_metadata: Vec<TimedUpdatePermission>,
+    collection_metadata: CollectionMetadata,
+    can_update_collection_metadata: Vec<ActionPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
   SetTokenMetadataMsg {
     creator: String,
     collection_id: String,
-    token_metadata_timeline: Vec<TokenMetadataTimeline>,
-    can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
+    token_metadata: Vec<TokenMetadata>,
+    can_update_token_metadata: Vec<TokenIdsActionPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
   SetCustomDataMsg {
     creator: String,
     collection_id: String,
-    custom_data_timeline: Vec<CustomDataTimeline>,
-    can_update_custom_data: Vec<TimedUpdatePermission>,
+    custom_data: String,
+    can_update_custom_data: Vec<ActionPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
   SetStandardsMsg {
     creator: String,
     collection_id: String,
-    standards_timeline: Vec<StandardsTimeline>,
-    can_update_standards: Vec<TimedUpdatePermission>,
+    standards: Vec<String>,
+    can_update_standards: Vec<ActionPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -264,8 +247,8 @@ pub enum BitBadgesMsg {
   SetIsArchivedMsg {
     creator: String,
     collection_id: String,
-    is_archived_timeline: Vec<IsArchivedTimeline>,
-    can_archive_collection: Vec<TimedUpdatePermission>,
+    is_archived: bool,
+    can_archive_collection: Vec<ActionPermission>,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -273,6 +256,16 @@ pub enum BitBadgesMsg {
     authority: String,
     address: String,
     is_reserved_protocol: bool,
+  },
+
+  #[serde(rename_all = "camelCase")]
+  CastVoteMsg {
+    collection_id: String,
+    approval_level: String,
+    approver_address: String,
+    approval_id: String,
+    proposal_id: String,
+    yes_weight: String,
   }
 }
 
@@ -306,30 +299,32 @@ pub fn create_collection_msg(
   default_balances: UserBalanceStore,
   valid_token_ids: Vec<UintRange>,
   collection_permissions: CollectionPermissions,
-  manager_timeline: Vec<ManagerTimeline>,
-  collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  token_metadata_timeline: Vec<TokenMetadataTimeline>,
-  custom_data_timeline: Vec<CustomDataTimeline>,
+  manager: String,
+  collection_metadata: CollectionMetadata,
+  token_metadata: Vec<TokenMetadata>,
+  custom_data: String,
   collection_approvals: Vec<CollectionApproval>,
-  standards_timeline: Vec<StandardsTimeline>,
-  is_archived_timeline: Vec<IsArchivedTimeline>,
+  standards: Vec<String>,
+  is_archived: bool,
   mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
   cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+  alias_paths_to_add: Vec<AliasPathAddObject>,
   invariants: CollectionInvariants
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateCollectionMsg { 
     default_balances: default_balances,
     valid_token_ids,
     collection_permissions,
-    manager_timeline,
-    collection_metadata_timeline,
-    token_metadata_timeline,
-    custom_data_timeline,
+    manager,
+    collection_metadata,
+    token_metadata,
+    custom_data,
     collection_approvals,
-    standards_timeline,
-    is_archived_timeline,
+    standards,
+    is_archived,
     mint_escrow_coins_to_transfer,
     cosmos_coin_wrapper_paths_to_add,
+    alias_paths_to_add,
     invariants,
   }.into()
 }
@@ -340,22 +335,23 @@ pub fn update_collection_msg(
   valid_token_ids: Vec<UintRange>,
   update_collection_permissions: bool,
   collection_permissions: CollectionPermissions,
-  update_manager_timeline: bool,
-  manager_timeline: Vec<ManagerTimeline>,
-  update_collection_metadata_timeline: bool,
-  collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  update_token_metadata_timeline: bool,
-  token_metadata_timeline: Vec<TokenMetadataTimeline>,
-  update_custom_data_timeline: bool,
-  custom_data_timeline: Vec<CustomDataTimeline>,
+  update_manager: bool,
+  manager: String,
+  update_collection_metadata: bool,
+  collection_metadata: CollectionMetadata,
+  update_token_metadata: bool,
+  token_metadata: Vec<TokenMetadata>,
+  update_custom_data: bool,
+  custom_data: String,
   update_collection_approvals: bool,
   collection_approvals: Vec<CollectionApproval>,
-  update_standards_timeline: bool,
-  standards_timeline: Vec<StandardsTimeline>,
-  update_is_archived_timeline: bool,
-  is_archived_timeline: Vec<IsArchivedTimeline>,
+  update_standards: bool,
+  standards: Vec<String>,
+  update_is_archived: bool,
+  is_archived: bool,
   mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
   cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+  alias_paths_to_add: Vec<AliasPathAddObject>,
   invariants: Option<InvariantsAddObject>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateCollectionMsg {
@@ -364,23 +360,24 @@ pub fn update_collection_msg(
     valid_token_ids,
     update_collection_permissions,
     collection_permissions,
-    update_manager_timeline,
-    manager_timeline,
-      update_collection_metadata_timeline,
-      collection_metadata_timeline,
-      update_token_metadata_timeline,
-      token_metadata_timeline,
-      update_custom_data_timeline,
-      custom_data_timeline,
-      update_collection_approvals,
-      collection_approvals,
-      update_standards_timeline,
-      standards_timeline,
-      update_is_archived_timeline,
-      is_archived_timeline,
-      mint_escrow_coins_to_transfer,
-      cosmos_coin_wrapper_paths_to_add,
-      invariants,
+    update_manager,
+    manager,
+    update_collection_metadata,
+    collection_metadata,
+    update_token_metadata,
+    token_metadata,
+    update_custom_data,
+    custom_data,
+    update_collection_approvals,
+    collection_approvals,
+    update_standards,
+    standards,
+    update_is_archived,
+    is_archived,
+    mint_escrow_coins_to_transfer,
+    cosmos_coin_wrapper_paths_to_add,
+    alias_paths_to_add,
+    invariants,
   }
   .into()
 }
@@ -392,22 +389,23 @@ pub fn universal_update_collection_msg(
   valid_token_ids: Vec<UintRange>,
   update_collection_permissions: bool,
   collection_permissions: CollectionPermissions,
-  update_manager_timeline: bool,
-  manager_timeline: Vec<ManagerTimeline>,
-  update_collection_metadata_timeline: bool,
-  collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  update_token_metadata_timeline: bool,
-  token_metadata_timeline: Vec<TokenMetadataTimeline>,
-  update_custom_data_timeline: bool,
-  custom_data_timeline: Vec<CustomDataTimeline>,
+  update_manager: bool,
+  manager: String,
+  update_collection_metadata: bool,
+  collection_metadata: CollectionMetadata,
+  update_token_metadata: bool,
+  token_metadata: Vec<TokenMetadata>,
+  update_custom_data: bool,
+  custom_data: String,
   update_collection_approvals: bool,
   collection_approvals: Vec<CollectionApproval>,
-  update_standards_timeline: bool,
-  standards_timeline: Vec<StandardsTimeline>,
-  update_is_archived_timeline: bool,
-  is_archived_timeline: Vec<IsArchivedTimeline>,
+  update_standards: bool,
+  standards: Vec<String>,
+  update_is_archived: bool,
+  is_archived: bool,
   mint_escrow_coins_to_transfer: Vec<CosmosCoin>,
   cosmos_coin_wrapper_paths_to_add: Vec<CosmosCoinWrapperPathAddObject>,
+  alias_paths_to_add: Vec<AliasPathAddObject>,
   invariants: CollectionInvariants
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UniversalUpdateCollectionMsg {
@@ -417,23 +415,24 @@ pub fn universal_update_collection_msg(
     valid_token_ids,
     update_collection_permissions,
     collection_permissions,
-    update_manager_timeline,
-      manager_timeline,
-      update_collection_metadata_timeline,
-      collection_metadata_timeline,
-      update_token_metadata_timeline,
-      token_metadata_timeline,
-      update_custom_data_timeline,
-      custom_data_timeline,
-      update_collection_approvals,
-      collection_approvals,
-      update_standards_timeline,
-      standards_timeline,
-      update_is_archived_timeline,
-      is_archived_timeline,
-      mint_escrow_coins_to_transfer,
-      cosmos_coin_wrapper_paths_to_add,
-      invariants,
+    update_manager,
+    manager,
+    update_collection_metadata,
+    collection_metadata,
+    update_token_metadata,
+    token_metadata,
+    update_custom_data,
+    custom_data,
+    update_collection_approvals,
+    collection_approvals,
+    update_standards,
+    standards,
+    update_is_archived,
+    is_archived,
+    mint_escrow_coins_to_transfer,
+    cosmos_coin_wrapper_paths_to_add,
+    alias_paths_to_add,
+    invariants,
   }
   .into()
 }
@@ -472,23 +471,19 @@ pub fn update_user_approvals_msg(
 }
 
 pub fn create_dynamic_store_msg(
-  creator: String,
-  default_value: String,
+  default_value: bool,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::CreateDynamicStoreMsg {
-    creator,
     default_value,
   }
   .into()
 }
 
 pub fn update_dynamic_store_msg(
-  creator: String,
   store_id: String,
-  default_value: String,
+  default_value: bool,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateDynamicStoreMsg {
-    creator,
     store_id,
     default_value,
   }
@@ -496,59 +491,23 @@ pub fn update_dynamic_store_msg(
 }
 
 pub fn delete_dynamic_store_msg(
-  creator: String,
   store_id: String,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::DeleteDynamicStoreMsg {
-    creator,
     store_id,
   }
   .into()
 }
 
 pub fn set_dynamic_store_value_msg(
-  creator: String,
   store_id: String,
   address: String,
-  value: String,
+  value: bool,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetDynamicStoreValueMsg {
-    creator,
     store_id,
     address,
     value,
-  }
-  .into()
-}
-
-pub fn increment_store_value_msg(
-  creator: String,
-  store_id: String,
-  address: String,
-  amount: String,
-) -> CosmosMsg<BitBadgesMsg> {
-  BitBadgesMsg::IncrementStoreValueMsg {
-    creator,
-    store_id,
-    address,
-    amount,
-  }
-  .into()
-}
-
-pub fn decrement_store_value_msg(
-  creator: String,
-  store_id: String,
-  address: String,
-  amount: String,
-  set_to_zero_on_underflow: bool,
-) -> CosmosMsg<BitBadgesMsg> {
-  BitBadgesMsg::DecrementStoreValueMsg {
-    creator,
-    store_id,
-    address,
-    amount,
-    set_to_zero_on_underflow,
   }
   .into()
 }
@@ -642,13 +601,13 @@ pub fn set_valid_token_ids_msg(
 pub fn set_manager_msg(
   creator: String,
   collection_id: String,
-  manager_timeline: Vec<ManagerTimeline>,
-  can_update_manager: Vec<TimedUpdatePermission>,
+  manager: String,
+  can_update_manager: Vec<ActionPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetManagerMsg {
     creator,
     collection_id,
-    manager_timeline,
+    manager,
     can_update_manager,
   }
   .into()
@@ -657,13 +616,13 @@ pub fn set_manager_msg(
 pub fn set_collection_metadata_msg(
   creator: String,
   collection_id: String,
-  collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  can_update_collection_metadata: Vec<TimedUpdatePermission>,
+  collection_metadata: CollectionMetadata,
+  can_update_collection_metadata: Vec<ActionPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetCollectionMetadataMsg {
     creator,
     collection_id,
-    collection_metadata_timeline,
+    collection_metadata,
     can_update_collection_metadata,
   }
   .into()
@@ -672,13 +631,13 @@ pub fn set_collection_metadata_msg(
 pub fn set_token_metadata_msg(
   creator: String,
   collection_id: String,
-  token_metadata_timeline: Vec<TokenMetadataTimeline>,
-  can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
+  token_metadata: Vec<TokenMetadata>,
+  can_update_token_metadata: Vec<TokenIdsActionPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetTokenMetadataMsg {
     creator,
     collection_id,
-    token_metadata_timeline,
+    token_metadata,
     can_update_token_metadata,
   }
   .into()
@@ -687,13 +646,13 @@ pub fn set_token_metadata_msg(
 pub fn set_custom_data_msg(
   creator: String,
   collection_id: String,
-  custom_data_timeline: Vec<CustomDataTimeline>,
-  can_update_custom_data: Vec<TimedUpdatePermission>,
+  custom_data: String,
+  can_update_custom_data: Vec<ActionPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetCustomDataMsg {
     creator,
     collection_id,
-    custom_data_timeline,
+    custom_data,
     can_update_custom_data,
   }
   .into()
@@ -702,13 +661,13 @@ pub fn set_custom_data_msg(
 pub fn set_standards_msg(
   creator: String,
   collection_id: String,
-  standards_timeline: Vec<StandardsTimeline>,
-  can_update_standards: Vec<TimedUpdatePermission>,
+  standards: Vec<String>,
+  can_update_standards: Vec<ActionPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetStandardsMsg {
     creator,
     collection_id,
-    standards_timeline,
+    standards,
     can_update_standards,
   }
   .into()
@@ -732,13 +691,13 @@ pub fn set_collection_approvals_msg(
 pub fn set_is_archived_msg(
   creator: String,
   collection_id: String,
-  is_archived_timeline: Vec<IsArchivedTimeline>,
-  can_archive_collection: Vec<TimedUpdatePermission>,
+  is_archived: bool,
+  can_archive_collection: Vec<ActionPermission>,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::SetIsArchivedMsg {
     creator,
     collection_id,
-    is_archived_timeline,
+    is_archived,
     can_archive_collection,
   }
   .into()
@@ -757,6 +716,25 @@ pub fn set_reserved_protocol_address_msg(
   .into()
 }
 
+pub fn cast_vote_msg(
+  collection_id: String,
+  approval_level: String,
+  approver_address: String,
+  approval_id: String,
+  proposal_id: String,
+  yes_weight: String,
+) -> CosmosMsg<BitBadgesMsg> {
+  BitBadgesMsg::CastVoteMsg {
+    collection_id,
+    approval_level,
+    approver_address,
+    approval_id,
+    proposal_id,
+    yes_weight,
+  }
+  .into()
+}
+
 
 
 
@@ -769,7 +747,6 @@ pub struct AddressList {
     pub uri: String,
     pub custom_data: String,
     pub created_by: Option<String>,
-    pub alias_address: Option<String>,
 }
 
 
@@ -779,7 +756,7 @@ pub struct Transfer {
     pub from: String,
     pub to_addresses: Vec<String>,
     pub balances: Vec<Balance>,
-    pub precalculate_balances_from_approval: Option<ApprovalIdentifierDetails>,
+    pub precalculate_balances_from_approval: Option<PrecalculateBalancesFromApprovalDetails>,
     pub merkle_proofs: Vec<MerkleProof>,
     pub eth_signature_proofs: Vec<ETHSignatureProof>,
     pub memo: String,
@@ -787,8 +764,16 @@ pub struct Transfer {
     pub only_check_prioritized_collection_approvals: bool,
     pub only_check_prioritized_incoming_approvals: bool,
     pub only_check_prioritized_outgoing_approvals: bool,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct PrecalculateBalancesFromApprovalDetails {
+    pub approval_id: String,
+    pub approval_level: String,
+    pub approver_address: String,
+    pub version: String,
     pub precalculation_options: PrecalculationOptions,
-    pub num_attempts: String,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -868,65 +853,43 @@ pub struct CollectionMetadata {
     pub custom_data: String,
 }
 
-
-
-
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct CollectionMetadataTimeline {
-    pub collection_metadata: CollectionMetadata,
-    pub timeline_times: Vec<UintRange>,
-}
-
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct TokenMetadataTimeline {
-    pub token_metadata: Vec<TokenMetadata>,
-    pub timeline_times: Vec<UintRange>,
-}
-
-
-
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct CustomDataTimeline {
+pub struct PathMetadata {
+    pub uri: String,
     pub custom_data: String,
-    pub timeline_times: Vec<UintRange>,
 }
-
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct ManagerTimeline {
-    pub manager: String,
-    pub timeline_times: Vec<UintRange>,
+pub struct ConversionSideA {
+    pub amount: String,
 }
-
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct IsArchivedTimeline {
-    pub is_archived: bool,
-    pub timeline_times: Vec<UintRange>,
+pub struct ConversionSideAWithDenom {
+    pub amount: String,
+    pub denom: String,
 }
-
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct ContractAddressTimeline {
-    pub contract_address: String,
-    pub timeline_times: Vec<UintRange>,
+pub struct ConversionWithoutDenom {
+    pub side_a: ConversionSideA,
+    pub side_b: Vec<Balance>,
 }
-
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
-pub struct StandardsTimeline {
-    pub standards: Vec<String>,
-    pub timeline_times: Vec<UintRange>,
+pub struct Conversion {
+    pub side_a: ConversionSideAWithDenom,
+    pub side_b: Vec<Balance>,
 }
+
+
+
+
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1057,6 +1020,7 @@ pub struct ApprovalCriteria {
   pub initiator_checks: Option<AddressChecks>,
   pub alt_time_checks: Option<AltTimeChecks>,
   pub must_prioritize: bool,
+  pub voting_challenges: Vec<VotingChallenge>,
 }
 
 
@@ -1078,6 +1042,7 @@ pub struct OutgoingApprovalCriteria {
   pub initiator_checks: Option<AddressChecks>,
   pub alt_time_checks: Option<AltTimeChecks>,
   pub must_prioritize: bool,
+  pub voting_challenges: Vec<VotingChallenge>,
 }
 
 
@@ -1099,6 +1064,7 @@ pub struct IncomingApprovalCriteria {
   pub initiator_checks: Option<AddressChecks>,
   pub alt_time_checks: Option<AltTimeChecks>,
   pub must_prioritize: bool,
+  pub voting_challenges: Vec<VotingChallenge>,
 }
 
 
@@ -1169,13 +1135,13 @@ pub struct CollectionApproval {
 #[serde(rename_all = "camelCase")]
 pub struct CollectionPermissions {
     pub can_delete_collection: Vec<ActionPermission>,
-    pub can_archive_collection: Vec<TimedUpdatePermission>,
-    pub can_update_standards: Vec<TimedUpdatePermission>,
-    pub can_update_custom_data: Vec<TimedUpdatePermission>,
-    pub can_update_manager: Vec<TimedUpdatePermission>,
-    pub can_update_collection_metadata: Vec<TimedUpdatePermission>,
+    pub can_archive_collection: Vec<ActionPermission>,
+    pub can_update_standards: Vec<ActionPermission>,
+    pub can_update_custom_data: Vec<ActionPermission>,
+    pub can_update_manager: Vec<ActionPermission>,
+    pub can_update_collection_metadata: Vec<ActionPermission>,
     pub can_update_valid_token_ids: Vec<TokenIdsActionPermission>,
-    pub can_update_token_metadata: Vec<TimedUpdateWithTokenIdsPermission>,
+    pub can_update_token_metadata: Vec<TokenIdsActionPermission>,
     pub can_update_collection_approvals: Vec<CollectionApprovalPermission>,
 }
 
@@ -1248,23 +1214,6 @@ pub struct ActionPermission {
 }
 
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct TimedUpdatePermission {
-    pub permanently_permitted_times: Vec<UintRange>,
-    pub permanenty_forbidden_times: Vec<UintRange>,
-    pub timeline_times: Vec<UintRange>,
-}
-
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "camelCase")]
-pub struct TimedUpdateWithTokenIdsPermission {
-    pub token_ids: Vec<UintRange>,
-    pub permanently_permitted_times: Vec<UintRange>,
-    pub permanenty_forbidden_times: Vec<UintRange>,
-    pub timeline_times: Vec<UintRange>,
-}
 
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1284,19 +1233,20 @@ pub struct UserBalanceStore {
 #[serde(rename_all = "camelCase")]
 pub struct TokenCollection {
   pub collection_id: String,
-  pub collection_metadata_timeline: Vec<CollectionMetadataTimeline>,
-  pub token_metadata_timeline: Vec<TokenMetadataTimeline>,
-  pub custom_data_timeline: Vec<CustomDataTimeline>,
-  pub manager_timeline: Vec<ManagerTimeline>,
+  pub collection_metadata: CollectionMetadata,
+  pub token_metadata: Vec<TokenMetadata>,
+  pub custom_data: String,
+  pub manager: String,
   pub collection_permissions: CollectionPermissions,
   pub collection_approvals: Vec<CollectionApproval>,
-  pub standards_timeline: Vec<StandardsTimeline>,
-  pub is_archived_timeline: Vec<IsArchivedTimeline>,
+  pub standards: Vec<String>,
+  pub is_archived: bool,
   pub default_balances: UserBalanceStore,
   pub created_by: String,
   pub valid_token_ids: Vec<UintRange>,
   pub mint_escrow_address: String,
   pub cosmos_coin_wrapper_paths: Vec<CosmosCoinWrapperPath>,
+  pub alias_paths: Vec<AliasPath>,
   pub invariants: CollectionInvariants,
 }
 
@@ -1305,11 +1255,11 @@ pub struct TokenCollection {
 pub struct CosmosCoinWrapperPath {
   pub address: String,
   pub denom: String,
-  pub balances: Vec<Balance>,
+  pub conversion: ConversionWithoutDenom,
   pub symbol: String,
   pub denom_units: Vec<DenomUnit>,
   pub allow_override_with_any_valid_token: bool,
-  pub allow_cosmos_wrapping: bool,
+  pub metadata: PathMetadata,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1318,6 +1268,7 @@ pub struct DenomUnit {
   pub decimals: String,
   pub symbol: String,
   pub is_default_display: bool,
+  pub metadata: PathMetadata,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1381,13 +1332,58 @@ pub struct AltTimeChecks {
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
+pub struct Voter {
+  pub address: String,
+  pub weight: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct VotingChallenge {
+  pub proposal_id: String,
+  pub quorum_threshold: String,
+  pub voters: Vec<Voter>,
+  pub uri: String,
+  pub custom_data: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct VoteProof {
+  pub proposal_id: String,
+  pub voter: String,
+  pub yes_weight: String,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
 pub struct CosmosCoinWrapperPathAddObject {
   pub denom: String,
-  pub balances: Vec<Balance>,
+  pub conversion: ConversionWithoutDenom,
   pub symbol: String,
   pub denom_units: Vec<DenomUnit>,
   pub allow_override_with_any_valid_token: bool,
-  pub allow_cosmos_wrapping: bool,
+  pub metadata: PathMetadata,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct AliasPath {
+  pub denom: String,
+  pub conversion: ConversionWithoutDenom,
+  pub symbol: String,
+  pub denom_units: Vec<DenomUnit>,
+  pub metadata: PathMetadata,
+}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct AliasPathAddObject {
+  pub denom: String,
+  pub conversion: ConversionWithoutDenom,
+  pub symbol: String,
+  pub denom_units: Vec<DenomUnit>,
+  pub metadata: PathMetadata,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1404,17 +1400,13 @@ pub struct CollectionInvariants {
 #[serde(rename_all = "camelCase")]
 pub struct CosmosCoinBackedPath {
   pub address: String,
-  pub ibc_denom: String,
-  pub balances: Vec<Balance>,
-  pub ibc_amount: String,
+  pub conversion: Conversion,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 #[serde(rename_all = "camelCase")]
 pub struct CosmosCoinBackedPathAddObject {
-  pub ibc_denom: String,
-  pub balances: Vec<Balance>,
-  pub ibc_amount: String,
+  pub conversion: Conversion,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1432,7 +1424,7 @@ pub struct InvariantsAddObject {
 pub struct DynamicStore {
   pub store_id: String,
   pub created_by: String,
-  pub default_value: String,
+  pub default_value: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -1440,7 +1432,7 @@ pub struct DynamicStore {
 pub struct DynamicStoreValue {
   pub store_id: String,
   pub address: String,
-  pub value: String,
+  pub value: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
