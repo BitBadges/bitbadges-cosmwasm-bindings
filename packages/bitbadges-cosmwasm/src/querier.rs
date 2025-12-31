@@ -114,4 +114,21 @@ impl<'a> BitBadgesQuerier<'a> {
         .into();
         self.querier.query(&request)
     }
+
+    pub fn query_dynamic_store<T: Into<String>>(&self, store_id: String) -> StdResult<String> {
+        let request = BitBadgesQuery::QueryDynamicStore { 
+            store_id
+        }
+        .into();
+        self.querier.query(&request)
+    }
+
+    pub fn query_dynamic_store_value<T: Into<String>>(&self, store_id: String, address: String) -> StdResult<String> {
+        let request = BitBadgesQuery::QueryDynamicStoreValue { 
+            store_id,
+            address
+        }
+        .into();
+        self.querier.query(&request)
+    }
 }

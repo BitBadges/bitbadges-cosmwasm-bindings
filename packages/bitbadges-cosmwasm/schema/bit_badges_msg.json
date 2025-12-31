@@ -537,10 +537,14 @@
           "type": "object",
           "required": [
             "defaultValue",
+            "globalEnabled",
             "storeId"
           ],
           "properties": {
             "defaultValue": {
+              "type": "boolean"
+            },
+            "globalEnabled": {
               "type": "boolean"
             },
             "storeId": {

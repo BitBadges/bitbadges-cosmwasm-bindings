@@ -134,6 +134,7 @@ pub enum BitBadgesMsg {
   UpdateDynamicStoreMsg {
     store_id: String,
     default_value: bool,
+    global_enabled: bool,
   },
 
   #[serde(rename_all = "camelCase")]
@@ -482,10 +483,12 @@ pub fn create_dynamic_store_msg(
 pub fn update_dynamic_store_msg(
   store_id: String,
   default_value: bool,
+  global_enabled: bool,
 ) -> CosmosMsg<BitBadgesMsg> {
   BitBadgesMsg::UpdateDynamicStoreMsg {
     store_id,
     default_value,
+    global_enabled,
   }
   .into()
 }
@@ -1425,6 +1428,7 @@ pub struct DynamicStore {
   pub store_id: String,
   pub created_by: String,
   pub default_value: bool,
+  pub global_enabled: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
