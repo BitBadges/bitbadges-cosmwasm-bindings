@@ -1146,6 +1146,8 @@ pub struct CollectionPermissions {
     pub can_update_valid_token_ids: Vec<TokenIdsActionPermission>,
     pub can_update_token_metadata: Vec<TokenIdsActionPermission>,
     pub can_update_collection_approvals: Vec<CollectionApprovalPermission>,
+    pub can_add_more_alias_paths: Vec<ActionPermission>,
+    pub can_add_more_cosmos_coin_wrapper_paths: Vec<ActionPermission>,
 }
 
 

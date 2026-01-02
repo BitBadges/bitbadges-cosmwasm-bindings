@@ -1681,6 +1681,8 @@
     "CollectionPermissions": {
       "type": "object",
       "required": [
+        "canAddMoreAliasPaths",
+        "canAddMoreCosmosCoinWrapperPaths",
         "canArchiveCollection",
         "canDeleteCollection",
         "canUpdateCollectionApprovals",
@@ -1692,6 +1694,18 @@
         "canUpdateValidTokenIds"
       ],
       "properties": {
+        "canAddMoreAliasPaths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActionPermission"
+          }
+        },
+        "canAddMoreCosmosCoinWrapperPaths": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActionPermission"
+          }
+        },
         "canArchiveCollection": {
           "type": "array",
           "items": {
