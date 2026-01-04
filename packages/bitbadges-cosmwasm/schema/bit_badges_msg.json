@@ -516,11 +516,19 @@
         "createDynamicStoreMsg": {
           "type": "object",
           "required": [
-            "defaultValue"
+            "customData",
+            "defaultValue",
+            "uri"
           ],
           "properties": {
+            "customData": {
+              "type": "string"
+            },
             "defaultValue": {
               "type": "boolean"
+            },
+            "uri": {
+              "type": "string"
             }
           }
         }
@@ -536,11 +544,16 @@
         "updateDynamicStoreMsg": {
           "type": "object",
           "required": [
+            "customData",
             "defaultValue",
             "globalEnabled",
-            "storeId"
+            "storeId",
+            "uri"
           ],
           "properties": {
+            "customData": {
+              "type": "string"
+            },
             "defaultValue": {
               "type": "boolean"
             },
@@ -548,6 +561,9 @@
               "type": "boolean"
             },
             "storeId": {
+              "type": "string"
+            },
+            "uri": {
               "type": "string"
             }
           }
