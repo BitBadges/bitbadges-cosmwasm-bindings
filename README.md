@@ -25,8 +25,9 @@ bitbadges-cosmwasm = { version = "X.X.X" }
 | v20                | 75c82042ba5a4bbceaa48d972cc0e2792902357b | [v20 Release](https://github.com/BitBadges/bitbadges-cosmwasm-bindings/tree/75c82042ba5a4bbceaa48d972cc0e2792902357b) |
 | v21                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
 | v22                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
+| v23                | current                                  | [Current](https://github.com/BitBadges/bitbadges-cosmwasm-bindings)                                                   |
 
-**Note:** The v12/v13/v14/v16/v17/v18/v19/v20/v21/v22 refer to our blockchain's versions. Make sure to use the appropriate bindings version for your target blockchain version.
+**Note:** The v12/v13/v14/v16/v17/v18/v19/v20/v21/v22/v23 refer to our blockchain's versions. Make sure to use the appropriate bindings version for your target blockchain version.
 
 ## Features
 

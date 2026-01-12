@@ -102,6 +102,7 @@ Update the README.md with the newest version support:
         -   `IncomingApprovalCriteria`: `alt_time_checks` (optional `AltTimeChecks`)
 
 -   v21: Changes:
+
     -   Added `allow_cosmos_wrapping` field to `CosmosCoinWrapperPathAddObject` struct
     -   Added `must_prioritize` field to approval criteria:
         -   `ApprovalCriteria`: `must_prioritize` (bool - if true, this approval must be explicitly prioritized in PrioritizedApprovals to be used)
@@ -109,6 +110,7 @@ Update the README.md with the newest version support:
         -   `IncomingApprovalCriteria`: `must_prioritize` (bool)
 
 -   v22: Major Changes:
+
     -   **Timeline Functionality Removal**: Removed all timeline-based functionality. Timeline fields have been converted to direct values:
         -   `manager_timeline: Vec<ManagerTimeline>` → `manager: String`
         -   `collection_metadata_timeline: Vec<CollectionMetadataTimeline>` → `collection_metadata: CollectionMetadata`
@@ -137,3 +139,19 @@ Update the README.md with the newest version support:
         -   `QueryGetVote`: Query a single vote by collection ID, approval level, approver address, approval ID, proposal ID, and voter address
         -   `QueryGetVotes`: Query all votes for a proposal
         -   Added corresponding response types and querier helper methods
+
+-   v23: Changes:
+    -   **DynamicStore Enhancements**:
+        -   Added `globalEnabled` field to `DynamicStore` message (field 4) - Global kill switch for dynamic stores
+        -   Added `uri` field to `DynamicStore` message (field 5) - URI for additional metadata
+        -   Added `customData` field to `DynamicStore` message (field 6) - Custom data field for arbitrary data
+        -   Added `uri` and `customData` fields to `MsgCreateDynamicStore` (fields 3 and 4)
+        -   Added `uri` and `customData` fields to `MsgUpdateDynamicStore` (fields 5 and 6)
+    -   **Collection Permissions**:
+        -   Added `canAddMoreAliasPaths` permission (field 10) - Controls adding non-wrapping alias paths
+        -   Added `canAddMoreCosmosCoinWrapperPaths` permission (field 11) - Controls adding IBC wrapper paths
+    -   **DynamicStoreChallenge Enhancement**:
+        -   Added `ownershipCheckParty` field to `DynamicStoreChallenge` (field 2) - Specifies which party to check ownership for ("initiator", "sender", "recipient", or any valid bb1 address)
+    -   **Collection Approval Criteria Flags**:
+        -   Added `allowedBackedMinting` field to `ApprovalCriteria` (field 23) - Boolean flag that determines whether this collection approval can be used for transfers involving backed minting (via CosmosCoinBackedPath)
+        -   Added `allowSpecialWrapping` field to `ApprovalCriteria` (field 24) - Boolean flag that determines whether this collection approval can be used for transfers involving special wrapping (via CosmosCoinWrapperPath)

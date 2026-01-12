@@ -1036,6 +1036,8 @@ pub struct ApprovalCriteria {
   pub alt_time_checks: Option<AltTimeChecks>,
   pub must_prioritize: bool,
   pub voting_challenges: Vec<VotingChallenge>,
+  pub allowed_backed_minting: bool,
+  pub allow_special_wrapping: bool,
 }
 
 
@@ -1320,6 +1322,7 @@ pub struct MustOwnTokens {
 #[serde(rename_all = "camelCase")]
 pub struct DynamicStoreChallenge {
   pub store_id: String,
+  pub ownership_check_party: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

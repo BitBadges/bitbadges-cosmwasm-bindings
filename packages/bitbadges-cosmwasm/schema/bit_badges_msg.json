@@ -1301,6 +1301,8 @@
     "ApprovalCriteria": {
       "type": "object",
       "required": [
+        "allowSpecialWrapping",
+        "allowedBackedMinting",
         "approvalAmounts",
         "autoDeletionOptions",
         "coinTransfers",
@@ -1321,6 +1323,12 @@
         "votingChallenges"
       ],
       "properties": {
+        "allowSpecialWrapping": {
+          "type": "boolean"
+        },
+        "allowedBackedMinting": {
+          "type": "boolean"
+        },
         "altTimeChecks": {
           "anyOf": [
             {
@@ -1944,6 +1952,12 @@
         "storeId"
       ],
       "properties": {
+        "ownershipCheckParty": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "storeId": {
           "type": "string"
         }
